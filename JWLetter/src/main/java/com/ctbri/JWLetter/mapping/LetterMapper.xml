@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace = "com.ctbri.JWLetter.DAO.LetterMapper">
+	<resultMap id="LetterMap" type = "com.ctbri.JWLetter.pojo.Letter">
+		<id column="Letter_ID" property="letter_id" jdbcType="INTEGER"/>
+		<result column = "ID" property="id" jdbcType="INTEGER"/>
+		<result column = "SubmitDatetime" property="submitDateTime" jdbcType="VARCHAR"/>
+		<result column = "Author" property="author" jdbcType="VARCHAR"/>
+		<result column = "Contents" property="contents" jdbcType="VARCHAR"/>
+		<result column = "Title" property="attachments" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<resultMap id="LetterResultMap" type = "com.ctbri.JWLetter.pojo.LetterResult">
+		<id column="Letter_ID" property="letter_id" jdbcType="INTEGER"/>
+		<result column = "ID" property="id" jdbcType="INTEGER"/>
+		<result column = "SubmitDatetime" property="submitDateTime" jdbcType="VARCHAR"/>
+		<result column = "Author" property="author" jdbcType="VARCHAR"/>
+		<result column = "Contents" property="contents" jdbcType="VARCHAR"/>
+		<result column = "Title" property="attachments" jdbcType="VARCHAR"/>
+		<result column = "ReadOrNot" property="ifRead" jdbcType="INTEGER"/>
+		<result column = "Category_name" property="name" jdbcType="INTEGER"/>
+	</resultMap>
+	<resultMap id="LetterTitleMap" type = "com.ctbri.JWLetter.pojo.LetterTitle">
+		<id column="Letter_ID" property="letter_id" jdbcType="INTEGER"/>
+		<result column = "ID" property="id" jdbcType="INTEGER"/>
+		<result column = "SubmitDatetime" property="submitDateTime" jdbcType="VARCHAR"/>
+		<result column = "Author" property="author" jdbcType="VARCHAR"/>
+		<result column = "Title" property="attachments" jdbcType="VARCHAR"/>
+		<result column = "ReadOrNot" property="ifRead" jdbcType="INTEGER"/>
+		<result column = "Category_name" property="name" jdbcType="INTEGER"/>
+	</resultMap>
+  <sql id="Base_Column_List">
+  Letter_ID,ID,SubmitDatetime,Author,Contents,Title
+  </sql>
+  
+  <!-- 通过id筛选实体 -->
+  <select id = "selectByPrimaryKey" resultMap="LetterMap" parameterType = "java.lang.String" flushCache="true">
+  	select
+  	<include refid ="Base_Column_List"/>
+  	from letters where Letter_ID = #{_parameter,jdbcType = VARCHAR}
+  </select>
+  
+  <select id = "select" resultMap="LetterMap" flushCache="true">
+  	select
+  	<include refid ="Base_Column_List"/>
+  	from letters
+  </select>
+  
+  <select id = "selectByTagId" resultMap="LetterResultMap" parameterType = "java.lang.Integer" flushCache="true">
+  	select
+  	a.Letter_ID,a.ID,a.SubmitDatetime,a.Author,a.Contents,a.Title,c.ReadOrNot,d.Category_name
+	from letters as a,tag_letter as b,letter_status as c,categories as d where a.Letter_ID=b.Letter_ID And a.Letter_ID=c.Letter_ID AND a.Letter_ID=d.Letter_ID AND b.tag_id=#{_parameter,jdbcType = INTEGER}
+  </select>
+  
+  <select id = "selectAll" resultMap="LetterResultMap" flushCache="true">
+  	select
+  	a.Letter_ID,a.ID,SubmitDatetime,Author,Contents,Title,ReadOrNot,Category_name
+  	from letters a,letter_status b,categories c where a.Letter_ID = b.Letter_ID and a.Letter_ID=c.Letter_ID
+  </select>
+  
+  <select id = "selectTitles" resultMap="LetterTitleMap" flushCache="true">
+  	select
+  	a.Letter_ID,a.ID,SubmitDatetime,Author,Title,ReadOrNot,Category_name
+  	from letters a,letter_status b,categories c where a.Letter_ID = b.Letter_ID and a.Letter_ID=c.Letter_ID
+  </select>
+  
+  <!-- 添加实体类 -->
+  <insert id="insert" parameterType = "com.ctbri.JWLetter.pojo.Letter">
+  	insert into letters (Letter_ID,ID,SubmitDatetime,Author,Contents,Attachments)
+  	values (#{letter_id,jdbcType = VARCHAR},
+  	#{id,jdbcType = INTEGER},
+  	#{submitDateTime,jdbcType = TIMESTAMP},
+  	#{author,jdbcType = VARCHAR},
+  	#{contents,jdbcType = VARCHAR},
+  	#{attachments,jdbcType = VARCHAR}
+  	)
+  </insert>
+  
+  <!-- 通过id更新实体类 -->
+  <update id = "updateByPrimaryKey" parameterType = "com.ctbri.JWLetter.pojo.Letter">
+  	update letters
+  	<set>
+			ID=#{id,jdbcType = INTEGER},  		
+  			SubmitDatetime = #{submitDateTime,jdbcType = TIMESTAMP},
+  			Author=#{author,jdbcType = VARCHAR},
+  			Contents=#{contents,jdbcType = VARCHAR},
+  			Title=#{attachments,jdbcType = VARCHAR}
+  	</set>
+  	where Letter_ID = #{letter_id,jdbcType = INTEGER}
+  </update>
+  
+  <!-- 通过id删除实体类 -->
+  <delete id="deleteByPrimaryKey" parameterType = "java.lang.Integer">
+  	delete from letters where Letter_ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  </mapper>

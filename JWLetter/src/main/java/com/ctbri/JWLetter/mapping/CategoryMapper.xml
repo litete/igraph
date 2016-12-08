@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace = "com.ctbri.JWLetter.DAO.CategoryMapper">
+	<resultMap id="CategoryMap" type = "com.ctbri.JWLetter.pojo.Category">
+		<id column="Letter_ID" property="letter_id" jdbcType="INTEGER"/>
+		<result column = "ID" property="id" jdbcType="INTEGER"/>
+		<result column = "Category_name" property="name" jdbcType="INTEGER"/>
+	</resultMap>
+
+  <sql id="Base_Column_List">
+  Letter_ID,ID,Category_name
+  </sql>
+  
+  
+  
+  <!-- 添加实体类 -->
+  <insert id="insert" parameterType = "com.ctbri.JWLetter.pojo.Category">
+  	insert into categories (Letter_ID,ID,Category_name)
+  	values (#{letter_id,jdbcType = INTEGER},
+  	#{id,jdbcType = INTEGER},
+  	#{name,jdbcType = INTEGER}
+  	)
+  </insert>
+  
+ 
+  </mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace = "com.ctbri.JWLetter.DAO.TagMapper">
+	<resultMap id="TagCountMap" type = "com.ctbri.JWLetter.pojo.TagCount">
+		<id column="Tag_id" property="tag_id" jdbcType="INTEGER"/>
+		<result column = "count" property="count" jdbcType="INTEGER"/>
+		<result column = "Tag_name" property="tag_name" jdbcType="VARCHAR"/>
+		<result column = "tag_class" property="tag_class" jdbcType="VARCHAR"/>
+	</resultMap>
+
+  <sql id="Base_Column_List">
+  Tag_id,Tag_name,count,tag_class
+  </sql>
+ 
+  
+  <select id = "selectCountByPrimaryKey" resultMap="TagCountMap" parameterType = "java.lang.Integer" flushCache="true">
+  	select distinct l.Tag_id,l.Tag_name,count(*) as count,t.tag_class from tag_letter as l,tag as t where l.Tag_id=t.tag_id AND l.Tag_id=#{_id,jdbcType=INTEGER}
+ group by l.Tag_id order by count desc;
+  </select>
+  
+ 
+  
+  </mapper>

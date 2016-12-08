@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:tx="http://www.springframework.org/schema/tx" 
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:jdbc="http://www.springframework.org/schema/jdbc" 
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+			http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/jdbc 
+			http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd
+			http://www.springframework.org/schema/aop 
+			http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+	
+	<!-- ========================================加载DB配置信息========================================= -->
+	<!-- <context:property-placeholder location="classpath:bdcsc2-service-system-mybaties.properties" /> -->
+	
+    <!-- ========================================配置数据源========================================= -->
+    <!-- 配置数据源，使用的是alibaba的Druid(德鲁伊)数据源 -->
+    <bean name="dataSource" class="org.apache.commons.dbcp.BasicDataSource"  destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://27.148.153.1:3306/guanxi?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true" />
+        <property name="username" value="root" />
+        <property name="password" value="nlp4" />
+        <property name="initialSize" value="20" />
+        <property name="maxActive" value="20" />
+        <property name="maxIdle" value="20" />
+        <property name="minIdle" value="20" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="testWhileIdle" value="true" />
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <property name="minEvictableIdleTimeMillis" value="25200000" />
+        <property name="removeAbandoned" value="true" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        
+    </bean>
+    
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+        	<tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            
+            <tx:method name="get*" propagation="SUPPORTS" />
+            <tx:method name="list*" propagation="SUPPORTS" />
+            <tx:method name="is*" propagation="SUPPORTS" />
+        </tx:attributes>
+    </tx:advice>
+    
+    
+    
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="/WEB-INF/conf/ctbri-mybatis-config.xml" />
+    </bean>
+    
+    <bean id="LetterMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    	<property name="mapperInterface" value="com.ctbri.JWLetter.DAO.LetterMapper"></property>
+    	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+    <bean id="LetterService" class="com.ctbri.JWLetter.impl.LetterServiceImpl">
+    	<property name="letterMapper" ref="LetterMapper"></property>
+    </bean>
+    
+   <bean id="CategoryMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    	<property name="mapperInterface" value="com.ctbri.JWLetter.DAO.CategoryMapper"></property>
+    	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+    <bean id="CategroyService" class="com.ctbri.JWLetter.impl.CategoryServiceImpl">
+    	<property name="categoryMapper" ref="CategoryMapper"></property>
+    </bean>
+    
+     <bean id="StatusMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    	<property name="mapperInterface" value="com.ctbri.JWLetter.DAO.StatusMapper"></property>
+    	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+    <bean id="StatusService" class="com.ctbri.JWLetter.impl.StatusServiceImpl">
+    	<property name="statusMapper" ref="StatusMapper"></property>
+    </bean>
+    
+    <bean id="TagMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    	<property name="mapperInterface" value="com.ctbri.JWLetter.DAO.TagMapper"></property>
+    	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+    <bean id="TagService" class="com.ctbri.JWLetter.impl.TagServiceImpl">
+    	<property name="tagMapper" ref="TagMapper"></property>
+    </bean>
+    
+</beans>
