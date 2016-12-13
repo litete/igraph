@@ -510,17 +510,13 @@
         	        }
         	        function eConsole(param) {    
         	            if (typeof param.data.source == 'undefined') {    
-        	            	if (param.type == 'click') {    
-        	            		
+        	            	if (param.type == 'click') {
         	                    window.location.href="/JWLetter/graph?word="+param.name;    
         	                }    
-        	            }    
-        	            
+        	            }
         	        }
-        	        
         	    }
         	});
-        	
         }
     </script>
     

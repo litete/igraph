@@ -6,8 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="css/bootstrap.css" type="text/css" rel="stylesheet">
-<link href="css/sticky-footer-navbar.css" type="text/css"
-	rel="stylesheet">
+<link href="css/sticky-footer-navbar.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" href="css/AdminLTE.min.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -103,7 +102,69 @@
         <!-- /.box-body -->
       </div>
       <!-- /.box -->
-    </div>
+      <div class="box box-solid">
+        <div class="box-header with-border">
+          <h3 class="box-title">处理进度</h3>
+          <div class="box-tools">
+            <button type="button" class="btn btn-box-tool"
+                    data-widget="collapse"> <i class="fa fa-minus"></i> </button>
+          </div>
+        </div>
+         <div class="box-body no-padding">
+            <table class="table table-condensed">
+              <tbody><tr>
+                <th style="width: 10px">#</th>
+                <th>任务</th>
+                <th>进度</th>
+                <th style="width: 40px">总量</th>
+              </tr>
+              <tr>
+                <td>1.</td>
+                <td>总信件量</td>
+                <td>
+                  <div class="progress progress-xs">
+                    <div class="progress-bar progress-bar-danger" style="width: 100%"></div>
+                  </div>
+                </td>
+                <td><span class="badge bg-red">1000</span></td>
+              </tr>
+              <tr>
+                <td>2.</td>
+                <td>已处理量</td>
+                <td>
+                  <div class="progress progress-xs">
+                    <div class="progress-bar progress-bar-yellow" style="width: 60%"></div>
+                  </div>
+                </td>
+                <td><span class="badge bg-yellow">600</span></td>
+              </tr>
+              <tr>
+                <td>3.</td>
+                <td>流程执行中</td>
+                <td>
+                  <div class="progress progress-xs progress-striped active">
+                    <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
+                  </div>
+                </td>
+                <td><span class="badge bg-light-blue">300</span></td>
+              </tr>
+              <tr>
+                <td>4.</td>
+                <td>已证伪</td>
+                <td>
+                  <div class="progress progress-xs progress-striped active">
+                    <div class="progress-bar progress-bar-success" style="width: 10%"></div>
+                  </div>
+                </td>
+                <td><span class="badge bg-green">100</span></td>
+              </tr>
+              </tbody></table>
+          </div>
+          <!-- /.box-body -->
+        </div>
+      <a  style="position: absolute; right: 0;" href="more">>>>了解更多</a>
+      </div>
+
     <!-- /.col -->
     <div class="col-md-9" id="message">
       <div class="box box-primary">
