@@ -3,3 +3,4 @@
 .settings/
 src/main/webapp.zip
 target/
+.idea/
