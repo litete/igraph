@@ -83,23 +83,21 @@
 
 <script type="text/javascript">
     $(function () {
-        "use strict";
+      "use strict";
 
-        // 信件量/处理量
-        var area = new Morris.Area({
+      // 信件量/处理量
+        Morris.Area({
             element: 'revenue-chart',
-            resize: true,
             data: [
-                {y: '2011 Q1', 信件量: 2666, 处理量: 2666},
-                {y: '2011 Q2', 信件量: 2778, 处理量: 2294},
-                {y: '2011 Q3', 信件量: 4912, 处理量: 1969},
-                {y: '2011 Q4', 信件量: 3767, 处理量: 3597},
-                {y: '2012 Q1', 信件量: 6810, 处理量: 1914},
-                {y: '2012 Q2', 信件量: 5670, 处理量: 4293},
-                {y: '2012 Q3', 信件量: 4820, 处理量: 3795},
-                {y: '2012 Q4', 信件量: 15073, 处理量: 5967},
-                {y: '2013 Q1', 信件量: 10687, 处理量: 4460},
-                {y: '2013 Q2', 信件量: 8432, 处理量: 5713}
+                { y: '201604', 信件量: 250, 处理量: 90 },
+                { y: '201605', 信件量: 291,  处理量: 65 },
+                { y: '201606', 信件量: 278,  处理量: 40 },
+                { y: '201607', 信件量: 252,  处理量: 65 },
+                { y: '201608', 信件量: 306,  处理量: 40 },
+                { y: '201609', 信件量: 257,  处理量: 65 },
+                { y: '201610', 信件量: 372, 处理量: 90 },
+                { y: '201611', 信件量: 258, 处理量: 90 }
+
             ],
             xkey: 'y',
             ykeys: ['信件量', '处理量'],
@@ -107,98 +105,98 @@
             lineColors: ['#a0d0e0', '#3c8dbc'],
             hideHover: 'auto'
         });
-    });
-
-</script>
-<script type="text/javascript">
+   });
+ </script>
+  <script type="text/javascript">
     // 中高层干部/基层干部   使用的是chart.js
     var areaChartOptions = {
-        //Boolean - If we should show the scale at all
-        showScale: true,
-        //Boolean - Whether grid lines are shown across the chart
-        scaleShowGridLines: false,
-        //String - Colour of the grid lines
-        scaleGridLineColor: "rgba(0,0,0,.05)",
-        //Number - Width of the grid lines
-        scaleGridLineWidth: 1,
-        //Boolean - Whether to show horizontal lines (except X axis)
-        scaleShowHorizontalLines: true,
-        //Boolean - Whether to show vertical lines (except Y axis)
-        scaleShowVerticalLines: true,
-        //Boolean - Whether the line is curved between points
-        bezierCurve: true,
-        //Number - Tension of the bezier curve between points
-        bezierCurveTension: 0.3,
-        //Boolean - Whether to show a dot for each point
-        pointDot: false,
-        //Number - Radius of each point dot in pixels
-        pointDotRadius: 4,
-        //Number - Pixel width of point dot stroke
-        pointDotStrokeWidth: 1,
-        //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-        pointHitDetectionRadius: 20,
-        //Boolean - Whether to show a stroke for datasets
-        datasetStroke: true,
-        //Number - Pixel width of dataset stroke
-        datasetStrokeWidth: 2,
-        //Boolean - Whether to fill the dataset with a color
-        datasetFill: true,
-        //String - A legend template
-        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-        //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-        maintainAspectRatio: true,
-        //Boolean - whether to make the chart responsive to window resizing
-        responsive: true
+      //Boolean - If we should show the scale at all
+      showScale: true,
+      //Boolean - Whether grid lines are shown across the chart
+      scaleShowGridLines: false,
+      //String - Colour of the grid lines
+      scaleGridLineColor: "rgba(0,0,0,.05)",
+      //Number - Width of the grid lines
+      scaleGridLineWidth: 1,
+      //Boolean - Whether to show horizontal lines (except X axis)
+      scaleShowHorizontalLines: true,
+      //Boolean - Whether to show vertical lines (except Y axis)
+      scaleShowVerticalLines: true,
+      //Boolean - Whether the line is curved between points
+      bezierCurve: true,
+      //Number - Tension of the bezier curve between points
+      bezierCurveTension: 0.3,
+      //Boolean - Whether to show a dot for each point
+      pointDot: false,
+      //Number - Radius of each point dot in pixels
+      pointDotRadius: 4,
+      //Number - Pixel width of point dot stroke
+      pointDotStrokeWidth: 1,
+      //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+      pointHitDetectionRadius: 20,
+      //Boolean - Whether to show a stroke for datasets
+      datasetStroke: true,
+      //Number - Pixel width of dataset stroke
+      datasetStrokeWidth: 2,
+      //Boolean - Whether to fill the dataset with a color
+      datasetFill: true,
+      //String - A legend template
+      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+      //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+      maintainAspectRatio: true,
+      //Boolean - whether to make the chart responsive to window resizing
+      responsive: true
     };
     var areaChartData = {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
-        datasets: [
-            {
-                label: "中高层干部",
-                fillColor: "rgba(210, 214, 222, 1)",
-                strokeColor: "rgba(210, 214, 222, 1)",
-                pointColor: "rgba(210, 214, 222, 1)",
-                pointStrokeColor: "#c1c7d1",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
-                data: [65, 59, 80, 81, 56, 55, 40]
-            },
-            {
-                label: "基层干部",
-                fillColor: "rgba(60,141,188,0.9)",
-                strokeColor: "rgba(60,141,188,0.8)",
-                pointColor: "#3b8bba",
-                pointStrokeColor: "rgba(60,141,188,1)",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(60,141,188,1)",
-                data: [28, 48, 40, 19, 86, 27, 90]
-            }
-        ]
+      labels: ["2016.04", "2016.05", "2016.06", "2016.07", "2016.08", "2016.09","2016.09"],
+      datasets: [
+        {
+          label: "中高层干部",
+          fillColor: "rgba(210, 214, 222, 1)",
+          strokeColor: "rgba(210, 214, 222, 1)",
+          pointColor: "rgba(210, 214, 222, 1)",
+          pointStrokeColor: "#c1c7d1",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(220,220,220,1)",
+          data: [14, 21, 11, 6, 9, 16, 12,8]
+        },
+        {
+          label: "基层干部",
+          fillColor: "rgba(60,141,188,0.9)",
+          strokeColor: "rgba(60,141,188,0.8)",
+          pointColor: "#3b8bba",
+          pointStrokeColor: "rgba(60,141,188,1)",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(60,141,188,1)",
+          data: [236, 270, 278, 244, 298, 241, 360,250]
+        }
+      ]
     };
-    var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
-    var lineChart = new Chart(lineChartCanvas);
-    var lineChartOptions = areaChartOptions;
-    lineChartOptions.datasetFill = false;
-    lineChart.Line(areaChartData, lineChartOptions);
-</script>
-<script>
-    // 基于准备好的dom，初始化echarts实例
+        var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
+        var lineChart = new Chart(lineChartCanvas);
+        var lineChartOptions = areaChartOptions;
+        lineChartOptions.datasetFill = false;
+        lineChart.Line(areaChartData, lineChartOptions);
+    </script>
+
+	<script>
+		// 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
 
     // 指定图表的配置项和数据
     var option = {
-        title: {
-            text: '案件类型占比',
-            x:'center'
-        },
+      title: {
+        text: '案件类型占比',
+        x:'center'
+      },
         tooltip: {
-            trigger: 'item',
-            formatter: "{a} <br/>{b}: {c} ({d}%)"
+          trigger: 'item',
+          formatter: "{a} <br/>{b}: {c} ({d}%)"
         },
         legend: {
             orient: 'vertical',
             x: 'left',
-            data:['贪污','滥用职权','行贿','以权谋私','官商勾结']
+            data:['贪污','不作为','打击报复','滥用职权','违法违纪','官官相互','受贿','诈骗','绑架','徇私枉法','行贿','违纪违法','以权谋私','乱作为','侮辱','官商勾结']
         },
 
         series: [
@@ -226,18 +224,27 @@
                     }
                 },
                 data:[
-                    {value:335, name:'贪污'},
-                    {value:310, name:'滥用职权'},
-                    {value:234, name:'行贿'},
-                    {value:135, name:'以权谋私'},
-                    {value:1548, name:'官商勾结'}
+                    {value:356, name:'贪污'},
+                    {value:317, name:'不作为'},
+                    {value:269, name:'打击报复'},
+                    {value:228, name:'滥用职权'},
+                    {value:179, name:'违法违纪'},
+                    {value:156, name:'官官相护'},
+                    {value:152, name:'受贿'},
+                    {value:139, name:'诈骗'},
+                    {value:106, name:'绑架'},
+                    {value:93, name:'徇私枉法'},
+                    {value:80, name:'违纪违法'},
+                    {value:77, name:'以权谋私'},
+                    {value:73, name:'乱作为'},
+                    {value:71, name:'侮辱'},
+                    {value:44, name:'官商勾结'}
                 ]
             }
         ]
     };
-
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
-</script>
-</body>
+	</script>
+  </body>
 </html>
