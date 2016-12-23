@@ -5,7 +5,8 @@
   Time: 9:28
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -72,7 +73,7 @@
 <!--end 中高层干部/基层干部 -->
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src=".js/morris.min.js" charset="utf-8"></script>
+<script src="js/morris.min.js" charset="utf-8"></script>
 <script src="js/raphael-min.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/echarts.min.js"></script>
 <script type="text/javascript" src="js/echarts.js" charset="utf-8"></script>
@@ -141,7 +142,7 @@
       //Boolean - Whether to fill the dataset with a color
       datasetFill: true,
       //String - A legend template
-      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+
       //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
       maintainAspectRatio: true,
       //Boolean - whether to make the chart responsive to window resizing

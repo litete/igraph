@@ -8,7 +8,7 @@ $(document).ready(function() {
 $.ajax({
     type     : "post",
     cache    : true,
-    async    : true,
+    async    : false,
     dataType : "json",
     data	 : "",
     url      : "http://"+document.location.host+"/JWLetter/select" ,
@@ -322,6 +322,7 @@ function createXHR() {
 		document.getElementById("searchresult").style.display="none";
 		document.getElementById("letter_contents").style.display="none";
 		document.getElementById("tagBox").style.display="none";
+		document.getElementById("statiscresult").style.display="";
 		var ul = document.getElementById("ul");
 		for(var i=0;i<ul.children.length-1;i++){
 			ul.children[i].className='';
@@ -386,6 +387,7 @@ function createXHR() {
 		document.getElementById("searchresult").style.display="none";
 		document.getElementById("letter_contents").style.display="none";
 		document.getElementById("tagBox").style.display="none";
+		document.getElementById("statiscresult").style.display="none";
 		var ul = document.getElementById("ul");
 		for(var i=0;i<ul.children.length-1;i++){
 			ul.children[i].className='';
@@ -445,6 +447,7 @@ function createXHR() {
 		document.getElementById("searchresult").style.display="none";
 		document.getElementById("letter_contents").style.display="none";
 		document.getElementById("tagBox").style.display="none";
+		document.getElementById("statiscresult").style.display="none";
 		var ul = document.getElementById("ul");
 		for(var i=0;i<ul.children.length-1;i++){
 			ul.children[i].className='';
@@ -460,6 +463,7 @@ function createXHR() {
 		document.getElementById("message").style.display="none";
 		document.getElementById("undo").style.display="none";
 		document.getElementById("levelone").style.display="none";
+		document.getElementById("statiscresult").style.display="none";
 		document.getElementById("leveltwo").style.display="";
 		var table = document.getElementById("leveltwo").children[0].children[1].children[1].children[0].children[0];
 		showTitle(table,levelTwo,1,"leveltwo");
@@ -520,6 +524,7 @@ function createXHR() {
 		document.getElementById("undo").style.display="none";
 		document.getElementById("levelone").style.display="none";
 		document.getElementById("leveltwo").style.display="none";
+		document.getElementById("statiscresult").style.display="none";
 		document.getElementById("levelthree").style.display="";
 		var table = document.getElementById("levelthree").children[0].children[1].children[1].children[0].children[0];
 		showTitle(table,levelThree,1,"levelthree");
@@ -582,6 +587,7 @@ function createXHR() {
 		document.getElementById("levelthree").style.display="none";
 		document.getElementById("letter_contents").style.display="none";
 		document.getElementById("tagBox").style.display="none";
+		document.getElementById("statiscresult").style.display="none";
 		document.getElementById("searchresult").style.display="";
 		document.getElementById("searchresult").children[1].children[1].setAttribute("class", "active");
 		for(var i=2;i<document.getElementById("searchresult").children[1].children.length-1;i++){
@@ -652,6 +658,7 @@ function createXHR() {
     			document.getElementById("levelthree").style.display="none";
     			document.getElementById("searchresult").style.display="none";
     			document.getElementById("letter_contents").style.display="none";
+    			document.getElementById("statiscresult").style.display="none";
     			document.getElementById("tagBox").style.display="";
     			document.getElementById("tagBox").children[0].children[0].children[0].innerHTML="标签："+name;
     	    	result=res;
@@ -912,6 +919,7 @@ function createXHR() {
 		document.getElementById("searchresult").style.display="none";
 		document.getElementById("letter_contents").style.display="";
 		document.getElementById("tagBox").style.display="none";
+		document.getElementById("statiscresult").style.display="none";
     }
     
     function search(){
@@ -923,6 +931,25 @@ function createXHR() {
     	
     	}
     	document.getElementById("toGraph").setAttribute("href", "graph?word="+word);
+    }
+    
+    function showStatisc(){
+    	document.getElementById("message").style.display="none";
+		document.getElementById("undo").style.display="none";
+		document.getElementById("levelone").style.display="none";
+		document.getElementById("leveltwo").style.display="none";
+		document.getElementById("levelthree").style.display="none";
+		document.getElementById("letter_contents").style.display="none";
+		document.getElementById("tagBox").style.display="none";
+		document.getElementById("searchresult").style.display="none";
+		document.getElementById("statiscresult").style.display="";
+	
+		var ul = document.getElementById("ul");
+		for(var i=0;i<ul.children.length-1;i++){
+			ul.children[i].className='';
+			ul.children[i].children[0].children[1].className='label label-warning pull-right';
+		}
+	
     }
     
     function pre(page_num,id){

@@ -1677,7 +1677,12 @@ public class BHController {
 	public String institution() {
 		return "search_institution";
 	}
-
+	
+	@RequestMapping(value = "/more")
+	public String getMore() {
+		return "more";
+	}
+	
 	@RequestMapping(value = "/search_person")
 	public String person() {
 		return "search_person";
