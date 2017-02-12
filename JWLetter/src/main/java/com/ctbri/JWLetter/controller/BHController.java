@@ -1,42 +1,20 @@
 package com.ctbri.JWLetter.controller;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Random;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.lucene.queryparser.xml.FilterBuilder;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.ctbri.JWLetter.impl.CategoryServiceImpl;
+import com.ctbri.JWLetter.impl.LetterServiceImpl;
+import com.ctbri.JWLetter.impl.StatusServiceImpl;
+import com.ctbri.JWLetter.impl.TagServiceImpl;
+import com.ctbri.JWLetter.pojo.*;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.elasticsearch.action.search.MultiSearchResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
@@ -45,19 +23,14 @@ import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.filters.Filters;
 import org.elasticsearch.search.aggregations.bucket.filters.FiltersAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.filters.FiltersAggregator;
 import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramBuilder;
 import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramInterval;
 import org.elasticsearch.search.aggregations.bucket.histogram.Histogram;
-import org.elasticsearch.search.aggregations.bucket.range.date.DateRangeBuilder;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsBuilder;
-import org.elasticsearch.search.aggregations.metrics.MetricsAggregationBuilder;
-import org.elasticsearch.search.aggregations.support.format.ValueParser.DateTime;
 import org.elasticsearch.search.sort.SortOrder;
 import org.elasticsearch.search.sort.SortParseElement;
 import org.springframework.stereotype.Controller;
@@ -66,28 +39,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.ctbri.JWLetter.impl.CategoryServiceImpl;
-import com.ctbri.JWLetter.impl.LetterServiceImpl;
-import com.ctbri.JWLetter.impl.StatusServiceImpl;
-import com.ctbri.JWLetter.impl.TagServiceImpl;
-import com.ctbri.JWLetter.pojo.Category;
-import com.ctbri.JWLetter.pojo.GzItem;
-import com.ctbri.JWLetter.pojo.Legend;
-import com.ctbri.JWLetter.pojo.Letter;
-import com.ctbri.JWLetter.pojo.LetterResult;
-import com.ctbri.JWLetter.pojo.LetterTitle;
-import com.ctbri.JWLetter.pojo.Link;
-import com.ctbri.JWLetter.pojo.Links;
-import com.ctbri.JWLetter.pojo.Node;
-import com.ctbri.JWLetter.pojo.Nodes;
-import com.ctbri.JWLetter.pojo.SearchItem;
-import com.ctbri.JWLetter.pojo.Status;
-import com.ctbri.JWLetter.pojo.TagCount;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.neo4j.jdbc.Driver;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Date;
+
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 @Controller
 public class BHController {
@@ -1386,7 +1349,7 @@ public class BHController {
 						+ "MATCH (layer1)-[r]->(layer2) "
 						+ "WHERE layer2 in list "
 						+ "RETURN layer1 as node, r as dis, layer2 as nextlayer";
-
+				System.out.println("word.indexOf( )");
 				Node center = new Node();
 				center.setCategory(0);
 				center.setLabel(word.toLowerCase());
@@ -1423,10 +1386,12 @@ public class BHController {
 					nodes.add(nodeStr);
 					// + "  "+ rs.getFloat("r.weight")
 					// + "  " +rs.getString("f.content"));
+					System.out.println("else之前的底部");
 				}
 			} else {
 				HashSet<String> centers = new HashSet<String>();
 				String[] words = word.split(" ");
+				System.out.println("words0"+words[0]);
 				//两个关键字
 				String query = "MATCH p = allShortestPaths( (node1 {content : '"
 						+ words[0]
@@ -1448,6 +1413,7 @@ public class BHController {
 					String centerStr = mapper.writeValueAsString(center);
 					nodes.add(centerStr);
 				}
+				System.out.println("nodes"+nodes);
 				stmt = con.prepareStatement(query);
 				// stmt.setString(1,"John");
 				// stmt.setInt(1, 14);
@@ -1545,7 +1511,7 @@ public class BHController {
 		model.addAttribute("links", links.toString());
 		model.addAttribute("nodes", nodes.toString());
 		model.addAttribute("keyword", word);
-
+		System.out.println("links:"+links);
 		return "graph";
 	}
 

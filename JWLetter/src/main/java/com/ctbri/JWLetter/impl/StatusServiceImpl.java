@@ -6,16 +6,10 @@ import com.ctbri.JWLetter.pojo.Status;
 public class StatusServiceImpl {
 
 	private static StatusMapper statusMapper;
-	
-	
-
 
 	public static StatusMapper getStatusMapper() {
 		return statusMapper;
 	}
-
-
-
 
 	public static void setStatusMapper(StatusMapper statusMapper) {
 		StatusServiceImpl.statusMapper = statusMapper;

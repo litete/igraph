@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>org.neo4j</groupId>
 			<artifactId>neo4j</artifactId>
-			<version>2.0.3</version>
+			<version>2.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.neo4j</groupId>
@@ -241,5 +241,22 @@
 	</dependencies>
 	<build>
 		<finalName>vSearch</finalName>
+		<resources>
+		<!--打包进XML等文件，排除java及版本控制文件 -->
+		<resource>
+			<directory>src/main/java</directory>
+			<excludes>
+				<exclude>**/*.java</exclude>
+				<exclude>**/.svn/*</exclude>
+			</excludes>
+		</resource>
+		<resource>
+			<directory>src/main/webapp/WEB-INF/conf</directory>
+			<includes>
+				<include>**/*.*</include>
+				<include>**/*.*</include>
+			</includes>
+		</resource>
+	</resources>
 	</build>
 </project>
