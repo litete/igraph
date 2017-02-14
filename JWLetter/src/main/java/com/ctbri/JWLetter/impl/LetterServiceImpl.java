@@ -1,6 +1,7 @@
 package com.ctbri.JWLetter.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import com.ctbri.JWLetter.DAO.LetterMapper;
@@ -61,4 +62,6 @@ public class LetterServiceImpl {
 	public ArrayList<LetterResult> selectByTagId(Integer id){
 		return letterMapper.selectByTagId(id);
 	}
+	//根据关键字做出模糊匹配
+	public HashSet<Letter> selectTitleByKeyWord(String keyword){return letterMapper.selectTitleByKeyWord(keyword);}
 }

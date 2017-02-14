@@ -16,6 +16,8 @@ public class LetterTitle implements Serializable {
 	private long submitDateTime;
 	private String author;
 	private String attachments;
+	private int name;
+	private int ifRead;
 	public int getName() {
 		return name;
 	}
@@ -28,8 +30,7 @@ public class LetterTitle implements Serializable {
 	public void setIfRead(int ifRead) {
 		this.ifRead = ifRead;
 	}
-	private int name;
-	private int ifRead;
+
 	public int getId() {
 		return id;
 	}

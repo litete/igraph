@@ -40,7 +40,12 @@
   	<include refid ="Base_Column_List"/>
   	from letters where Letter_ID = #{_parameter,jdbcType = VARCHAR}
   </select>
-  
+	<!--根据关键字做出模糊匹配-->
+  <select id="selectTitleByKeyWord" resultMap="LetterMap" parameterType="java.lang.String" flushCache="true">
+SELECT letters.Letter_ID,letters.Title,letters.Contents FROM letters
+ WHERE  Contents LIKE '%石堤镇%'
+
+  </select>
   <select id = "select" resultMap="LetterMap" flushCache="true">
   	select
   	<include refid ="Base_Column_List"/>
