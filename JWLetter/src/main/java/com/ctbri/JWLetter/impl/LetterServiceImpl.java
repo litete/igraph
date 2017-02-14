@@ -1,16 +1,18 @@
 package com.ctbri.JWLetter.impl;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 import com.ctbri.JWLetter.DAO.LetterMapper;
 import com.ctbri.JWLetter.pojo.Letter;
 import com.ctbri.JWLetter.pojo.LetterResult;
 import com.ctbri.JWLetter.pojo.LetterTitle;
 
-import java.util.ArrayList;
-
 public class LetterServiceImpl {
 
 	private static LetterMapper letterMapper;
-
+	
 	public static LetterMapper getLetterMapper() {
 		return letterMapper;
 	}
@@ -60,4 +62,6 @@ public class LetterServiceImpl {
 	public ArrayList<LetterResult> selectByTagId(Integer id){
 		return letterMapper.selectByTagId(id);
 	}
+	//根据关键字做出模糊匹配
+	public ArrayList<Letter> selectTitleByKeyWord(String keyword){return letterMapper.selectTitleByKeyWord(keyword);}
 }

@@ -33,6 +33,7 @@ import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.elasticsearch.search.sort.SortParseElement;
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
@@ -1295,7 +1297,8 @@ public class BHController {
 		model.addAttribute("keyword", word);
 		LetterServiceImpl ls = new LetterServiceImpl();
 		Letter letter = ls.selectByPrimaryKey("1");
-		System.out.println(letter.getAttachments());
+		//System.out.println(letter.getAttachments());
+		System.out.println("index:"+letter.getAttachments());
 		return "index";
 	}
 
@@ -1303,12 +1306,15 @@ public class BHController {
 	public String graph(HttpServletRequest request, Model model)
 			throws SQLException, JsonGenerationException, JsonMappingException,
 			IOException {
+          request.setCharacterEncoding("UTF-8");
+
 		if (request.getParameter("word") == null
 				|| request.getParameter("word").equals("")) {
 			return "graph";
 		}
-
 		String word = request.getParameter("word");
+
+		//System.out.println("word:"+word);
 
 		Connection con = DriverManager.getConnection(
 				"jdbc:neo4j://27.148.153.1:7474/", "neo4j", "nlp4");
@@ -1320,6 +1326,7 @@ public class BHController {
 		// String
 		// query="MATCH (n {content:'"+word+"'} )-[r]->(f) RETURN n as node, r as dis ,f as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 0 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 10 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 1 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 2 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 3 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 4 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 5 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 6 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 7 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 8 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 9 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 10 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 11 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 12 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 13 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 14 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 15 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 16 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 17 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 18 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 19 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 ";
 
+		List<Letter> lettersList=new ArrayList<Letter>();
 		try {
 			if (word.indexOf(" ") < 0) {
 				//通过关键字查图
@@ -1349,7 +1356,7 @@ public class BHController {
 						+ "MATCH (layer1)-[r]->(layer2) "
 						+ "WHERE layer2 in list "
 						+ "RETURN layer1 as node, r as dis, layer2 as nextlayer";
-				System.out.println("word.indexOf( )");
+
 				Node center = new Node();
 				center.setCategory(0);
 				center.setLabel(word.toLowerCase());
@@ -1362,6 +1369,7 @@ public class BHController {
 				// stmt.setInt(1, 14);
 
 				rs = stmt.executeQuery();
+				List keyWords=new ArrayList();
 				while (rs.next()) {
 					Integer value = 0;
 					// 加入一条边
@@ -1384,14 +1392,47 @@ public class BHController {
 					node.setName(nodeJson.getString("content"));
 					String nodeStr = mapper.writeValueAsString(node);
 					nodes.add(nodeStr);
+					if (!keyWords.contains(link.getTarget())){
+						//设定关键字
+						keyWords.add(link.getTarget());
+					}
+					//搜索关键字的模糊匹配
+					//System.out.println("  关键字:" + link.getTarget());
 					// + "  "+ rs.getFloat("r.weight")
 					// + "  " +rs.getString("f.content"));
-					System.out.println("else之前的底部");
 				}
+				System.out.println("size"+keyWords.size());
+				//List<Letter> titleContents=new ArrayList<Letter>();
+
+				lettersList = new ArrayList<Letter>();
+				for (int i = 0; i <keyWords.size(); i++) {
+					//System.out.print(keyWords.get(i) + "  ");
+					LetterServiceImpl ls = new LetterServiceImpl();
+					ArrayList<Letter> letterTitles = ls.selectTitleByKeyWord((String) keyWords.get(i));
+					//向lettersList添加元素
+					for (int j = 0; j <letterTitles.size() ; j++) {
+						Letter letter=letterTitles.get(j);
+						//System.out.println(letter.getAttachments());
+							lettersList.add(letter);
+					}
+				}
+				//去除重复元素
+				for (int i = 0; i <lettersList.size()-1 ; i++) {
+					for (int j=lettersList.size()-1;j>i;j--){
+						if (lettersList.get(j).getAttachments().equals(lettersList.get(i).getAttachments())){
+							lettersList.remove(j);
+						}
+					}
+				}
+               //验证用
+				for (int i = 0; i <lettersList.size() ; i++) {
+					System.out.println(lettersList.get(i).getAttachments());
+				}
+				System.out.println("asd:"+lettersList.size());
+
 			} else {
 				HashSet<String> centers = new HashSet<String>();
 				String[] words = word.split(" ");
-				System.out.println("words0"+words[0]);
 				//两个关键字
 				String query = "MATCH p = allShortestPaths( (node1 {content : '"
 						+ words[0]
@@ -1413,7 +1454,6 @@ public class BHController {
 					String centerStr = mapper.writeValueAsString(center);
 					nodes.add(centerStr);
 				}
-				System.out.println("nodes"+nodes);
 				stmt = con.prepareStatement(query);
 				// stmt.setString(1,"John");
 				// stmt.setInt(1, 14);
@@ -1511,7 +1551,10 @@ public class BHController {
 		model.addAttribute("links", links.toString());
 		model.addAttribute("nodes", nodes.toString());
 		model.addAttribute("keyword", word);
-		System.out.println("links:"+links);
+		model.addAttribute("list",lettersList);
+//		System.out.println("nodeStr:"+nodes.toString());
+//		System.out.println("linkStr:"+links.toString());
+
 		return "graph";
 	}
 
