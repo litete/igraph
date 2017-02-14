@@ -1326,6 +1326,7 @@ public class BHController {
 		// String
 		// query="MATCH (n {content:'"+word+"'} )-[r]->(f) RETURN n as node, r as dis ,f as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 0 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 10 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 1 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 2 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 3 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 4 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 5 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 6 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 7 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 8 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 9 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 10 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 11 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 12 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 13 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 14 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 15 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 16 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 17 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 18 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 19 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 ";
 
+		List<Letter> lettersList=new ArrayList<Letter>();
 		try {
 			if (word.indexOf(" ") < 0) {
 				//通过关键字查图
@@ -1401,8 +1402,9 @@ public class BHController {
 					// + "  " +rs.getString("f.content"));
 				}
 				System.out.println("size"+keyWords.size());
-				List<Letter> titleContents=new ArrayList<Letter>();
-				List<Letter> lettersList=new ArrayList<Letter>();
+				//List<Letter> titleContents=new ArrayList<Letter>();
+
+				lettersList = new ArrayList<Letter>();
 				for (int i = 0; i <keyWords.size(); i++) {
 					//System.out.print(keyWords.get(i) + "  ");
 					LetterServiceImpl ls = new LetterServiceImpl();
@@ -1549,22 +1551,11 @@ public class BHController {
 		model.addAttribute("links", links.toString());
 		model.addAttribute("nodes", nodes.toString());
 		model.addAttribute("keyword", word);
+		model.addAttribute("list",lettersList);
 //		System.out.println("nodeStr:"+nodes.toString());
 //		System.out.println("linkStr:"+links.toString());
 
 		return "graph";
-	}
-//去除重复元素
-	private List deleteYuanSu(List letterTitles) {
-		ArrayList newList = new ArrayList();     //创建新集合
-		Iterator it = letterTitles.iterator();        //根据传入的集合(旧集合)获取迭代器
-		while(it.hasNext()){          //遍历老集合
-			Object obj = it.next();       //记录每一个元素
-			if(!newList.contains(obj)){      //如果新集合中不包含旧集合中的元素
-				newList.add(obj);       //将元素添加
-			}
-		}
-		return newList;
 	}
 
 	@RequestMapping(value = "/vknowledge")

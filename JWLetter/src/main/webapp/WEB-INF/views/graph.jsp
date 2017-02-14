@@ -55,7 +55,9 @@
       </div>
           <!-- /.box-header -->
           <div class="box-body" id="article">
-        <p class="text-muted"> <span class="label label-danger">一级信件</span> 执纪审查辽宁省大连市委常委、常务副市长曹爱华接受调查 </p>
+<c:forEach items="${list}" var="user" varStatus="vs">
+</c:forEach>
+<p class="text-muted"> <span class="label label-danger">一级信件</span> 执纪审查辽宁省大连市委常委、常务副市长曹爱华接受调查 </p>
         <p class="text-muted"> <span class="label label-success">三级信件</span> 执纪审查河南省济源市人大原党组副书记、副主任郭茹被调查 </p>
         <p class="text-muted"> <span class="label label-success">三级信件</span> 执纪审查重庆市九龙坡区人大原党组书记、主任潘平被调查 </p>
         <p class="text-muted"> <span class="label label-success">三级信件</span> 党纪处分广州南沙经济技术开发区管委会副主任段险峰被双开 </p>
