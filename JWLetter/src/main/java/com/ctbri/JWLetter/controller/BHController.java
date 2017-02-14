@@ -33,6 +33,7 @@ import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.elasticsearch.search.sort.SortParseElement;
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -1390,35 +1391,43 @@ public class BHController {
 					node.setName(nodeJson.getString("content"));
 					String nodeStr = mapper.writeValueAsString(node);
 					nodes.add(nodeStr);
-					//设定关键字
-					keyWords.add(link.getTarget());
+					if (!keyWords.contains(link.getTarget())){
+						//设定关键字
+						keyWords.add(link.getTarget());
+					}
 					//搜索关键字的模糊匹配
-					System.out.println("  关键字:" + link.getTarget());
+					//System.out.println("  关键字:" + link.getTarget());
 					// + "  "+ rs.getFloat("r.weight")
 					// + "  " +rs.getString("f.content"));
 				}
 				System.out.println("size"+keyWords.size());
 				List<Letter> titleContents=new ArrayList<Letter>();
+				List<Letter> lettersList=new ArrayList<Letter>();
 				for (int i = 0; i <keyWords.size(); i++) {
-					System.out.print(keyWords.get(i) + "  ");
+					//System.out.print(keyWords.get(i) + "  ");
 					LetterServiceImpl ls = new LetterServiceImpl();
-					HashSet<Letter> letterTitles = ls.selectTitleByKeyWord((String) keyWords.get(i));
-				/*	for (int j = 0; j <letterTitles.size() ; j++) {
-						Letter lett=letterTitles.get(j);
-						titleContents.add(lett);
-					}*/
-					for (Iterator it = letterTitles.iterator(); it.hasNext();) {
-						System.out.println(it.next());
+					ArrayList<Letter> letterTitles = ls.selectTitleByKeyWord((String) keyWords.get(i));
+					//向lettersList添加元素
+					for (int j = 0; j <letterTitles.size() ; j++) {
+						Letter letter=letterTitles.get(j);
+						//System.out.println(letter.getAttachments());
+							lettersList.add(letter);
 					}
-					//System.out.println("set:"+letterTitles.toString());
 				}
-				;
-				System.out.println("titleContents的大小是"+titleContents.size());
-				for (int i = 0; i <titleContents.size() ; i++) {
-					Letter lett=titleContents.get(i);
-					System.out.println(lett.getLetter_id()+"  "+lett.getAttachments());
+				//去除重复元素
+				for (int i = 0; i <lettersList.size()-1 ; i++) {
+					for (int j=lettersList.size()-1;j>i;j--){
+						if (lettersList.get(j).getAttachments().equals(lettersList.get(i).getAttachments())){
+							lettersList.remove(j);
+						}
+					}
+				}
+               //验证用
+				for (int i = 0; i <lettersList.size() ; i++) {
+					System.out.println(lettersList.get(i).getAttachments());
+				}
+				System.out.println("asd:"+lettersList.size());
 
-				}
 			} else {
 				HashSet<String> centers = new HashSet<String>();
 				String[] words = word.split(" ");
@@ -1544,6 +1553,18 @@ public class BHController {
 //		System.out.println("linkStr:"+links.toString());
 
 		return "graph";
+	}
+//去除重复元素
+	private List deleteYuanSu(List letterTitles) {
+		ArrayList newList = new ArrayList();     //创建新集合
+		Iterator it = letterTitles.iterator();        //根据传入的集合(旧集合)获取迭代器
+		while(it.hasNext()){          //遍历老集合
+			Object obj = it.next();       //记录每一个元素
+			if(!newList.contains(obj)){      //如果新集合中不包含旧集合中的元素
+				newList.add(obj);       //将元素添加
+			}
+		}
+		return newList;
 	}
 
 	@RequestMapping(value = "/vknowledge")

@@ -63,5 +63,5 @@ public class LetterServiceImpl {
 		return letterMapper.selectByTagId(id);
 	}
 	//根据关键字做出模糊匹配
-	public HashSet<Letter> selectTitleByKeyWord(String keyword){return letterMapper.selectTitleByKeyWord(keyword);}
+	public ArrayList<Letter> selectTitleByKeyWord(String keyword){return letterMapper.selectTitleByKeyWord(keyword);}
 }

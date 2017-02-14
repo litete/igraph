@@ -26,5 +26,5 @@ public interface LetterMapper {
 	
 	public ArrayList<LetterResult> selectByTagId(Integer id);
 	//根据关键字做出模糊匹配
-	public HashSet<Letter> selectTitleByKeyWord(String keyword);
+	public ArrayList<Letter> selectTitleByKeyWord(String keyword);
 }
