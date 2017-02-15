@@ -33,7 +33,6 @@ import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.elasticsearch.search.sort.SortParseElement;
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +40,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
@@ -1326,7 +1324,7 @@ public class BHController {
 		// String
 		// query="MATCH (n {content:'"+word+"'} )-[r]->(f) RETURN n as node, r as dis ,f as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 0 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 10 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 1 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 2 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 3 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 4 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 5 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 6 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 7 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 8 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 9 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 10 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 11 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 12 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 13 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 14 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 15 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 16 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 17 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 18 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 UNION MATCH (n {content:'"+word+"'} )-[r]->(f) WITH r.weight as weight, f as layer1 ORDER by weight DESC skip 19 limit 1 MATCH (layer1)-[r]->(f2) RETURN layer1 as node,r as dis , f2 as nextlayer ORDER by r.weight DESC limit 20 ";
 
-		List<Letter> lettersList=new ArrayList<Letter>();
+		List<LetterTitle> lettersList=new ArrayList<LetterTitle>();
 		try {
 			if (word.indexOf(" ") < 0) {
 				//通过关键字查图
@@ -1404,14 +1402,14 @@ public class BHController {
 				System.out.println("size"+keyWords.size());
 				//List<Letter> titleContents=new ArrayList<Letter>();
 
-				lettersList = new ArrayList<Letter>();
+				lettersList = new ArrayList<LetterTitle>();
 				for (int i = 0; i <keyWords.size(); i++) {
 					//System.out.print(keyWords.get(i) + "  ");
 					LetterServiceImpl ls = new LetterServiceImpl();
-					ArrayList<Letter> letterTitles = ls.selectTitleByKeyWord((String) keyWords.get(i));
+					ArrayList<LetterTitle> letterTitles = ls.selectTitleByKeyWord((String) keyWords.get(i));
 					//向lettersList添加元素
 					for (int j = 0; j <letterTitles.size() ; j++) {
-						Letter letter=letterTitles.get(j);
+						LetterTitle letter=letterTitles.get(j);
 						//System.out.println(letter.getAttachments());
 							lettersList.add(letter);
 					}

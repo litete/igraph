@@ -1,12 +1,10 @@
 package com.ctbri.JWLetter.DAO;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-
 import com.ctbri.JWLetter.pojo.Letter;
 import com.ctbri.JWLetter.pojo.LetterResult;
 import com.ctbri.JWLetter.pojo.LetterTitle;
+
+import java.util.ArrayList;
 
 public interface LetterMapper {
 
@@ -26,5 +24,5 @@ public interface LetterMapper {
 	
 	public ArrayList<LetterResult> selectByTagId(Integer id);
 	//根据关键字做出模糊匹配
-	public ArrayList<Letter> selectTitleByKeyWord(String keyword);
+	public ArrayList<LetterTitle> selectTitleByKeyWord(String keyword);
 }

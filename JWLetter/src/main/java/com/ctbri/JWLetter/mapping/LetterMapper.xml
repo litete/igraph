@@ -41,9 +41,11 @@
   	from letters where Letter_ID = #{_parameter,jdbcType = VARCHAR}
   </select>
 	<!--根据关键字做出模糊匹配-->
-  <select id="selectTitleByKeyWord" resultMap="LetterMap" parameterType="java.lang.String" flushCache="true">
-SELECT  letters.Letter_ID,letters.Title,letters.Contents FROM letters
- WHERE  Contents LIKE CONCAT(CONCAT('%', #{keyword}), '%');
+  <select id="selectTitleByKeyWord" resultMap="LetterTitleMap" parameterType="java.lang.String" flushCache="true">
+select
+  	a.Letter_ID,a.ID,Title,Category_name
+  	from letters a,categories c where  a.Letter_ID=c.Letter_ID AND a.Contents
+  	  LIKE CONCAT(CONCAT('%', #{keyword}), '%');
 
   </select>
 
