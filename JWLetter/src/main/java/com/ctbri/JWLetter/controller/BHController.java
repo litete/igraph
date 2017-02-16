@@ -1305,7 +1305,7 @@ public class BHController {
 			throws SQLException, JsonGenerationException, JsonMappingException,
 			IOException {
           request.setCharacterEncoding("UTF-8");
-
+		System.out.println("进来了");
 		if (request.getParameter("word") == null
 				|| request.getParameter("word").equals("")) {
 			return "graph";

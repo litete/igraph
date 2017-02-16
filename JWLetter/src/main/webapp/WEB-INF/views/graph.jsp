@@ -57,7 +57,7 @@
           <div class="box-body" id="article">
 <c:forEach items="${list}" var="user" varStatus="vs">
 
-	<p class="text-muted"> <span class="label label-danger">${user.name}</span> ${user.attachments} </p>
+	<p class="text-muted" onclick="myEConsole(${user.letter_id})"> <span class="label label-danger">${user.name+1}</span> ${user.attachments} </p>
 	<%--
         <p class="text-muted"> <span class="label label-danger">一级信件</span> 执纪审查辽宁省大连市委常委、常务副市长曹爱华接受调查 </p>
         <p class="text-muted"> <span class="label label-success">三级信件</span> 执纪审查河南省济源市人大原党组副书记、副主任郭茹被调查 </p>
@@ -284,6 +284,11 @@
 			
 			treeChart.hideLoading();
         }
+		function myEConsole(a){
+				alert(a);
+				window.location.href="/JWLetter/graph?word="+a;
+
+		}
         function eConsole(param) {    
             if (typeof param.data.source == 'undefined') {    
             	if (param.type == 'click') {    

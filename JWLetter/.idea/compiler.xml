@@ -16,7 +16,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="vSearch" target="1.8" />
+      <module name="vSearch" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
