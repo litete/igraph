@@ -925,13 +925,15 @@ function createXHR() {
     function search(){
     	var word = document.getElementById("word").value;
     	var button = document.getElementById("showSearch");
-    	if(word!=""&&button.className!="active"){
-    	button.children[0].children[1].className='label label-warning pull-right';
-    	button.children[0].children[1].innerHTML='1';
-    	
-    	}
-    	document.getElementById("toGraph").setAttribute("href", "graph?word="+word);
-    }
+    	if(word!=""&&button.className!="active") {
+			button.children[0].children[1].className = 'label label-warning pull-right';
+			button.children[0].children[1].innerHTML = '1';
+			document.location.href = "/JWLetter/graph?word=" + word;
+		}
+		/*window.location.href="/JWLetter/graph?word="+word;*/
+		document.location.href="/JWLetter/graph?word="+word;
+		/*document.getElementById("toGraph").setAttribute("href", "graph?word="+word);*/
+	}
     
     function showStatisc(){
     	document.getElementById("message").style.display="none";
