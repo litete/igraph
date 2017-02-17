@@ -1305,7 +1305,6 @@ public class BHController {
 			throws SQLException, JsonGenerationException, JsonMappingException,
 			IOException {
           request.setCharacterEncoding("UTF-8");
-		System.out.println("进来了");
 		if (request.getParameter("word") == null
 				|| request.getParameter("word").equals("")) {
 			return "graph";
@@ -1403,17 +1402,18 @@ public class BHController {
 				//List<Letter> titleContents=new ArrayList<Letter>();
 
 				lettersList = new ArrayList<LetterTitle>();
-				for (int i = 0; i <keyWords.size(); i++) {
+				//for (int i = 0; i <keyWords.size(); i++) {
 					//System.out.print(keyWords.get(i) + "  ");
 					LetterServiceImpl ls = new LetterServiceImpl();
-					ArrayList<LetterTitle> letterTitles = ls.selectTitleByKeyWord((String) keyWords.get(i));
+					//ArrayList<LetterTitle> letterTitles = ls.selectTitleByKeyWord((String) keyWords.get(i));
+					ArrayList<LetterTitle> letterTitles = ls.selectTitleByKeyWord(word);
 					//向lettersList添加元素
 					for (int j = 0; j <letterTitles.size() ; j++) {
 						LetterTitle letter=letterTitles.get(j);
 						//System.out.println(letter.getAttachments());
 							lettersList.add(letter);
 					}
-				}
+				//}
 				//去除重复元素
 				for (int i = 0; i <lettersList.size()-1 ; i++) {
 					for (int j=lettersList.size()-1;j>i;j--){
