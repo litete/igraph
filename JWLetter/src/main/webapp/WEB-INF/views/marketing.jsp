@@ -20,7 +20,7 @@
 <body>
  <!-- Static navbar -->
  <div class="navbar navbar-default" role="navigation">
-      <div class="container">
+      <div class="container-fluid">
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -49,7 +49,7 @@
       </div>
     </div>
  
-   <div class="container">
+   <div class="container-fluid">
   
    <div class=" col-lg-3">
           <img width=110 height=110 class="profile-user-img img-responsive img-circle" src="http://wx.qlogo.cn/mmhead/Q3auHgzwzM47AKAkJ990UXQIfTFBialhlSEiaHOGGn9ehu0yQ0icp6Svg/0">

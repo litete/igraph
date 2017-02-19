@@ -20,7 +20,7 @@
 	
 	<!-- Static navbar -->
 	<div class="navbar navbar-default" role="navigation">
-		<div class="container">
+		<div class="container-fluid">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -51,7 +51,7 @@
 			<!--/.container-fluid -->
 		</div>
 	</div>
-	<div class="container" style="padding-top: 10px">
+	<div class="container-fluid" style="padding-top: 10px">
 		<div class="row">
 			<div class="col-md-3">
 				<div class="box box-solid">
@@ -599,7 +599,7 @@
 						<h3 class="box-title">举报信正文</h3>
 						<div class="box-tools pull-right">
 							<button type="button" class="btn btn-default btn-sm">
-								<i class="fa fa-close"></i>
+								<i class="`fa fa-close"></i>
 							</button>
 						</div>
 					</div>

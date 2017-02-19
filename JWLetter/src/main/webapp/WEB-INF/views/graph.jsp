@@ -20,7 +20,7 @@
     <body>
 <!-- Static navbar -->
 <div class="navbar navbar-default" role="navigation">
-      <div class="container">
+      <div class="container-fluid">
     <div class="container-fluid">
           <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -47,7 +47,7 @@
     <!--/.container-fluid -->
   </div>
     </div>
-<div class="container" style="padding-top: 10px">
+<div class="container-fluid" style="padding-top: 10px">
       <div class="col-md-3">
     <div class="box box-primary">
           <div class="box-header with-border">
@@ -55,7 +55,7 @@
       </div>
           <!-- /.box-header -->
           <div class="box-body" id="article">
-<c:forEach items="${list}" var="user" varStatus="vs" end="10">
+    <c:forEach items="${list}" var="user" varStatus="vs" end="10">
 
 	<p class="text-muted" onclick="showDetail(${user.letter_id})"> <span class="label label-danger">${user.name+1}</span> ${user.attachments} </p>
 	<%--
@@ -83,10 +83,10 @@
     <div class="box box-primary">
           <div class="box-header with-border">
         <h3 class="box-title">举报信正文</h3>
-        <div class="box-tools pull-right"> <a href="#" class="btn btn-box-tool" data-toggle="tooltip"
-							title="Previous"><i class="fa fa-chevron-left"></i></a> <a
-							href="#" class="btn btn-box-tool" data-toggle="tooltip"
-							title="Next"><i class="fa fa-chevron-right"></i></a> </div>
+        <div class="box-tools pull-right">
+			<button type="button" class="btn btn-default btn-sm" onclick="pre(1,message)">
+				<i class="fa fa-close"></i>
+			</button>
       </div>
           <!-- /.box-header -->
           <div class="box-body no-padding">

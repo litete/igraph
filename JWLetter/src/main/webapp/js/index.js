@@ -4,7 +4,7 @@ var levelOne;
 var levelTwo;
 var levelThree;
 var lines = 20;
-$(document).ready(function() { 
+$(document).ready(function() {
 $.ajax({
     type     : "post",
     cache    : true,
@@ -13,18 +13,18 @@ $.ajax({
     data	 : "",
     url      : "http://"+document.location.host+"/JWLetter/select" ,
     success  : function(res){
-    	
+
     	all = res.all;
     	undoMes = res.undo;
     	levelOne = res.levelOne;
     	levelTwo = res.levelTwo;
     	levelThree = res.levelThree;
-        
+
     }
 });
 showMessage();
 showTag();
-}); 
+});
 
 function page(tmp){
 	var ul = tmp.parentNode.parentNode;
@@ -48,7 +48,7 @@ function page(tmp){
 			}else{
 				ul.children[i].setAttribute("class", "");
 			}
-		
+
 	}
 }
 function createXHR() {
@@ -87,7 +87,7 @@ function createXHR() {
         //tableOld.firstChild.removeNode(true);
         var tb = document.getElementById('result-tab');
         var rowNum=tb.rows.length;
-       
+
         for (i=1;i<rowNum;i++)
         {
             tb.deleteRow(i);
@@ -95,7 +95,7 @@ function createXHR() {
             i=i-1;
         }
         var t = document.getElementById("result-tab");
-        
+
         for(var i=0; i<dataItems.length; i++)
         {
             var item = dataItems[i];
@@ -112,7 +112,7 @@ function createXHR() {
             var numberCell = tabRow.insertCell(3);
             numberCell.innerHTML = "<a>"+item.tel+"</a>";
             var operationCell = tabRow.insertCell(4);
-            operationCell.innerHTML = "<a class='link-update' onclick='showUpdate(this.id)' width='%5' id='modify"+i+"' >修改&nbsp</a>" 
+            operationCell.innerHTML = "<a class='link-update' onclick='showUpdate(this.id)' width='%5' id='modify"+i+"' >修改&nbsp</a>"
                 + "<a class='link-del' onclick='deleteWorker(this.id)' id='delete"+item.id+"'>删除&nbsp</a>"
                 + "<a class='check-state' onclick='checkWorkerState()' id='check"+item.id+"'>查看状态</a>";
         }
@@ -139,7 +139,7 @@ function createXHR() {
                 //tableOld.firstChild.removeNode(true);
                 var tb = document.getElementById('result-tab');
                 var rowNum=tb.rows.length;
-               
+
                 for (i=1;i<rowNum;i++)
                 {
                     tb.deleteRow(i);
@@ -147,7 +147,7 @@ function createXHR() {
                     i=i-1;
                 }
                 var t = document.getElementById("result-tab");
-                
+
                 for(var i=0; i<dataItems.length; i++)
                 {
                     var item = dataItems[i];
@@ -164,7 +164,7 @@ function createXHR() {
                     var numberCell = tabRow.insertCell(3);
                     numberCell.innerHTML = "<a>"+item.tel+"</a>";
                     var operationCell = tabRow.insertCell(4);
-                    operationCell.innerHTML = "<a class='link-update' onclick='showUpdate(this.id)' width='%5' id='modify"+i+"' >修改&nbsp</a>" 
+                    operationCell.innerHTML = "<a class='link-update' onclick='showUpdate(this.id)' width='%5' id='modify"+i+"' >修改&nbsp</a>"
                         + "<a class='link-del' onclick='deleteWorker(this.id)' id='delete"+item.id+"'>删除&nbsp</a>"
                         + "<a class='check-state' onclick='checkWorkerState()' id='check"+item.id+"'>查看状态</a>";
                 }
@@ -194,13 +194,13 @@ function createXHR() {
             }
         });
     }
-    
+
     function deleteWorker(id)
     {
     	if(window.confirm("确定要删除该人员信息吗？"))
     	{
     		var index = id.substr("delete".length);
-			  
+
             var url = "http://"+document.location.host+"/BlackGame/deleteDriver";
             $.ajax({
                 type     : "POST",
@@ -215,7 +215,7 @@ function createXHR() {
                 }
             });
     	}
-    	
+
     }
 
     function addWorker()
@@ -223,10 +223,10 @@ function createXHR() {
 
     	var insertTable = document.getElementById("insert-tab");
         var t = document.getElementById("addSelect");
-        
+
         var name = insertTable.rows[0].cells[1].getElementsByTagName("input")[0].value;
         var phoneId = insertTable.rows[1].cells[1].getElementsByTagName("input")[0].value;
-        
+
         var url = "http://"+document.location.host+"/BlackGame/addDriver";
         $.ajax({
             type     : "POST",
@@ -241,7 +241,7 @@ function createXHR() {
             }
         });
     }
-    
+
     function showTitle(table,data,page,id){
     	for(var i=0;i<table.children.length;){
     		table.removeChild(table.children[0]);
@@ -269,10 +269,10 @@ function createXHR() {
     			}
     			tr.innerHTML=td1+td2+td3+td4+td5+td6;
     			table.appendChild(tr);
-	
+
     	}
     }
-    
+
     function showMessage()
 	{
 		document.getElementById("message").style.display="";
@@ -397,7 +397,7 @@ function createXHR() {
 		document.getElementById("showUndo").setAttribute("class", "active");
 		document.getElementById("showUndo").children[0].children[1].className='label label-primary pull-right';
 	}
-	
+
     function showOneLevel()
 	{
 		document.getElementById("message").style.display="none";
@@ -457,7 +457,7 @@ function createXHR() {
 		document.getElementById("showOneLevel").setAttribute("class", "active");
 		document.getElementById("showOneLevel").children[0].children[1].className='label label-primary pull-right';
 	}
-    
+
     function showTwoLevel()
 	{
 		document.getElementById("message").style.display="none";
@@ -517,7 +517,7 @@ function createXHR() {
 		document.getElementById("showTwoLevel").setAttribute("class", "active");
 		document.getElementById("showTwoLevel").children[0].children[1].className='label label-primary pull-right';
 	}
-    
+
     function showThreeLevel()
 	{
 		document.getElementById("message").style.display="none";
@@ -577,7 +577,7 @@ function createXHR() {
 		document.getElementById("showThreeLevel").setAttribute("class", "active");
 		document.getElementById("showThreeLevel").children[0].children[1].className='label label-primary pull-right';
 	}
-    
+
     function showSearch()
 	{
 		document.getElementById("message").style.display="none";
@@ -602,13 +602,13 @@ function createXHR() {
 		document.getElementById("showSearch").children[0].children[1].className='label label-primary pull-right';
 		document.getElementById("showSearch").children[0].children[1].innerHTML='0';
 	}
-    
+
     function showTag(){
     	var ul = document.getElementById("tag");
     	for(var i=0;i<ul.children.length;){
     		ul.removeChild(ul.children[0]);
     	}
-    	
+
     	$.ajax({
     	    type     : "post",
     	    cache    : true,
@@ -617,7 +617,7 @@ function createXHR() {
     	    data	 : "tags=1-3-6-7-11-13",
     	    url      : "http://"+document.location.host+"/JWLetter/tags" ,
     	    success  : function(res){
-    	    	
+
     	    	for(var j =0;j<res.length;j++){
     	    		var t = res[j];
     	    		var name= t.tag_name;
@@ -636,11 +636,11 @@ function createXHR() {
     				 li.appendChild(lia);
     				 ul.appendChild(li);
     			}
-    	        
+
     	    }
     	});
     }
-    
+
     function tagsArt(id,name){
     	var result;
     	$.ajax({
@@ -709,9 +709,9 @@ function createXHR() {
     	    }
     	});
     }
-    
+
     function showDetail(a,page_num,id){
-    	
+
 //    	var index = a.getAttribute("name");
 //    	var pId = a.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.getAttribute("id");
 //    	var data;
@@ -734,11 +734,11 @@ function createXHR() {
     	    data	 : "id="+a,
     	    url      : "http://"+document.location.host+"/JWLetter/letter" ,
     	    success  : function(res){
-    	    	
+
     	    	node=res.node;
     	    	link=res.link;
     	    	content=res.letter[0];
-    	    	
+
     	    	var title = document.getElementById("title");
     	    	var pre = document.getElementById("title").parentNode.parentNode.children[0].children[1].children[0];
     	    	var tid=id.getAttribute("id");
@@ -770,7 +770,7 @@ function createXHR() {
     	        var treeChart = null;
     			var ech = null;
     	        require(['js/dist/theme/blue'],function(tarTheme){
-    				
+
     				chartTheme = tarTheme;
     	            // 路径配置
     	            require.config({
@@ -800,9 +800,9 @@ function createXHR() {
     	            // 基于准备好的dom，初始化echarts图表
     	            var tmp = document.getElementById('let');
     	            treeChart = ec.init(tmp,'macarons');
-    	         
-    				var ecConfig = require('echarts/config');  
-    		        treeChart.on(ecConfig.EVENT.CLICK, eConsole);    
+
+    				var ecConfig = require('echarts/config');
+    		        treeChart.on(ecConfig.EVENT.CLICK, eConsole);
     	            var option = {
     	                title : {
     		                text: '',
@@ -854,7 +854,7 @@ function createXHR() {
     		                    name:'其他'
     		                }
     		            ],
-    	            
+
     	            itemStyle: {
     	                normal: {
     	                    label: {
@@ -896,19 +896,19 @@ function createXHR() {
     				links:link
     				}]};
     				treeChart.setOption(option);
-    				
+
     				treeChart.hideLoading();
     	        }
-    	        function eConsole(param) {    
-    	            if (typeof param.data.source == 'undefined') {    
-    	            	if (param.type == 'click') {    
-    	            		
-    	                    window.location.href="/JWLetter/graph?word="+param.name;    
-    	                }    
-    	            }    
-    	            
+    	        function eConsole(param) {
+    	            if (typeof param.data.source == 'undefined') {
+    	            	if (param.type == 'click') {
+
+    	                    window.location.href="/JWLetter/graph?word="+param.name;
+    	                }
+    	            }
+
     	        }
-    	        
+
     	    }
     	});
     	document.getElementById("message").style.display="none";
@@ -921,20 +921,19 @@ function createXHR() {
 		document.getElementById("tagBox").style.display="none";
 		document.getElementById("statiscresult").style.display="none";
     }
-    
+
     function search(){
     	var word = document.getElementById("word").value;
     	var button = document.getElementById("showSearch");
     	if(word!=""&&button.className!="active") {
 			button.children[0].children[1].className = 'label label-warning pull-right';
 			button.children[0].children[1].innerHTML = '1';
-			document.location.href = "/JWLetter/graph?word=" + word;
 		}
 		/*window.location.href="/JWLetter/graph?word="+word;*/
 		document.location.href="/JWLetter/graph?word="+word;
-		/*document.getElementById("toGraph").setAttribute("href", "graph?word="+word);*/
+		document.getElementById("toGraph").setAttribute("href", "graph?word="+word);
 	}
-    
+
     function showStatisc(){
     	document.getElementById("message").style.display="none";
 		document.getElementById("undo").style.display="none";
@@ -945,33 +944,33 @@ function createXHR() {
 		document.getElementById("tagBox").style.display="none";
 		document.getElementById("searchresult").style.display="none";
 		document.getElementById("statiscresult").style.display="";
-	
+
 		var ul = document.getElementById("ul");
 		for(var i=0;i<ul.children.length-1;i++){
 			ul.children[i].className='';
 			ul.children[i].children[0].children[1].className='label label-warning pull-right';
 		}
-	
+
     }
-    
+
     function pre(page_num,id){
     	document.getElementById("letter_contents").style.display="none";
     	id.style.display="";
     }
-    
+
 	function showUpdate(id)
 	{
 		var index = id.substr("modify".length);
-		
+
 		var updateTable = document.getElementById("update-tab");
 		var row = document.getElementById("item"+index);
-		
+
 		updateTable.rows[0].cells[1].children[0].innerHTML = row.children[1].children[0].innerHTML;
-		
+
 		updateTable.rows[1].cells[1].children[0].value = row.children[2].children[0].innerHTML;
 		updateTable.rows[2].cells[1].children[0].value = row.children[3].children[0].innerHTML;
 		updateTable.rows[3].cells[1].children[0].value = row.children[2].children[0].innerHTML;
-		
+
 		document.getElementById("select").style.display="none";
 		document.getElementById("add").style.display="none";
 		document.getElementById("update").style.display="";
