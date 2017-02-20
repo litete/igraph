@@ -15,37 +15,7 @@
 </head>
 <body>
  <!-- Static navbar -->
-  <div class="navbar navbar-default" role="navigation">
-      <div class="container">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-           <a href="index.jsp"> <img src="img/deepSearch_logo_s.png"  class="navbar-brand"></a>
-          </div>
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li><a href="search.jsp">搜索</a></li>
-              <li><a href="knowledge.jsp">知识</a></li>
-              <li><a href="topic.jsp">头条</a></li>
-              <li><a href="marketing.jsp">营销</a></li>
-
-            </ul>
-        <form class="navbar-form" action="/vSearch/search">
-		   <input type="text" class="form-control" style="width:420px" id="word" name="word" placeholder="${keyword}"> <button type="submit" class="btn btn-primary" style="width:100px" >搜索</button>
-	 </form>
-		 
-          </div><!--/.nav-collapse -->
-          <div>
-         
-          </div>
-        </div><!--/.container-fluid -->
-      </div>
-    </div>
+<jsp:include page="navigation.jsp"/>
 
 	<div class="col-lg-8" >
 	     <div id="main" style="width: 100%;height:300px;"></div>

@@ -5,7 +5,10 @@
 
 <html>
 <head>
-    <title>智察 - 大数据关系洞察系统</title>
+    <title>智察 - 智能关系洞察系统</title>
+    <link href="css/bootstrap.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="css/AdminLTE.min.css">
+    <link rel="stylesheet" href="css/morris.css">
     <style type="text/css">
     .info-box-icon {
         border-top-left-radius: 2px;
@@ -45,99 +48,104 @@
 </head>
 
 <body>
+<jsp:include page="navigation.jsp"/>
     <script src="js/echarts.min.js"></script>
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon" style="background: #60C5C8 url('img/icon/趋势.png') no-repeat center;"></span>
-                <div class="info-box-content" style="position: absolute;right: 120px;margin: 0 auto;top: 7px;text-align: center;"><span>彭州,PX</span>
+                <div class="info-box-content" style="position: absolute;right: 120px;margin: 0 auto;top: 7px;text-align: center;"><span><b>彭州 PX</b></span>
                     <br><span>关键字</span></div>
             </div>
         </div>
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-aqua" style="background: #60C5C8 url('img/icon/赞同.png') no-repeat center"></span>
-                <div class="info-box-content" style="position: absolute;right: 120px;margin: 0 auto;top: 7px;text-align: center;"><span>5524</span>
+                <div class="info-box-content" style="position: absolute;right: 120px;margin: 0 auto;top: 7px;text-align: center;"><span><b>5524</b></span>
                     <br><span>正面信息</span></div>
             </div>
         </div>
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-aqua" style="background:#b3a3da url('img/icon/中立.png') no-repeat center"></span>
-                <div class="info-box-content" style="position: absolute;right: 120px;margin: 0 auto;top: 7px;text-align: center;"><span>8133</span>
+                <div class="info-box-content" style="position: absolute;right: 120px;margin: 0 auto;top: 7px;text-align: center;"><span><b>8133</b></span>
                     <br><span>中立信息</span></div>
             </div>
         </div>
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-aqua" style="background:#9cb460 url('img/icon/反对.png') no-repeat center"></span>
-                <div class="info-box-content" style="position: absolute;right: 120px;margin: 0 auto;top: 7px;text-align: center;"><span>536</span>
+                <div class="info-box-content" style="position: absolute;right: 120px;margin: 0 auto;top: 7px;text-align: center;"><span><b>536</b></span>
                     <br><span>负面信息</span></div>
             </div>
         </div>
-    </div>
-    <div style="display: flex;display: -webkit-flex;justify-content: space-around;">
-        <div style="width: 48%;height:500px;">
+        </div>
+<%--    <div style="display: flex;display: -webkit-flex;justify-content: space-around;">--%>
+       <%-- <div style="width: 40%;height:500px;">--%>
+           <div class="col-md-6 col-sm-12 col-xs-12">
             <h4>全网声量走势</h4>
             <hr>
-            <div id="saleTrend" style="width: 100%;height:90%"></div>
+            <div id="saleTrend" style="width: 100%;height:450px"></div>
         </div>
-        <div style="width:48%;height:500px;">
+       <%-- <div style="width:40%;height:500px;">--%>
+           <div class="col-md-6 col-sm-12 col-xs-12">
             <h4>负面舆情</h4>
             <hr>
             <div id="negativeOpinion" style="width: 100%;height: 90%">
-                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">老一辈留下的8个错误育儿经害了多少宝宝 扫码阅读手机版</span>
+                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">老一辈留下的8个错误育儿经害了多少宝宝 手机版</span>
                 <hr style="border:0;border-bottom:1px dashed #eee;margin-top:3px;">
                 
-                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">拒绝干裂脱皮膏 最全的冬季唇部护理秘诀 扫码阅读手机版</span>
+                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">拒绝干裂脱皮膏 最全的冬季唇部护理秘诀 手机版</span>
                 <hr style="border:0;border-bottom:1px dashed #eee;margin-top:3px;">
 
-                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">车险费改一周年 车险赔付减少2%~3% 扫码阅读手机版</span>
+                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">车险费改一周年 车险赔付减少2%~3% 手机版</span>
                 <hr style="border:0;border-bottom:1px dashed #eee;margin-top:3px;">
 
-                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">女生逼疯骗子 骗子：你不按套路出牌我要报警 扫码阅读手机版</span>
+                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">女生逼疯骗子 骗子：你不按套路出牌我要报警 手机版</span>
                 <hr style="border:0;border-bottom:1px dashed #eee;margin-top:3px;">
 
-                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">郑步春：次新股系统性下跌 在跌后有望反弹 扫码阅读手机版</span>
+                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">郑步春：次新股系统性下跌 在跌后有望反弹 手机版</span>
                 <hr style="border:0;border-bottom:1px dashed #eee;margin-top:3px;">
 
-                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">爆笑！韩国主播失误大合集 看到最后笑喷饭了 扫码阅读手机版</span>
+                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">爆笑！韩国主播失误大合集 看到最后笑喷饭了 手机版</span>
                 <hr style="border:0;border-bottom:1px dashed #eee;margin-top:3px;">
 
-                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">1月16日国内四大证券报纸头版头条内容精华摘要 扫码阅读手机版</span>
+                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">1月16日国内四大证券报纸头版头条内容精华摘要 手机版</span>
 
                 <hr style="border:0;border-bottom:1px dashed #eee;margin-top:3px;">
-                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">四川农民工贵州讨薪被打7人伤 警方已立案调查 扫码阅读手机版</span>
+                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">四川农民工贵州讨薪被打7人伤 警方已立案调查 手机版</span>
                 <hr style="border:0;border-bottom:1px dashed #eee;margin-top:3px;">
 
-                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">万达年会上王健林再展歌喉 挑战摇滚、黄梅戏 扫码阅读手机版</span>
+                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">万达年会上王健林再展歌喉 挑战摇滚、黄梅戏 手机版</span>
                 <hr style="border:0;border-bottom:1px dashed #eee;margin-top:3px;">
 
-                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">河北一酒店KTV发生爆炸现场 扫码阅读手机版</span>
+                <img src="img/icon/负.png" height="20" width="20"><span class="titleList">河北一酒店KTV发生爆炸现场 手机版</span>
                 <hr style="border:0;border-bottom:1px dashed #eee;margin-top:3px;">
 
 
             </div>
-        </div>
+       <%-- </div>--%>
     </div>
-    <br>
-    <div style="display: flex;display: -webkit-flex;justify-content: space-around;">
-        <div style="width:48%;height:500px;">
+   <%-- <div style="display: flex;display: -webkit-flex;justify-content: space-around;">--%>
+        <%--<div style="width:40%;height:500px;">--%>
+            <div class="col-md-6 col-sm-12 col-xs-12">
             <h4>来源分类</h4>
             <hr>
-            <div id="sourceType" style="width: 100%;height: 90%">
+            <div id="sourceType" style="width: 100%;height: 450px">
             </div>
         </div>
-        <div style="width:48%;height:500px;">
-            <h4>媒体友好程度</h4>
-            <hr>
-            <div id="mediaFriend" style="width: 100%;height: 90%">
-            </div>
+       <%-- <div style="width:40%;height:500px;">--%>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <h4>媒体友好程度</h4>
+                <hr>
+                <div id="mediaFriend" style="width: 100%;height: 450px">
+                </div>
         </div>
-    </div>
-    <br>
-    <div style="display: flex;display: -webkit-flex;justify-content: space-around;">
-        <div style="width:48%;height:500px;">
+<%--</div>--%>
+   <%-- <div style="display: flex;display: -webkit-flex;justify-content: space-around;">--%>
+        <%--<div style="width:40%;height:500px;">--%>
+            <div class="col-md-6 col-sm-12 col-xs-12">
             <h4>网页搜索结果</h4>
             <hr>
             <div id="searchResult" style="width: 100%;height: 90%">
@@ -152,7 +160,7 @@
                         <tr>
                             <td width="5%"><img src="img/icon/正.png" width="18px" height="18px"></td>
                             <td>2017-01-15 20:36</td>
-                            <td>成都七中</td>
+                            <td width="50%">成都七中</td>
                             <td><a href="#">查看</a></td>
                         </tr>
                         <tr>
@@ -221,10 +229,12 @@
                 </table>
             </div>
         </div>
-        <div style="width:48%;height:500px;">
+        <%--<div style="width:40%;height:500px;">--%>
+            <div class="col-md-6 col-sm-12 col-xs-12">
             <h4>舆情信息实时统计</h4>
             <hr>
-            <div id="InfoStatic" style="width: 100%;height: 90%">
+            <div id="InfoStatic" style="width: 100%;height: 500px">
+                <%--<div id="InfoStatic" class="col-md-6 col-sm-12 col-xs-12">--%>
                 <table class="table table-bordered table-hover">
                     <thead>
                         <td></td>
@@ -293,8 +303,15 @@
                     </tbody>
                 </table>
             </div>
+       <%-- </div>--%>
         </div>
+
+</div>
+<div id="footer">
+    <div class="container">
+        <p class="text-muted" style="float: right">关于我们</p>
     </div>
+</div>
     <script type="text/javascript">
     var myChart = echarts.init(document.getElementById('saleTrend'));
     option = {
@@ -478,7 +495,7 @@
 
                 type: 'funnel',
 
-                left: '20%',
+                left: '30%',
 
 
                 label: {

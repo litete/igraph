@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="neo4jConnection:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="com.ctbri.war">
+      <element id="artifact" artifact-name="neo4jConnection:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -322,7 +322,7 @@ function createXHR() {
 		document.getElementById("searchresult").style.display="none";
 		document.getElementById("letter_contents").style.display="none";
 		document.getElementById("tagBox").style.display="none";
-		document.getElementById("statiscresult").style.display="";
+		document.getElementById("statiscresult").style.display="none";
 		var ul = document.getElementById("ul");
 		for(var i=0;i<ul.children.length-1;i++){
 			ul.children[i].className='';
@@ -710,22 +710,9 @@ function createXHR() {
     	});
     }
 
+
     function showDetail(a,page_num,id){
 
-//    	var index = a.getAttribute("name");
-//    	var pId = a.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.getAttribute("id");
-//    	var data;
-//    	if(pId=="message"){
-//    		data=all;
-//    	}else if(pId=="undo"){
-//    		data=undo;
-//    	}else if(pId=="levelone"){
-//    		data=levelOne;
-//    	}else if(pId=="leveltwo"){
-//    		data=levelTwo;
-//    	}else if(pId=="levelthree"){
-//    		data=levelThree;
-//    	}
     	$.ajax({
     	    type     : "post",
     	    cache    : true,
@@ -974,4 +961,15 @@ function createXHR() {
 		document.getElementById("select").style.display="none";
 		document.getElementById("add").style.display="none";
 		document.getElementById("update").style.display="";
+
+
 	}
+function graphOnclick(){
+	var word=document.getElementById("word").value;
+/*
+	word.setAttribute("href","graph?word="+word)
+*/
+	document.location.href="/JWLetter/graph?word="+word;
+
+
+}

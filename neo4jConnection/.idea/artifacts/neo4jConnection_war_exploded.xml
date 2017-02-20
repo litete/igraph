@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="neo4jConnection:war exploded">
+    <output-path>$PROJECT_DIR$/target/com.ctbri</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="neo4jConnection" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="D:\IntellijIDEA\gzkj\igraph\neo4jConnection\target/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="neo4jConnection/web/Web" />
+    </root>
+  </artifact>
+</component>

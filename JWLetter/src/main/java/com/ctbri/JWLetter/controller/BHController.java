@@ -1731,9 +1731,9 @@ public class BHController {
         return "toutiao";
     }
 
-    @RequestMapping(value = "/yuqing")
-    public String yuqing() {
-        return "yuqing";
+    @RequestMapping(value = "/opinions")
+    public String opinions() {
+        return "opinions";
     }
 
     @RequestMapping(value = "/")

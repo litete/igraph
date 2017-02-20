@@ -17,28 +17,7 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/index.js"></script>
 <!-- Static navbar -->
-<div class="navbar navbar-default" role="navigation">
-  <div class="container">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-        <a href="index.jsp"> <img src="img/deepSearch_logo_s.png"  class="navbar-brand"></a><a class="navbar-brand page-scroll" href="#page-top"> 中国电信纪律检查委员会举报信件处理系统</a> </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li><a href="index">举报箱</a></li>
-          <li><a id="toGraph" href="graph">关联图谱</a></li>
-        </ul>
-        <form class="navbar-form" >
-          <input type="text" class="form-control" style="width:350px" id="word" name="" placeholder="${keyword}">
-          <i type="text" class="btn btn-primary" style="width:100px" onclick="search()" >搜索</i>
-        </form>
-      </div>
-      <!--/.nav-collapse -->
-      <div> </div>
-    </div>
-    <!--/.container-fluid -->
-  </div>
-</div>
+<jsp:include page="navigation.jsp"/>
 <div class="container">
   <div class="row">
     <div class="col-md-3">
