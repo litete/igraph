@@ -1735,10 +1735,12 @@ public class BHController {
     public String opinions() {
         return "opinions";
     }
- @RequestMapping(value = "/map")
- public String map(){
-     return "map";
- }
+
+    @RequestMapping(value = "/map")
+    public String map() {
+        return "map";
+    }
+
     @RequestMapping(value = "/")
     public String root() {
         return "index";

@@ -5,26 +5,27 @@ var levelTwo;
 var levelThree;
 var lines = 20;
 $(document).ready(function() {
-$.ajax({
-    type     : "post",
-    cache    : true,
-    async    : false,
-    dataType : "json",
-    data	 : "",
-    url      : "http://"+document.location.host+"/JWLetter/select" ,
-    success  : function(res){
+	$.ajax({
+		type     : "post",
+		cache    : true,
+		async    : false,
+		dataType : "json",
+		data	 : "",
+		url      : "http://"+document.location.host+"/JWLetter/select" ,
+		success  : function(res){
 
-    	all = res.all;
-    	undoMes = res.undo;
-    	levelOne = res.levelOne;
-    	levelTwo = res.levelTwo;
-    	levelThree = res.levelThree;
+			all = res.all;
+			undoMes = res.undo;
+			levelOne = res.levelOne;
+			levelTwo = res.levelTwo;
+			levelThree = res.levelThree;
 
-    }
+		}
+	});
+	showMessage();
+	showTag();
 });
-showMessage();
-showTag();
-});
+
 
 function page(tmp){
 	var ul = tmp.parentNode.parentNode;
@@ -711,205 +712,220 @@ function createXHR() {
     }
 
 
-    function showDetail(a,page_num,id){
+function showDetail(a,page_num,id){
 
-    	$.ajax({
-    	    type     : "post",
-    	    cache    : true,
-    	    async    : true,
-    	    dataType : "json",
-    	    data	 : "id="+a,
-    	    url      : "http://"+document.location.host+"/JWLetter/letter" ,
-    	    success  : function(res){
+//    	var index = a.getAttribute("name");
+//    	var pId = a.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.getAttribute("id");
+//    	var data;
+//    	if(pId=="message"){
+//    		data=all;
+//    	}else if(pId=="undo"){
+//    		data=undo;
+//    	}else if(pId=="levelone"){
+//    		data=levelOne;
+//    	}else if(pId=="leveltwo"){
+//    		data=levelTwo;
+//    	}else if(pId=="levelthree"){
+//    		data=levelThree;
+//    	}
+	$.ajax({
+		type     : "post",
+		cache    : true,
+		async    : true,
+		dataType : "json",
+		data	 : "id="+a,
+		url      : "http://"+document.location.host+"/JWLetter/letter" ,
+		success  : function(res){
 
-    	    	node=res.node;
-    	    	link=res.link;
-    	    	content=res.letter[0];
+			node=res.node;
+			link=res.link;
+			content=res.letter[0];
 
-    	    	var title = document.getElementById("title");
-    	    	var pre = document.getElementById("title").parentNode.parentNode.children[0].children[1].children[0];
-    	    	var tid=id.getAttribute("id");
-    	    	pre.setAttribute("onclick", "pre("+page_num+","+tid+")");
-    	    	for(var i=0;i<title.children.length;){
-    	    		title.removeChild(title.children[0]);
-    	    	}
-    	    	var author = document.createElement("h3");
-    	    	author.innerHTML=content.attachments;
-    	    	var time = document.createElement("h5");
-    	    	var span1 = document.createElement("span");
-    	    	span1.innerHTML=content.author;
-    	    	var span2 = document.createElement("span");
-    	    	span2.innerHTML=content.submitDateTime;
-    	    	span2.setAttribute("class","mailbox-read-time pull-right");
-    	    	time.appendChild(span1);
-    	    	time.appendChild(span2);
-    	    	title.appendChild(author);
-    	    	title.appendChild(time);
-    	    	var con = document.getElementById("content");
-    	    	for(var i=0;i<con.children.length;){
-    	    		con.removeChild(con.children[0]);
-    	    	}
-    	    	var p = document.createElement("p");
-    	    	p.innerHTML=content.contents;
-    	    	con.appendChild(p);
-    	    	var chartTheme = null;
-    	        var sumChart = null;
-    	        var treeChart = null;
-    			var ech = null;
-    	        require(['js/dist/theme/blue'],function(tarTheme){
+			var title = document.getElementById("title");
+			var pre = document.getElementById("title").parentNode.parentNode.children[0].children[1].children[0];
+			var tid=id.getAttribute("id");
+			pre.setAttribute("onclick", "pre("+page_num+","+tid+")");
+			for(var i=0;i<title.children.length;){
+				title.removeChild(title.children[0]);
+			}
+			var author = document.createElement("h3");
+			author.innerHTML=content.attachments;
+			var time = document.createElement("h5");
+			var span1 = document.createElement("span");
+			span1.innerHTML=content.author;
+			var span2 = document.createElement("span");
+			span2.innerHTML=content.submitDateTime;
+			span2.setAttribute("class","mailbox-read-time pull-right");
+			time.appendChild(span1);
+			time.appendChild(span2);
+			title.appendChild(author);
+			title.appendChild(time);
+			var con = document.getElementById("content");
+			for(var i=0;i<con.children.length;){
+				con.removeChild(con.children[0]);
+			}
+			var p = document.createElement("p");
+			p.innerHTML=content.contents;
+			con.appendChild(p);
+			var chartTheme = null;
+			var sumChart = null;
+			var treeChart = null;
+			var ech = null;
+			require(['js/dist/theme/blue'],function(tarTheme){
 
-    				chartTheme = tarTheme;
-    	            // 路径配置
-    	            require.config({
-    					paths: {
-    						echarts: 'js/dist'
-    					}
-    				});
-    				// 使用
-    				require(
-    					[
-    						'echarts',
-    						'echarts/chart/bar',
-    						'echarts/chart/line', // 使用柱状图就加载bar模块，按需加载
-    						'echarts/chart/force',
-    						'echarts/chart/chord'
-    					],
-    					//将画多个图表的进行函数封装
-    					function drawCharts(ec) {
-    						ech=ec;
-    						//drawSumChart(ec);
-    						drawTChart(ec);
-    					}
-    				);
-    	        })
+				chartTheme = tarTheme;
+				// 路径配置
+				require.config({
+					paths: {
+						echarts: 'js/dist'
+					}
+				});
+				// 使用
+				require(
+					[
+						'echarts',
+						'echarts/chart/bar',
+						'echarts/chart/line', // 使用柱状图就加载bar模块，按需加载
+						'echarts/chart/force',
+						'echarts/chart/chord'
+					],
+					//将画多个图表的进行函数封装
+					function drawCharts(ec) {
+						ech=ec;
+						//drawSumChart(ec);
+						drawTChart(ec);
+					}
+				);
+			})
 
-    	       function drawTChart(ec){
-    	            // 基于准备好的dom，初始化echarts图表
-    	            var tmp = document.getElementById('let');
-    	            treeChart = ec.init(tmp,'macarons');
+			function drawTChart(ec){
+				// 基于准备好的dom，初始化echarts图表
+				var tmp = document.getElementById('let');
+				treeChart = ec.init(tmp,'macarons');
 
-    				var ecConfig = require('echarts/config');
-    		        treeChart.on(ecConfig.EVENT.CLICK, eConsole);
-    	            var option = {
-    	                title : {
-    		                text: '',
-    		                subtext: '',
-    		                x:'right',
-    		                y:'bottom'
-    		            },
-    	                tooltip : {
-    	                    trigger: 'item',
-    	                    formatter: '{a} : {b}'
-    	                },
-    	                toolbox: {
-    	                    show : true,
-    	                    feature : {
-    		                    restore : {show: true},
-    		                    magicType: {show: true, type: ['force', 'chord']},
-    		                    saveAsImage : {show: true}
-    		                }
-    	            	},
-    		            legend: {
-    		                x: 'left',
-    		                data:['人名','地名','组织机构','罪名','职务','诉讼日期','其他'],
-    		                textStyle:{
-    							fontFamily : '微软雅黑'
-    						}
-    		            },
-    	            series : [
-    	            {
-    	                type:'force',
-    	                name : "关联关系",
-    	                ribbonType: false,
-    	                clickable:true,
-    	                categories : [
-    		                {
-    		                    name: '关键词'
-    		                },{
-    		                    name: '人名'
-    		                },{
-    		                    name:'地名'
-    		                }, {
-    		                    name:'组织机构'
-    		                }, {
-    		                    name:'罪名'
-    		                }, {
-    		                    name:'职务'
-    		                }, {
-    		                    name:'诉讼日期'
-    		                }, {
-    		                    name:'其他'
-    		                }
-    		            ],
+				var ecConfig = require('echarts/config');
+				treeChart.on(ecConfig.EVENT.CLICK, eConsole);
+				var option = {
+					title : {
+						text: '',
+						subtext: '',
+						x:'right',
+						y:'bottom'
+					},
+					tooltip : {
+						trigger: 'item',
+						formatter: '{a} : {b}'
+					},
+					toolbox: {
+						show : true,
+						feature : {
+							restore : {show: true},
+							magicType: {show: true, type: ['force', 'chord']},
+							saveAsImage : {show: true}
+						}
+					},
+					legend: {
+						x: 'left',
+						data:['人名','地名','组织机构','罪名','职务','诉讼日期','其他'],
+						textStyle:{
+							fontFamily : '微软雅黑'
+						}
+					},
+					series : [
+						{
+							type:'force',
+							name : "关联关系",
+							ribbonType: false,
+							clickable:true,
+							categories : [
+								{
+									name: '关键词'
+								},{
+									name: '人名'
+								},{
+									name:'地名'
+								}, {
+									name:'组织机构'
+								}, {
+									name:'罪名'
+								}, {
+									name:'职务'
+								}, {
+									name:'诉讼日期'
+								}, {
+									name:'其他'
+								}
+							],
 
-    	            itemStyle: {
-    	                normal: {
-    	                    label: {
-    	                        show: true,
-    	                        textStyle: {
-    	                            color: '#eee'
-    	                        }
-    	                    },
-    	                    nodeStyle : {
-    	                        //color:'rgb(54,143,255)',
-    	                        brushType : 'both',
-    	                        borderColor : 'rgba(0,0,0,0)',
-    	                        borderWidth : 1
-    	                    },
-    	                    linkStyle: {
-    	                        type: 'curve',
-    	                        color:'rgb(145,146,148)',
-    	                        borderColor: '#919294'
-    	                    }
-    	                },
-    	                emphasis: {
-    	                    label: {
-    	                        show: false
-    	                        // textStyle: null      // 默认使用全局文本样式
-    	                    },
-    	                    nodeStyle : {
-    	                        //r: 30
-    	                    },
-    	                    linkStyle : {}
-    	                }
-    	            },
-    	            useWorker: false,
-    	            minRadius : 20,
-    	            maxRadius : 35,
-    	            gravity: 1,
-    	            scaling: 1.6,
-    	            roam: 'move',
-    				nodes:node,
-    				links:link
-    				}]};
-    				treeChart.setOption(option);
+							itemStyle: {
+								normal: {
+									label: {
+										show: true,
+										textStyle: {
+											color: '#eee'
+										}
+									},
+									nodeStyle : {
+										//color:'rgb(54,143,255)',
+										brushType : 'both',
+										borderColor : 'rgba(0,0,0,0)',
+										borderWidth : 1
+									},
+									linkStyle: {
+										type: 'curve',
+										color:'rgb(145,146,148)',
+										borderColor: '#919294'
+									}
+								},
+								emphasis: {
+									label: {
+										show: false
+										// textStyle: null      // 默认使用全局文本样式
+									},
+									nodeStyle : {
+										//r: 30
+									},
+									linkStyle : {}
+								}
+							},
+							useWorker: false,
+							minRadius : 20,
+							maxRadius : 35,
+							gravity: 1,
+							scaling: 1.6,
+							roam: 'move',
+							nodes:node,
+							links:link
+						}]};
+				treeChart.setOption(option);
 
-    				treeChart.hideLoading();
-    	        }
-    	        function eConsole(param) {
-    	            if (typeof param.data.source == 'undefined') {
-    	            	if (param.type == 'click') {
+				treeChart.hideLoading();
+			}
+			function eConsole(param) {
+				if (typeof param.data.source == 'undefined') {
+					if (param.type == 'click') {
 
-    	                    window.location.href="/JWLetter/graph?word="+param.name;
-    	                }
-    	            }
+						window.location.href="/JWLetter/graph?word="+param.name;
+					}
+				}
 
-    	        }
+			}
 
-    	    }
-    	});
-    	document.getElementById("message").style.display="none";
-    	document.getElementById("undo").style.display="none";
-		document.getElementById("levelone").style.display="none";
-		document.getElementById("leveltwo").style.display="none";
-		document.getElementById("levelthree").style.display="none";
-		document.getElementById("searchresult").style.display="none";
-		document.getElementById("letter_contents").style.display="";
-		document.getElementById("tagBox").style.display="none";
-		document.getElementById("statiscresult").style.display="none";
-    }
+		}
+	});
+	document.getElementById("message").style.display="none";
+	document.getElementById("undo").style.display="none";
+	document.getElementById("levelone").style.display="none";
+	document.getElementById("leveltwo").style.display="none";
+	document.getElementById("levelthree").style.display="none";
+	document.getElementById("searchresult").style.display="none";
+	document.getElementById("letter_contents").style.display="";
+	document.getElementById("tagBox").style.display="none";
+	document.getElementById("statiscresult").style.display="none";
+}
 
-    function search(){
+
+function search(){
     	var word = document.getElementById("word").value;
     	var button = document.getElementById("showSearch");
     	if(word!=""&&button.className!="active") {
@@ -966,10 +982,13 @@ function createXHR() {
 	}
 function graphOnclick(){
 	var word=document.getElementById("word").value;
-/*
-	word.setAttribute("href","graph?word="+word)
-*/
 	document.location.href="/JWLetter/graph?word="+word;
-
-
+}
+function opinionsOnclick(){
+	var word=document.getElementById("word").value;
+	document.location.href="/JWLetter/opinions?word="+word;
+}
+function mapOnclick(){
+	var word=document.getElementById("word").value;
+	document.location.href="/JWLetter/map?word="+word;
 }
