@@ -39,6 +39,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.print.DocFlavor;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -1294,16 +1295,22 @@ public class BHController {
 
     @RequestMapping(value = "/index", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public String index(HttpServletRequest request, Model model) {
-        if (request.getParameter("word") == null
+     /*   if (request.getParameter("word") == null
                 || request.getParameter("word").equals("")) {
             return "index";
+        }*/
+        LetterServiceImpl ls = new LetterServiceImpl();
+
+        String word ="";
+        model.addAttribute("keyword", word);
+        String indexId=request.getParameter("id");
+        if ( indexId== null||indexId.equals("")) {
+       return "index";
         }
 
-        String word = request.getParameter("word");
-        model.addAttribute("keyword", word);
-        LetterServiceImpl ls = new LetterServiceImpl();
-        Letter letter = ls.selectByPrimaryKey("1");
-        //System.out.println(letter.getAttachments());
+        Letter letter = ls.selectByPrimaryKey(indexId);
+        //System.out.println(letter.getId());
+        model.addAttribute("letter", letter);
         System.out.println("index:" + letter.getAttachments());
         return "index";
     }

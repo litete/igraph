@@ -1,6 +1,9 @@
+<%@ page import="com.ctbri.JWLetter.pojo.Letter" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 		 pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%--<% Letter letter= (Letter) request.getAttribute("letter");--%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="zh-cn">
 <head>
@@ -18,6 +21,12 @@
 </head>
 <body>
 
+<input type="text" id="dvs" style="display: none" value=${letter.letter_id} >
+
+
+	<%--<% request.getAttribute("letter") ;--%>
+		<%--System.out.println("letter:"+request.getAttribute("letter"));%>--%>
+
 <!-- Static navbar -->
 <div class="navbar navbar-default" role="navigation">
 	<div class="container-fluid">
@@ -32,14 +41,15 @@
 																  href="#page-top"> 智察 - 大数据关系洞察系统</a></div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="index">举报箱</a></li>
+					<%--<li><a href="index">举报箱</a></li>--%>
+					<li><a href="#" onclick="indexOnclick">举报箱</a></li>
 					<li><a <%--id="toGraph"--%> href="#" onclick="graphOnclick()">关联图谱</a></li>
 					<li><a href="#" onclick="mapOnclick()">地图</a></li>
 					<li><a href="#" onclick="opinionsOnclick()">舆情</a></li>
 				</ul>
 				<form class="navbar-form" action="/JWLetter/graph">
 					<input type="text" class="form-control" style="width: 350px"
-						   id="word" name="word" placeholder="${keyword}">
+						   id="word" name="word" placeholder="${keyword}" />
 					<button type="submit" class="btn btn-primary" style="width: 100px">搜索</button>
 				</form>
 			</div>
@@ -601,7 +611,7 @@
 
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-default btn-sm">
-							<i class="`fa fa-close"></i>
+							<i class="fa fa-close"></i>
 						</button>
 					</div>
 				</div>
