@@ -24,8 +24,8 @@
 <input type="text" id="dvs" style="display: none" value=${letter.letter_id} >
 
 
-	<%--<% request.getAttribute("letter") ;--%>
-		<%--System.out.println("letter:"+request.getAttribute("letter"));%>--%>
+<%--<% request.getAttribute("letter") ;--%>
+<%--System.out.println("letter:"+request.getAttribute("letter"));%>--%>
 
 <!-- Static navbar -->
 <div class="navbar navbar-default" role="navigation">

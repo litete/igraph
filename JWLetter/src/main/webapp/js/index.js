@@ -6,7 +6,7 @@ var levelThree;
 var lines = 20;
 $(document).ready(function () {
     var s = document.getElementById("dvs").value;
-    if (s == null || s == "") {
+
         $.ajax({
             type: "post",
             cache: true,
@@ -26,6 +26,7 @@ $(document).ready(function () {
         });
         showMessage();
         showTag();
+    if (s == null || s == "") {
     } else {
 
         showDetail2(s, 1, message);

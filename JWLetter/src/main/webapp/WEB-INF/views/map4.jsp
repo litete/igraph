@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html style="height: 100%">
 
+<html style="height: 100%" >
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -18,9 +19,7 @@
 
 <body style="height: 80%; margin: 0">
 <jsp:include page="navigation.jsp"></jsp:include>
-    <div id="container" style="height: 90%;width: 100% ;margin-top: -20px;"></div>
-    <div style=""></div>
-    
+    <div id="container" style="height: 92%;width: 100%;margin-top: -20px;" ></div>
     <!-- 新添加的jQuery -->
     <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <!-- End -->
@@ -35,34 +34,8 @@
     var myChart = echarts.init(dom);
     var app = {};
     option = null;
-    // app.title = '热力图与百度地图扩展';
+    app.title = '热力图与百度地图扩展';
 
-    function nameMapConvert(lists){
-      var nameMap = {};
-      for(var i=0; i < lists.length; i++){
-        id = lists[i].id;
-        name = lists[i].name;
-        nameMap[id] = name
-      }
-      return nameMap
-    }
-
-    function geoCoordMapConvert(lists){
-      var geoCoordMap = {}
-      for(var i=0; i < lists.length; i++){
-        
-      }
-    }
-
-    // 后台返回的数据
-    var lists = [{"name":"牛背山遭遇抢劫","id":1, "category":"抢劫","lo":104.067923,"la":30.679943,"weight":10}]
-    console.log(nameMapConvert(lists));
-
-    var nameMap = {
-      1:"牛背山遭遇抢劫",
-      2:"政府门口遭抢劫",
-      3:"乐山广场持刀抢劫"
-    }
     var geoCoordMap = {
         "牛背山遭遇抢劫": [104.067923, 30.679943],
         "政府门口遭抢劫": [102.89916, 30.367481],
@@ -572,7 +545,6 @@
     var convertData = function(data) {
         var res = [];
         for (var i = 0; i < data.length; i++) {
-            id = data[i].id
             var geoCoord = geoCoordMap[data[i].name];
             var value = geoCoord.concat(data[i].value)
             var category1 = categoryMap[data[i].name]
@@ -581,8 +553,8 @@
                 res.push({
                     name: data[i].name,
                     value: value
-                        // value: geoCoord.concat(data[i].value)
-                        // category: value.concat(category1)
+                    // value: geoCoord.concat(data[i].value)
+                    // category: value.concat(category1)
                 });
             }
         }
@@ -598,14 +570,21 @@
     // regularData = convertedData[0]
 
     option = {
-        // backgroundColor: '#404a59',
-        backgroundColor: '#ccc',
+        backgroundColor: '#404a59',
         animation: true,
         animationDuration: 1000,
         animationEasing: 'cubicInOut',
         animationDurationUpdate: 1000,
         animationEasingUpdate: 'cubicInOut',
         title: [
+            // {
+            //     text: '全国主要城市 交易量',
+            //     subtext: 'data from yunqicl',
+            //     left: 'center',
+            //     textStyle: {
+            //         color: '#fff'
+            //     }
+            // },
             {
                 id: 'statistic',
                 right: 120,
@@ -627,7 +606,7 @@
                 }
             },
             feature: {
-                // dataZoom: {},
+                dataZoom: {},
                 brush: {
                     type: ['rect', 'polygon', 'clear']
                 },
@@ -642,8 +621,8 @@
             },
             brushStyle: {
                 borderWidth: 2,
-                color: 'rgba(0,0,0,0.5)',
-                borderColor: 'rgba(0,0,0,0.9)',
+                color: 'rgba(0,0,0,0.2)',
+                borderColor: 'rgba(0,0,0,0.5)',
             },
             seriesIndex: [0, 1],
             throttleType: 'debounce',
@@ -654,14 +633,14 @@
             // map: 'china',
             right: '100',
             // right: '55%',
-            center: [104.40, 30.67],
-            // zoom: 11,
+            center: [104.20, 30.67],
+            zoom: 2.5,
             label: {
                 emphasis: {
                     show: false
                 }
             },
-            roam: false,
+            roam: true,
             itemStyle: {
                 normal: {
                     areaColor: '#323c48',
@@ -675,18 +654,11 @@
         tooltip: {
             trigger: 'item'
         },
-        // grid: {
-        //     right: 30,
-        //     top: 100,
-        //     bottom: 40,
-        //     width: '30%'
-        // },
         grid: {
-            // show: true,
-            right: 12,
-            top: 50,
-            width: '20%'
-                // backgroundColor:'#ccc'
+            right: 30,
+            top: 100,
+            bottom: 40,
+            width: '30%'
         },
         xAxis: {
             type: 'value',
@@ -708,11 +680,10 @@
                     color: '#aaa'
                 }
             },
-
         },
         yAxis: {
             type: 'category',
-            // name: 'TOP 20',
+            name: 'TOP 20',
             nameGap: 16,
             axisLine: {
                 show: false,
@@ -729,39 +700,11 @@
             axisLabel: {
                 interval: 0,
                 textStyle: {
-                    fontFamily: "SimSun",
-                    color: '#f4e925',
-                    fontSize: 12
+                    color: '#ddd'
                 }
             },
-            data: [],
-            // nameTextStyle:{
-            //   color:'black'
-            // }
+            data: []
         },
-        dataZoom: [
-            // {
-            //     type: 'slider',
-            //     show: true,
-            //     xAxisIndex: [0],
-            //     start: 1,
-            //     end: 35,
-            //     bottom: 0
-            // }, 
-            {
-                start: 0,
-                end: 100,
-                handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
-                handleSize: '80%',
-                handleStyle: {
-                    color: '#fff',
-                    shadowBlur: 3,
-                    shadowColor: 'rgba(0, 0, 0, 0.6)',
-                    shadowOffsetX: 2,
-                    shadowOffsetY: 2
-                }
-            }
-        ],
         series: [{
             // name: category.regularData.name,
             type: 'scatter',
@@ -772,7 +715,7 @@
             },
             label: {
                 normal: {
-                    formatter: '{b}',
+                    formatter: '{c}',
                     position: 'right',
                     show: false
                 },
@@ -786,7 +729,7 @@
                 }
             }
         }, {
-            // name: 'Top 5',
+            name: 'Top 5',
             type: 'effectScatter',
             coordinateSystem: 'bmap',
             data: convertedData[1],
@@ -802,9 +745,6 @@
                 normal: {
                     formatter: '{b}',
                     position: 'right',
-                    show: false
-                },
-                emphasis: {
                     show: true
                 }
             },
@@ -834,15 +774,6 @@
     myChart.on('brushselected', renderBrushed);
 
     // myChart.setOption(option);
-    // myChart.on('brush',clearRoam)
-    // myChart.on('moving', function() {
-    //     console.log(2)
-    // })
-    myChart.on('click', function(params) {
-        console.log(params.name)
-        // window.open('https://www.baidu.com/s?id=' + encodeURIComponent(params.name));
-
-    });
 
     setTimeout(function() {
         myChart.dispatchAction({
@@ -862,12 +793,13 @@
 
 
     function renderBrushed(params) {
-        // var bmap = myChart.getModel().getComponent('bmap').getBMap();
-        // bmap.setOption({roam:false});
+        var bmap = myChart.getModel().getComponent('bmap').getBMap();
+        bmap.disableDragging();
+
         var mainSeries = params.batch[0].selected[0];
 
         var selectedItems = [];
-        var hotEvent = [];
+        var categoryData = [];
         var barData = [];
         var maxBar = 30;
         var sum = 0;
@@ -889,65 +821,48 @@
         });
 
         for (var i = 0; i < Math.min(selectedItems.length, maxBar); i++) {
-            hotEvent.push(selectedItems[i].name);
+            categoryData.push(selectedItems[i].name);
             barData.push(selectedItems[i].value[2]);
         }
 
         this.setOption({
-            backgroundColor: 'rgba(0,0,0,0.5)',
-            show: true,
             yAxis: {
-                data: hotEvent
+                data: categoryData
+            },
+            xAxis: {
+                axisLabel: {
+                    show: !!count
+                }
+            },
+            title: {
+                id: 'statistic',
+                text: count ? '平均: ' + (sum / count).toFixed(4) : ''
             },
             series: {
                 id: 'bar',
-                data: barData,
+                data: barData
             }
         });
-    }
-
-    function clearRoam() {
-        this.setOption({
-            bmap: {
-                roam: false
-            }
-        })
     }
     if (option && typeof option === "object") {
         myChart.setOption(option, true);
     }
     if (!app.inNode) {
-
         // 添加百度地图插件
         var bmap = myChart.getModel().getComponent('bmap').getBMap();
-        // bmap.addControl(new BMap.MapTypeControl({
-        //     anchor: BMAP_ANCHOR_TOP_LEFT
-        // }));
+        bmap.addControl(new BMap.MapTypeControl({
+            anchor: BMAP_ANCHOR_TOP_LEFT
+        }));
         bmap.setMapStyle({
             style: 'midnight'
         });
-        // bmap.addEventListener('moving',function(){
-        //   console.log(2)
-        // })
-        // bmap.removeEventListener('moving')
-
-
-        bmap.centerAndZoom(new BMap.Point(104.20, 30.67), 13);
+        bmap.centerAndZoom(new BMap.Point(104.20, 30.67), 11);
         var local = new BMap.LocalSearch(bmap, {
             renderOptions: {
                 map: bmap
             }
         })
-         var navigationControl = new BMap.NavigationControl({
-            // 靠左上角位置
-            anchor: BMAP_ANCHOR_TOP_LEFT, 
-            // LARGE类型
-            type: BMAP_NAVIGATION_CONTROL_LARGE,
-            // 启用显示定位
-            enableGeolocation: false
-          });
-          bmap.addControl(navigationControl);
-        // bmap.disableDragging();
+        bmap.disableDragging();
 
         var myKeys = ["公安局", "派出所"];
         // local.search("派出所");
