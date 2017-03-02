@@ -1,8 +1,6 @@
 package com.ctbri.JWLetter.DAO;
 
-import com.ctbri.JWLetter.pojo.Letter;
-import com.ctbri.JWLetter.pojo.LetterResult;
-import com.ctbri.JWLetter.pojo.LetterTitle;
+import com.ctbri.JWLetter.pojo.*;
 
 import java.util.ArrayList;
 
@@ -25,4 +23,6 @@ public interface LetterMapper {
 	public ArrayList<LetterResult> selectByTagId(Integer id);
 	//根据关键字做出模糊匹配
 	public ArrayList<LetterTitle> selectTitleByKeyWord(String keyword);
+	public ArrayList<EsSmall> selectessmall();
+	public ArrayList<Es> selectEs();
 }

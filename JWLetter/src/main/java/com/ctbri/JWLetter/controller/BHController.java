@@ -86,7 +86,55 @@ public class BHController {
             e.printStackTrace();
         }
     }
+    @RequestMapping(value = "/selectes")
+    public void selectes() {
+        System.out.println("进来了");
+    LetterServiceImpl letterService=new LetterServiceImpl();
+        List<EsSmall> listEsSmall=new ArrayList();
+        listEsSmall=letterService.selectessmall();
+        List<Es> listEs=new ArrayList<>();
+        List<EsDao> esDaoList=new ArrayList<>();
+        listEs=letterService.selectEs();
+        System.out.println("运行到这了");
+        for (int i=0;i<listEs.size();i++){
+            Es es=listEs.get(i);
+            EsDao esDao=new EsDao();
+            esDao.setId(es.getId());
+            esDao.setTitle(es.getTitle());
+            esDao.setContents(es.getContents());
+            esDao.setAuthor(es.getAuthor());
+            esDao.setSubmiteDatetime(es.getSubmiteDatetime());
+            esDao.setAttachments(es.getAttachments());
+            esDao.setReadornot(es.getReadornot());
+            esDao.setStatus(es.getStatus());
+            esDao.setCategoryname(es.getCategoryname());
+            ArrayList list=new ArrayList();
+            for (int j = 0; j <listEsSmall.size() ; j++) {
 
+                EsSmall esSmall=listEsSmall.get(j);
+                if (es.getId()==esSmall.getId()){
+                    if (es.getTagname().equals(esSmall.getTagname())){
+
+                    }else {
+                        list.add(esSmall.getTagname());
+                    }
+                }
+                esDao.setTagname(list);
+            }
+            esDaoList.add(esDao);
+        }
+
+        System.out.println("循环完了");
+        ObjectMapper obj=new ObjectMapper();
+        try {
+            String json= obj.writeValueAsString(esDaoList);
+            System.out.println("json:"+json);
+            System.out.println("长度是"+json.length());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
     @RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public String ulogin(HttpServletRequest request, Model model)
             throws JsonParseException, JsonMappingException, IOException,

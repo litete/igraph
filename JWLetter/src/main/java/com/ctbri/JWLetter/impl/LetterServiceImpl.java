@@ -1,9 +1,7 @@
 package com.ctbri.JWLetter.impl;
 
 import com.ctbri.JWLetter.DAO.LetterMapper;
-import com.ctbri.JWLetter.pojo.Letter;
-import com.ctbri.JWLetter.pojo.LetterResult;
-import com.ctbri.JWLetter.pojo.LetterTitle;
+import com.ctbri.JWLetter.pojo.*;
 
 import java.util.ArrayList;
 
@@ -62,4 +60,12 @@ public class LetterServiceImpl {
 	}
 	//根据关键字做出模糊匹配
 	public ArrayList<LetterTitle> selectTitleByKeyWord(String keyword){return letterMapper.selectTitleByKeyWord(keyword);}
+	//查询id,tagname 为es做准备
+	public  ArrayList<EsSmall> selectessmall(){
+		return letterMapper.selectessmall();
+	};
+	//查询all 为es做准备
+	public ArrayList<Es> selectEs(){
+		return letterMapper.selectEs();
+	}
 }
