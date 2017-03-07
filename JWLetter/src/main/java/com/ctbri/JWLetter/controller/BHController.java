@@ -40,6 +40,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
@@ -88,12 +90,14 @@ public class BHController {
     }
     @RequestMapping(value = "/selectes")
     public void selectes() {
+        String json=null;
         System.out.println("进来了");
     LetterServiceImpl letterService=new LetterServiceImpl();
         List<EsSmall> listEsSmall=new ArrayList();
         listEsSmall=letterService.selectessmall();
         List<Es> listEs=new ArrayList<>();
-        List<EsDao> esDaoList=new ArrayList<>();
+        List esDaoList=new ArrayList<>();
+        Map<String,EsDao>map=new IdentityHashMap<>();
         listEs=letterService.selectEs();
         System.out.println("运行到这了");
         for (int i=0;i<listEs.size();i++){
@@ -103,7 +107,10 @@ public class BHController {
             esDao.setTitle(es.getTitle());
             esDao.setContents(es.getContents());
             esDao.setAuthor(es.getAuthor());
-            esDao.setSubmiteDatetime(es.getSubmiteDatetime());
+            Long timestamp = Long.parseLong(es.getSubmiteDatetime())*1000;
+            String date = new java.text.SimpleDateFormat("yyyy-MM-dd HH-mm-ss")
+                    .format(new java.util.Date(timestamp));
+            esDao.setSubmiteDatetime(date);
             esDao.setAttachments(es.getAttachments());
             esDao.setReadornot(es.getReadornot());
             esDao.setStatus(es.getStatus());
@@ -121,19 +128,34 @@ public class BHController {
                 }
                 esDao.setTagname(list);
             }
-            esDaoList.add(esDao);
+            //esDaoList.add(esDao);
+            map.put(new String("index"),esDao);
+          //esDaoList.add(map);
         }
-
+       // HashMap<String,List>map=new HashMap<>();
+       // map.put("index",esDaoList);
         System.out.println("循环完了");
         ObjectMapper obj=new ObjectMapper();
         try {
-            String json= obj.writeValueAsString(esDaoList);
-            System.out.println("json:"+json);
-            System.out.println("长度是"+json.length());
+             json= obj.writeValueAsString(map);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        try {
+            BufferedWriter bw=new BufferedWriter(new FileWriter("D://igraph.txt"));
+//            for (int i = 0; i <json.length() ; i++) {
+//                String subStr = json.substring(i, i+1);
+//                if (subStr.equals("],")){
+//                   subStr.replace("],","\n");
+//                }
+//            }
+            String json2=json.replace("},", "}\r\n");
+            bw.write(json2);
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public String ulogin(HttpServletRequest request, Model model)

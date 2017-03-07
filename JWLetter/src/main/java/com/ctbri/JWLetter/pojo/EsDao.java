@@ -17,6 +17,7 @@ public class EsDao {
     private int categoryname;
     private ArrayList tagname;
 
+
     public int getId() {
         return id;
     }
