@@ -7,13 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37b5a9a6-c782-4338-9714-7a4bbfafb1de" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/neo4j-jdbc-driver-3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/x-pack-api-5.1.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/x-pack-transport-5.0.2.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/BHController.java" afterPath="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/BHController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/mapping/LetterMapper.xml" afterPath="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/mapping/LetterMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vSearch.iml" afterPath="$PROJECT_DIR$/vSearch.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -1066,7 +1059,7 @@
       <workItem from="1488769817929" duration="7599000" />
       <workItem from="1488783309013" duration="3347000" />
       <workItem from="1488902752982" duration="8000" />
-      <workItem from="1488959825965" duration="2947000" />
+      <workItem from="1488959825965" duration="3003000" />
     </task>
     <task id="LOCAL-00001" summary="11">
       <created>1486915077429</created>
@@ -1122,7 +1115,13 @@
       <option name="project" value="LOCAL" />
       <updated>1488465406967</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="添加了es的字段功能">
+      <created>1488963253777</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1488963253777</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1140,7 +1139,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="200340000" />
+    <option name="totallyTimeSpent" value="200396000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
