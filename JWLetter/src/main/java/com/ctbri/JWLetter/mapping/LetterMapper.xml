@@ -45,7 +45,7 @@ ORDER BY
 	Letter_ID
 	</select>
     <select id="selectEs" resultType="com.ctbri.JWLetter.pojo.Es">
-    SELECT
+ SELECT
 	letters.Letter_ID as id,
 	letters.Title as title,
 	letters.Contents as contents ,
@@ -56,16 +56,10 @@ ORDER BY
 	letter_status.ReadOrNot as readornot,
 	categories.Category_name as categoryname,
 	'' as tagname
-FROM
-  tag_letter,
-	letters,
-	letter_status,
-	categories
-WHERE
-	letters.Letter_ID = categories.Letter_ID
-AND letters.Letter_ID = letter_status.Letter_ID
-AND letters.Letter_ID = tag_letter.Letter_ID
-GROUP  BY letters.Letter_ID
+FROM((letters LEFT JOIN categories ON letters.Letter_ID = categories.Letter_ID)
+             LEFT JOIN letter_status ON letters.Letter_ID=letter_status.Letter_ID)
+    LEFT JOIN tag_letter ON letters.Letter_ID=tag_letter.Letter_ID
+GROUP BY letters.Letter_ID
     </select>
 
     <!-- 通过id筛选实体 -->

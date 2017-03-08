@@ -15,6 +15,38 @@
 
 
 	<dependencies>
+		<!--es-->
+		<dependency>
+			<groupId>org.elasticsearch.client</groupId>
+			<artifactId>transport</artifactId>
+			<version>5.1.1</version>
+		</dependency>
+		<!--<dependency>
+			<groupId>org.elasticsearch.plugin</groupId>
+			<artifactId>x-pack-api</artifactId>
+			<version>5.1.1</version>
+		</dependency>-->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.1.37</version>
+		</dependency>
+		<dependency>
+			<groupId>org.neo4j.driver</groupId>
+			<artifactId>neo4j-java-driver</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+		<!--es-->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

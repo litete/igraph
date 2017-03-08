@@ -88,6 +88,10 @@ public class BHController {
             e.printStackTrace();
         }
     }
+    @RequestMapping("/selectbyes")
+    public void selectEsByEs(){
+
+    }
     @RequestMapping(value = "/selectes")
     public void selectes() {
         String json=null;
@@ -128,20 +132,29 @@ public class BHController {
                 }
                 esDao.setTagname(list);
             }
-            //esDaoList.add(esDao);
-            map.put(new String("index"),esDao);
+            esDaoList.add(esDao);
+            //map.put(new String("index"),esDao);
           //esDaoList.add(map);
         }
        // HashMap<String,List>map=new HashMap<>();
        // map.put("index",esDaoList);
         System.out.println("循环完了");
         ObjectMapper obj=new ObjectMapper();
-        try {
-             json= obj.writeValueAsString(map);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        for(Object str : esDaoList){
+            try {
+                json = json + "{ \"index\" : { \"_index\" : \"articles\", \"_type\" : \"article\"} }" + "\r\n";
+                json = json + obj.writeValueAsString(str) + "\r\n";
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+//        try {
+//             json= obj.writeValueAsString(esDaoList);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         try {
             BufferedWriter bw=new BufferedWriter(new FileWriter("D://igraph.txt"));
 //            for (int i = 0; i <json.length() ; i++) {
@@ -150,8 +163,8 @@ public class BHController {
 //                   subStr.replace("],","\n");
 //                }
 //            }
-            String json2=json.replace("},", "}\r\n");
-            bw.write(json2);
+//            String json2=json.replace("},", "}\r\n");
+            bw.write(json);
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
