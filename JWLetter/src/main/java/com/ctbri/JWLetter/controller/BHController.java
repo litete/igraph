@@ -88,11 +88,11 @@ public class BHController {
             e.printStackTrace();
         }
     }
-    @RequestMapping("/selectbyes")
+    @RequestMapping("/selectes")
     public void selectEsByEs(){
 
     }
-    @RequestMapping(value = "/selectes")
+    @RequestMapping(value = "/selectes1")
     public void selectes() {
         String json=null;
         System.out.println("进来了");

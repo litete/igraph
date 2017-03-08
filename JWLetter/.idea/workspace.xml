@@ -7,6 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37b5a9a6-c782-4338-9714-7a4bbfafb1de" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/BHController.java" afterPath="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/BHController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -42,8 +43,8 @@
       <file leaf-file-name="BHController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/BHController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6703911" vertical-offset="540" max-vertical-offset="52830">
-              <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.83798885" vertical-offset="630" max-vertical-offset="52830">
+              <caret line="98" column="26" selection-start-line="98" selection-start-column="26" selection-end-line="98" selection-end-column="26" />
               <folding>
                 <element signature="e#2699#2737#0" expanded="false" />
               </folding>
@@ -185,8 +186,8 @@
         <option value="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/pojo/EsSmall.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/pojo/EsDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/mapping/LetterMapper.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/BHController.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/BHController.java" />
       </list>
     </option>
   </component>
@@ -1059,7 +1060,7 @@
       <workItem from="1488769817929" duration="7599000" />
       <workItem from="1488783309013" duration="3347000" />
       <workItem from="1488902752982" duration="8000" />
-      <workItem from="1488959825965" duration="3003000" />
+      <workItem from="1488959825965" duration="3331000" />
     </task>
     <task id="LOCAL-00001" summary="11">
       <created>1486915077429</created>
@@ -1121,7 +1122,13 @@
       <option name="project" value="LOCAL" />
       <updated>1488963253777</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="es开始做了">
+      <created>1488963319468</created>
+      <option name="number" value="00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1488963319468</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1139,7 +1146,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="200396000" />
+    <option name="totallyTimeSpent" value="200724000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1186,7 +1193,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41480207" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874355" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874355" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27389985" sideWeight="0.48772505" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27389985" sideWeight="0.48772505" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27382752" sideWeight="0.512275" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25113463" sideWeight="0.5104167" order="7" side_tool="true" content_ui="tabs" />
@@ -1227,7 +1234,8 @@
     <MESSAGE value="周五做的 只剩分页功能了" />
     <MESSAGE value="周四上线了一个版本" />
     <MESSAGE value="添加了es的字段功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加了es的字段功能" />
+    <MESSAGE value="es开始做了" />
+    <option name="LAST_COMMIT_MESSAGE" value="es开始做了" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1687,8 +1695,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/BHController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6703911" vertical-offset="540" max-vertical-offset="52830">
-          <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.83798885" vertical-offset="630" max-vertical-offset="52830">
+          <caret line="98" column="26" selection-start-line="98" selection-start-column="26" selection-end-line="98" selection-end-column="26" />
           <folding>
             <element signature="e#2699#2737#0" expanded="false" />
           </folding>
