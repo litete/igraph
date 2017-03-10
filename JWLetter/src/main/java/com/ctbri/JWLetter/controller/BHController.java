@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
@@ -84,10 +85,13 @@ public class BHController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+      /*  SearchRequestBuilder requestBuilder=client.prepareSearch("articles");
+        requestBuilder.setQuery(QueryBuilders.termsQuery())*/
+
         SearchResponse sr = client.prepareSearch("articles")
                 //allowLeadingWildcard(true)表示加载规定列里的要搜索的字段
-                .setQuery(QueryBuilders.queryStringQuery("*").field("id").field("title").allowLeadingWildcard(true))
-                //.setQuery(QueryBuilders.query)
+               // .setQuery(QueryBuilders.queryStringQuery("*").field("id").field("title").allowLeadingWildcard(true))
+                .setQuery(QueryBuilders.termsQuery("id","title"))
                 //.setQuery(QueryBuilders.queryStringQuery("孙甲勇").field("contents"))
                 .get();
         Iterator it = sr.getHits().iterator();

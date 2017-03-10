@@ -6,76 +6,8 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="37b5a9a6-c782-4338-9714-7a4bbfafb1de" name="Default" comment="es开始做了">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/HdrHistogram-2.1.6.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/activation-1.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/bcpkix-jdk15on-1.55.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/bcprov-jdk15on-1.55.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/commons-codec-1.10.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/compiler-0.9.3.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/elasticsearch-5.1.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/fastjson-1.1.37.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/guava-16.0.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/hppc-0.7.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/httpasyncclient-4.1.2.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/httpclient-4.5.2.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/httpcore-4.4.5.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/httpcore-nio-4.4.5.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/jackson-dataformat-cbor-2.8.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/jackson-dataformat-smile-2.8.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/jackson-dataformat-yaml-2.8.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/javax.mail-1.5.3.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/jna-4.2.2.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/joda-time-2.9.5.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/jopt-simple-5.0.2.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/lang-mustache-client-5.1.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/log4j-api-2.7.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/log4j-core-2.7.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/lucene-analyzers-common-6.3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/lucene-backward-codecs-6.3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/lucene-core-6.3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/lucene-grouping-6.3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/lucene-highlighter-6.3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/lucene-join-6.3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/lucene-memory-6.3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/lucene-misc-6.3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/lucene-queries-6.3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/lucene-queryparser-6.3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/lucene-sandbox-6.3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/lucene-spatial-6.3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/lucene-spatial-extras-6.3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/lucene-spatial3d-6.3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/lucene-suggest-6.3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/neo4j-java-driver-1.1.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/netty-3.10.6.Final.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/netty-buffer-4.1.6.Final.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/netty-codec-4.1.6.Final.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/netty-codec-http-4.1.6.Final.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/netty-common-4.1.6.Final.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/netty-handler-4.1.6.Final.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/netty-resolver-4.1.6.Final.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/netty-transport-4.1.6.Final.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/owasp-java-html-sanitizer-r239.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/percolator-client-5.1.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/reindex-client-5.1.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/rest-5.1.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/securesm-1.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/snakeyaml-1.15.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/sniffer-5.1.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/t-digest-3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/transport-5.1.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/transport-netty3-client-5.1.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/transport-netty4-client-5.1.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/unboundid-ldapsdk-3.2.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/x-pack-api-5.1.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/esMapper/EsMappper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/esjavaclient.iml" />
-      <change type="DELETED" beforePath="D:\IntellijIDEA\gzkj\igraph\igraph\JWLetter\.idea\libraries\Maven__com_google_guava_guava_18_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\IntellijIDEA\gzkj\igraph\igraph\JWLetter\src\main\webapp\WEB-INF\views\map4.jsp" afterPath="" />
+    <list default="true" id="37b5a9a6-c782-4338-9714-7a4bbfafb1de" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/BHController.java" afterPath="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/BHController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vSearch.iml" afterPath="$PROJECT_DIR$/vSearch.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -112,37 +44,13 @@
       <file leaf-file-name="BHController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/BHController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.18644068" vertical-offset="1535" max-vertical-offset="26910">
-              <caret line="88" column="15" selection-start-line="88" selection-start-column="15" selection-end-line="88" selection-end-column="15" />
+            <state vertical-scroll-proportion="0.49348232" vertical-offset="1535" max-vertical-offset="27000">
+              <caret line="96" column="46" selection-start-line="96" selection-start-column="46" selection-end-line="96" selection-end-column="46" />
               <folding>
-                <element signature="e#2011#2027#0" expanded="true" />
                 <element signature="method#ulogin#0;class#BHController#0" expanded="false" />
-                <element signature="e#9951#9959#0" expanded="true" />
-                <element signature="e#10379#10496#0" expanded="false" />
-                <element signature="e#51283#51289#0" expanded="true" />
-                <element signature="e#51340#51346#0" expanded="true" />
-                <element signature="e#51401#51409#0" expanded="true" />
-                <element signature="e#51460#51468#0" expanded="true" />
-                <element signature="e#51581#51603#0" expanded="true" />
-                <element signature="e#56460#56573#0" expanded="false" />
-                <element signature="e#60050#60092#0" expanded="false" />
-                <element signature="e#64005#64018#0" expanded="true" />
-                <element signature="e#64077#64090#0" expanded="true" />
-                <element signature="e#64149#64162#0" expanded="true" />
-                <element signature="e#64223#64236#0" expanded="true" />
-                <element signature="e#64305#64337#0" expanded="true" />
-                <element signature="e#65528#65538#0" expanded="true" />
-                <element signature="e#67003#67011#0" expanded="true" />
-                <element signature="e#67075#67102#0" expanded="true" />
-                <element signature="e#71313#71321#0" expanded="true" />
-                <element signature="e#71367#71375#0" expanded="true" />
-                <element signature="e#76118#76131#0" expanded="true" />
-                <element signature="e#81380#81388#0" expanded="true" />
-                <element signature="e#90787#90812#0" expanded="true" />
-                <element signature="e#90860#90868#0" expanded="true" />
-                <element signature="e#90918#90926#0" expanded="true" />
-                <element signature="e#90979#90987#0" expanded="true" />
-                <element signature="e#91151#91159#0" expanded="true" />
+                <element signature="e#10602#10719#0" expanded="false" />
+                <element signature="e#56683#56796#0" expanded="false" />
+                <element signature="e#60273#60315#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -161,7 +69,7 @@
       <file leaf-file-name="LetterMapper.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/mapping/LetterMapper.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.25" vertical-offset="2772" max-vertical-offset="4200">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2772" max-vertical-offset="4200">
               <caret line="98" column="28" selection-start-line="98" selection-start-column="16" selection-end-line="98" selection-end-column="28" />
               <folding />
             </state>
@@ -183,7 +91,7 @@
       <file leaf-file-name="index.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/index.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.948718" vertical-offset="2264" max-vertical-offset="30240">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2264" max-vertical-offset="30240">
               <caret line="78" column="46" selection-start-line="78" selection-start-column="46" selection-end-line="78" selection-end-column="46" />
               <folding />
             </state>
@@ -1066,10 +974,10 @@
       </method>
     </configuration>
     <list size="4">
-      <item index="0" class="java.lang.String" itemvalue="Application.Test" />
-      <item index="1" class="java.lang.String" itemvalue="Application.ESAccess" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.All in vSearch" />
-      <item index="3" class="java.lang.String" itemvalue="Tomcat Server.Unnamed" />
+      <item index="0" class="java.lang.String" itemvalue="Tomcat Server.Unnamed" />
+      <item index="1" class="java.lang.String" itemvalue="Application.Test" />
+      <item index="2" class="java.lang.String" itemvalue="Application.ESAccess" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.All in vSearch" />
     </list>
     <recent_temporary>
       <list size="3">
@@ -1176,7 +1084,8 @@
       <workItem from="1489032532838" duration="809000" />
       <workItem from="1489039468224" duration="2180000" />
       <workItem from="1489044234351" duration="5598000" />
-      <workItem from="1489109250301" duration="15579000" />
+      <workItem from="1489109250301" duration="17322000" />
+      <workItem from="1489133719267" duration="40000" />
     </task>
     <task id="LOCAL-00001" summary="11">
       <created>1486915077429</created>
@@ -1250,7 +1159,13 @@
       <option name="project" value="LOCAL" />
       <updated>1488963720007</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="es第一天">
+      <created>1489130220732</created>
+      <option name="number" value="00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1489130220732</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1268,7 +1183,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="235766000" />
+    <option name="totallyTimeSpent" value="237549000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1294,31 +1209,27 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
     <editor active="true" />
     <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874355" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32702237" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874355" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41652325" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874355" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977098" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874355" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874355" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27389985" sideWeight="0.48772505" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27382752" sideWeight="0.512275" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962063" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39823008" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874355" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32702237" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36833048" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874355" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.41652325" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874355" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874355" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27389985" sideWeight="0.48772505" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27382752" sideWeight="0.512275" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25113463" sideWeight="0.5104167" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1326,9 +1237,13 @@
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39823008" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36833048" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41652325" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1357,7 +1272,8 @@
     <MESSAGE value="周四上线了一个版本" />
     <MESSAGE value="添加了es的字段功能" />
     <MESSAGE value="es开始做了" />
-    <option name="LAST_COMMIT_MESSAGE" value="es开始做了" />
+    <MESSAGE value="es第一天" />
+    <option name="LAST_COMMIT_MESSAGE" value="es第一天" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1370,7 +1286,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/BHController.java</url>
-          <line>1070</line>
+          <line>1074</line>
           <properties />
           <option name="timeStamp" value="13" />
         </line-breakpoint>
@@ -1629,7 +1545,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="9390">
           <caret line="242" column="8" selection-start-line="242" selection-start-column="4" selection-end-line="246" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1637,7 +1552,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33261803" vertical-offset="265" max-vertical-offset="15660">
           <caret line="14" column="62" selection-start-line="14" selection-start-column="60" selection-end-line="14" selection-end-column="62" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1645,7 +1559,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.76609445" vertical-offset="483" max-vertical-offset="25470">
           <caret line="28" column="16" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1653,7 +1566,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.267606" vertical-offset="155" max-vertical-offset="12900">
           <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1661,7 +1573,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="18.197184" vertical-offset="1292" max-vertical-offset="29040">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1669,7 +1580,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.028169014" vertical-offset="1532" max-vertical-offset="15870">
           <caret line="51" column="12" selection-start-line="51" selection-start-column="12" selection-end-line="51" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1677,7 +1587,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33261803" vertical-offset="1075" max-vertical-offset="7710">
           <caret line="41" column="91" selection-start-line="41" selection-start-column="89" selection-end-line="41" selection-end-column="91" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1685,7 +1594,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.7042253" vertical-offset="618" max-vertical-offset="1590">
           <caret line="27" column="72" selection-start-line="27" selection-start-column="72" selection-end-line="27" selection-end-column="72" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1693,7 +1601,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.5555556" vertical-offset="0" max-vertical-offset="16590">
           <caret line="2" column="31" selection-start-line="1" selection-start-column="0" selection-end-line="2" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1701,13 +1608,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.32359082" vertical-offset="55" max-vertical-offset="2280">
           <caret line="7" column="21" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.948718" vertical-offset="2264" max-vertical-offset="30240">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2264" max-vertical-offset="30240">
           <caret line="78" column="46" selection-start-line="78" selection-start-column="46" selection-end-line="78" selection-end-column="46" />
           <folding />
         </state>
@@ -1729,7 +1635,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.428571" vertical-offset="2070" max-vertical-offset="2610">
           <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1743,7 +1648,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/mapping/LetterMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.25" vertical-offset="2772" max-vertical-offset="4200">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2772" max-vertical-offset="4200">
           <caret line="98" column="28" selection-start-line="98" selection-start-column="16" selection-end-line="98" selection-end-column="28" />
           <folding />
         </state>
@@ -1761,37 +1666,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/BHController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18644068" vertical-offset="1535" max-vertical-offset="26910">
-          <caret line="88" column="15" selection-start-line="88" selection-start-column="15" selection-end-line="88" selection-end-column="15" />
+        <state vertical-scroll-proportion="0.49348232" vertical-offset="1535" max-vertical-offset="27000">
+          <caret line="96" column="46" selection-start-line="96" selection-start-column="46" selection-end-line="96" selection-end-column="46" />
           <folding>
-            <element signature="e#2011#2027#0" expanded="true" />
             <element signature="method#ulogin#0;class#BHController#0" expanded="false" />
-            <element signature="e#9951#9959#0" expanded="true" />
-            <element signature="e#10379#10496#0" expanded="false" />
-            <element signature="e#51283#51289#0" expanded="true" />
-            <element signature="e#51340#51346#0" expanded="true" />
-            <element signature="e#51401#51409#0" expanded="true" />
-            <element signature="e#51460#51468#0" expanded="true" />
-            <element signature="e#51581#51603#0" expanded="true" />
-            <element signature="e#56460#56573#0" expanded="false" />
-            <element signature="e#60050#60092#0" expanded="false" />
-            <element signature="e#64005#64018#0" expanded="true" />
-            <element signature="e#64077#64090#0" expanded="true" />
-            <element signature="e#64149#64162#0" expanded="true" />
-            <element signature="e#64223#64236#0" expanded="true" />
-            <element signature="e#64305#64337#0" expanded="true" />
-            <element signature="e#65528#65538#0" expanded="true" />
-            <element signature="e#67003#67011#0" expanded="true" />
-            <element signature="e#67075#67102#0" expanded="true" />
-            <element signature="e#71313#71321#0" expanded="true" />
-            <element signature="e#71367#71375#0" expanded="true" />
-            <element signature="e#76118#76131#0" expanded="true" />
-            <element signature="e#81380#81388#0" expanded="true" />
-            <element signature="e#90787#90812#0" expanded="true" />
-            <element signature="e#90860#90868#0" expanded="true" />
-            <element signature="e#90918#90926#0" expanded="true" />
-            <element signature="e#90979#90987#0" expanded="true" />
-            <element signature="e#91151#91159#0" expanded="true" />
+            <element signature="e#10602#10719#0" expanded="false" />
+            <element signature="e#56683#56796#0" expanded="false" />
+            <element signature="e#60273#60315#0" expanded="false" />
           </folding>
         </state>
       </provider>
