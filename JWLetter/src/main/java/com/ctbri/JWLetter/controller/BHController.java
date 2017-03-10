@@ -2,37 +2,22 @@ package com.ctbri.JWLetter.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.ctbri.JWLetter.impl.CategoryServiceImpl;
+import com.ctbri.JWLetter.esMapper.EsMappper;
 import com.ctbri.JWLetter.impl.LetterServiceImpl;
-import com.ctbri.JWLetter.impl.StatusServiceImpl;
 import com.ctbri.JWLetter.impl.TagServiceImpl;
 import com.ctbri.JWLetter.pojo.*;
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.elasticsearch.action.search.MultiSearchResponse;
-import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.common.unit.TimeValue;
-import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.search.MultiMatchQuery;
 import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.bucket.filters.Filters;
-import org.elasticsearch.search.aggregations.bucket.filters.FiltersAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramBuilder;
-import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramInterval;
-import org.elasticsearch.search.aggregations.bucket.histogram.Histogram;
-import org.elasticsearch.search.aggregations.bucket.terms.Terms;
-import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
-import org.elasticsearch.search.aggregations.bucket.terms.TermsBuilder;
-import org.elasticsearch.search.sort.SortOrder;
-import org.elasticsearch.search.sort.SortParseElement;
+import org.elasticsearch.xpack.client.PreBuiltXPackTransportClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,8 +36,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
-
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 @Controller
 public class BHController {
@@ -88,30 +71,60 @@ public class BHController {
             e.printStackTrace();
         }
     }
-    @RequestMapping("/selectes")
-    public void selectEsByEs(){
 
+    @RequestMapping("/selectes")
+    @ResponseBody
+    public Object selectEsByEs() throws UnknownHostException {
+        TransportClient client = null;
+        Settings settings = Settings.builder().put("cluster.name", "DeepSearch&")
+                .put("xpack.security.user", "elastic:YangZC*#03").build();
+        try {
+            client = new PreBuiltXPackTransportClient(settings)
+                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("124.127.117.108"), 9300));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        SearchResponse sr = client.prepareSearch("articles")
+                //allowLeadingWildcard(true)表示加载规定列里的要搜索的字段
+                .setQuery(QueryBuilders.queryStringQuery("*").field("id").field("title").allowLeadingWildcard(true))
+                //.setQuery(QueryBuilders.query)
+                //.setQuery(QueryBuilders.queryStringQuery("孙甲勇").field("contents"))
+                .get();
+        Iterator it = sr.getHits().iterator();
+        client.close();
+        SearchHit sh=null;
+        while (it.hasNext()){
+             sh = (SearchHit)it.next();
+           // System.out.println(sh.getSource().get("contents")+"  "+sh.getSource().get("title"));
+            System.out.println("title:"+sh.getSource().get("title"));
+            System.out.println("content"+sh.getSource().get("id"));
     }
+        // on shutdown
+
+// return sh.getSource().get("contents")+"  "+sh.getSource().get("title");
+        return sh.getSource().get("contents");
+    }
+
     @RequestMapping(value = "/selectes1")
     public void selectes() {
-        String json=null;
+        String json = null;
         System.out.println("进来了");
-    LetterServiceImpl letterService=new LetterServiceImpl();
-        List<EsSmall> listEsSmall=new ArrayList();
-        listEsSmall=letterService.selectessmall();
-        List<Es> listEs=new ArrayList<>();
-        List esDaoList=new ArrayList<>();
-        Map<String,EsDao>map=new IdentityHashMap<>();
-        listEs=letterService.selectEs();
+        LetterServiceImpl letterService = new LetterServiceImpl();
+        List<EsSmall> listEsSmall = new ArrayList();
+        listEsSmall = letterService.selectessmall();
+        List<Es> listEs = new ArrayList<>();
+        List esDaoList = new ArrayList<>();
+        Map<String, EsDao> map = new IdentityHashMap<>();
+        listEs = letterService.selectEs();
         System.out.println("运行到这了");
-        for (int i=0;i<listEs.size();i++){
-            Es es=listEs.get(i);
-            EsDao esDao=new EsDao();
+        for (int i = 0; i < listEs.size(); i++) {
+            Es es = listEs.get(i);
+            EsDao esDao = new EsDao();
             esDao.setId(es.getId());
             esDao.setTitle(es.getTitle());
             esDao.setContents(es.getContents());
             esDao.setAuthor(es.getAuthor());
-            Long timestamp = Long.parseLong(es.getSubmiteDatetime())*1000;
+            Long timestamp = Long.parseLong(es.getSubmiteDatetime()) * 1000;
             String date = new java.text.SimpleDateFormat("yyyy-MM-dd HH-mm-ss")
                     .format(new java.util.Date(timestamp));
             esDao.setSubmiteDatetime(date);
@@ -119,14 +132,14 @@ public class BHController {
             esDao.setReadornot(es.getReadornot());
             esDao.setStatus(es.getStatus());
             esDao.setCategoryname(es.getCategoryname());
-            ArrayList list=new ArrayList();
-            for (int j = 0; j <listEsSmall.size() ; j++) {
+            ArrayList list = new ArrayList();
+            for (int j = 0; j < listEsSmall.size(); j++) {
 
-                EsSmall esSmall=listEsSmall.get(j);
-                if (es.getId()==esSmall.getId()){
-                    if (es.getTagname().equals(esSmall.getTagname())){
+                EsSmall esSmall = listEsSmall.get(j);
+                if (es.getId() == esSmall.getId()) {
+                    if (es.getTagname().equals(esSmall.getTagname())) {
 
-                    }else {
+                    } else {
                         list.add(esSmall.getTagname());
                     }
                 }
@@ -134,14 +147,14 @@ public class BHController {
             }
             esDaoList.add(esDao);
             //map.put(new String("index"),esDao);
-          //esDaoList.add(map);
+            //esDaoList.add(map);
         }
-       // HashMap<String,List>map=new HashMap<>();
-       // map.put("index",esDaoList);
+        // HashMap<String,List>map=new HashMap<>();
+        // map.put("index",esDaoList);
         System.out.println("循环完了");
-        ObjectMapper obj=new ObjectMapper();
+        ObjectMapper obj = new ObjectMapper();
 
-        for(Object str : esDaoList){
+        for (Object str : esDaoList) {
             try {
                 json = json + "{ \"index\" : { \"_index\" : \"articles\", \"_type\" : \"article\"} }" + "\r\n";
                 json = json + obj.writeValueAsString(str) + "\r\n";
@@ -156,7 +169,7 @@ public class BHController {
 //            e.printStackTrace();
 //        }
         try {
-            BufferedWriter bw=new BufferedWriter(new FileWriter("D://igraph.txt"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("D://igraph.txt"));
 //            for (int i = 0; i <json.length() ; i++) {
 //                String subStr = json.substring(i, i+1);
 //                if (subStr.equals("],")){
@@ -170,1060 +183,1068 @@ public class BHController {
             e.printStackTrace();
         }
     }
-    @RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public String ulogin(HttpServletRequest request, Model model)
-            throws JsonParseException, JsonMappingException, IOException,
-            SQLException {
-        try {
 
-            if (request.getParameter("word") == null
-                    || request.getParameter("word").equals("")) {
-                System.out.println(request.getParameter("word"));
-                return "search";
-            }
-            request.setCharacterEncoding("UTF-8");
-            String word = request.getParameter("word");
-            System.out.println(word);
-            ObjectMapper mapper = new ObjectMapper();
+     @RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+      public String ulogin(HttpServletRequest request, Model model)
+              throws JsonParseException, JsonMappingException, IOException,
+              SQLException {
+          try {
 
-            Settings settings = Settings.settingsBuilder()
-                    .put("cluster.name", "elasticsearch").build();
-            Client client = TransportClient
-                    .builder()
-                    .settings(settings)
-                    .build()
-                    .addTransportAddress(
-                            new InetSocketTransportAddress(InetAddress
-                                    .getByName("124.127.117.207"), 9733));
-            QueryBuilder qb = queryStringQuery("content:" + word)
-                    .analyzeWildcard(true).field("*");
+              if (request.getParameter("word") == null
+                      || request.getParameter("word").equals("")) {
+                  System.out.println(request.getParameter("word"));
+                  return "search";
+              }
+              request.setCharacterEncoding("UTF-8");
+              String word = request.getParameter("word");
+              System.out.println(word);
+              ObjectMapper mapper = new ObjectMapper();
+              /*Settings settings = Settings.settingsBuilder()
+                      .put("cluster.name", "elasticsearch").build();
+              Client client = TransportClient
+                      .builder()
+                      .settings(settings)
+                      .build()
+                      .addTransportAddress(
+                              new InetSocketTransportAddress(InetAddress
+                                      .getByName("124.127.117.207"), 9733));
+              QueryBuilder qb = queryStringQuery("content:" + word)
+                      .analyzeWildcard(true).field("*");
 
-            SearchRequestBuilder sbuilder = client.prepareSearch("zhongjiwei")
-                    .addSort(SortParseElement.SCORE_FIELD_NAME, SortOrder.DESC)
-                    .setScroll(new TimeValue(60000)).setQuery(qb).setSize(30)
-                    .addField("_source");
+              SearchRequestBuilder sbuilder = client.prepareSearch("zhongjiwei")
+                      .addSort(SortParseElement.SCORE_FIELD_NAME, SortOrder.DESC)
+                      .setScroll(new TimeValue(60000)).setQuery(qb).setSize(30)
+                      .addField("_source");
 
-            // 进行多搜索
-            MultiSearchResponse sr = client.prepareMultiSearch().add(sbuilder)
-                    .execute().actionGet();
-            MultiSearchResponse.Item searchItem = sr.getResponses()[0];
+              // 进行多搜索
+              MultiSearchResponse sr = client.prepareMultiSearch().add(sbuilder)
+                      .execute().actionGet();
+              MultiSearchResponse.Item searchItem = sr.getResponses()[0];
 
-            SearchResponse searchResp = searchItem.getResponse();
-            List<SearchItem> items = new ArrayList<SearchItem>();
-            Integer number = 1;
-            for (SearchHit hit : searchResp.getHits().getHits()) {
-                JSONObject obj = JSONObject
-                        .parseObject(hit.getSourceAsString());
-                String url = obj.getString("url");
-                String body = obj.getJSONObject("result").getString("body");
-                String title = obj.getJSONObject("result").getString("title");
-                // String title = hit.getSource().get("title").toString();
-                SearchItem tmp = new SearchItem(body, url, word, title);
-                if (tmp.getContent().length() < 10)
-                    continue;
-                tmp.setTitle(number + "、" + tmp.getTitle());
-                items.add(tmp);
-                number++;
-            }
-            List<GzItem> gzItems = new ArrayList<GzItem>();
-            Integer gzNumber = 1;
+              SearchResponse searchResp = searchItem.getResponse();
+              List<SearchItem> items = new ArrayList<SearchItem>();
+              Integer number = 1;
+              for (SearchHit hit : searchResp.getHits().getHits()) {
+                  JSONObject obj = JSONObject
+                          .parseObject(hit.getSourceAsString());
+                  String url = obj.getString("url");
+                  String body = obj.getJSONObject("result").getString("body");
+                  String title = obj.getJSONObject("result").getString("title");
+                  // String title = hit.getSource().get("title").toString();
+                  SearchItem tmp = new SearchItem(body, url, word, title);
+                  if (tmp.getContent().length() < 10)
+                      continue;
+                  tmp.setTitle(number + "、" + tmp.getTitle());
+                  items.add(tmp);
+                  number++;
+              }*/
+              List<GzItem> gzItems = new ArrayList<GzItem>();
+              Integer gzNumber = 1;
 
-            model.addAttribute("title", word + "关系图谱");
-            model.addAttribute("keyword", word);
-            model.addAttribute("items", items);
-            model.addAttribute("gzitems", gzItems);
-            return "";
+              model.addAttribute("title", word + "关系图谱");
+              model.addAttribute("keyword", word);
+              /*model.addAttribute("items", items);*/
+              model.addAttribute("gzitems", gzItems);
+              return "";
 
-        } catch (UnsupportedEncodingException e) {
+          } catch (UnsupportedEncodingException e) {
 
-            e.printStackTrace();
-            return "";
-        }
+              e.printStackTrace();
+              return "";
+          }
 
-    }
+      }
 
-    @RequestMapping(value = "/owledge", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public String uPreStatic(HttpServletRequest request, Model model) {
-        try {
+//      @RequestMapping(value = "/owledge", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+//      public String uPreStatic(HttpServletRequest request, Model model) {
+//          try {
+//
+//              if (view.containsKey(request.getParameter("word"))) {
+//                  request.setCharacterEncoding("UTF-8");
+//                  String word = request.getParameter("word");
+//                  Client client = TransportClient
+//                          .builder()
+//                          .build()
+//                          .addTransportAddress(
+//                                  new InetSocketTransportAddress(InetAddress
+//                                          .getByName("124.127.117.208"), 9735));
+//                  QueryBuilder wfQB = queryStringQuery("result.body:" + word)
+//                          .field("*").analyzeWildcard(true);
+//
+//                  TermsBuilder wfAggs = AggregationBuilders
+//                          .terms("wf")
+//                          .field("result.body")
+//                          .exclude(
+//                                  "者|两个|鲜|当然|7|这里|没|一次|因|如何|内容|日|发生|来源|至|一起|影响|吃|工作|曾|各种|直接|继续|其实|生活|其他|要求|6|目前|因此|选择|金|表示|当时|之一|起|只是|之间|除了|您|打|吗|主要|出了|希望|自|家|得|所有|吧|地方|那么|二|这一|任何|一直|正|对于|它|非常|想|如|知道|不会|称|那|成|由于|发现|甚至|发|一种|第一|10|其中|成了|支持|点|每天|有的|进入|最后|点击|4|一样|虽然|包括|出现|国|更多|面的|过|之后|什么|以及|时候|好|高|看到|而且|5|大家|发展|需要|所以|呢|请|为了|们|可能|重要|很多|出|万|三|认为|看|所|只有|只|最大|前|但是|一些|这种|同时|不能|时间|个|现在|去|的人|到了|2|再|进行|3|作为|通过|做|之|提供|今天|多|详情|问题|美|开始|新|向|原文|其|1|更|成为|可|已设置|如果|都是|下|这是|他们|这些|用|里|还是|不是|小|精选|能|筛选|这个|也是|人|写|会|作者|显示|地|还有|来|需|已经|这样|因为|他|才|这|最|就是|文章|将|你|到|没有|了解|要|大|自己|以上|说|时|一扫|中|介绍|信|信号|公众|关注|功能|加载|号|已|微|我|扫|投诉|提交|留言|该|阅读|和|后|有|为|也|可以|我们|一个|一|都|不|由|上")
+//                          .size(30).order(Terms.Order.count(false));
+//                  SearchRequestBuilder wfSB = client
+//                          .prepareSearch("pyspider")
+//                          .addAggregation(wfAggs)
+//                          .addSort(SortParseElement.SCORE_FIELD_NAME,
+//                                  SortOrder.DESC).setScroll(new TimeValue(60000))
+//                          .setQuery(wfQB).setSize(0);
+//                  // 词语出现次数查询
+//                  QueryBuilder wcQB = queryStringQuery(
+//                          "result.body:\"" + word + "\"").analyzeWildcard(true);
+//                  DateHistogramInterval interval = new DateHistogramInterval("7D");
+//                  QueryBuilder wcQB1 = queryStringQuery(word).analyzeWildcard(
+//                          true).queryName(word);
+//                  FiltersAggregationBuilder wcFilter = AggregationBuilders
+//                          .filters("filter").filter(word, wcQB1);
+//                  DateHistogramBuilder wcAggs = AggregationBuilders
+//                          .dateHistogram("trend").field("result.issuedate")
+//                          .interval(interval).timeZone("Asia/Shanghai")
+//                          .minDocCount(1).subAggregation(wcFilter)
+//                          .order(Histogram.Order.KEY_ASC);
+//                  SearchRequestBuilder wcSB = client.prepareSearch("pyspider")
+//                          .addAggregation(wcAggs).setScroll(new TimeValue(60000))
+//                          .setQuery(wcQB).setSize(0);
+//                  // 进行多搜索
+//                  MultiSearchResponse sr = client.prepareMultiSearch().add(wcSB)
+//                          .add(wfSB).execute().actionGet();
+//                  MultiSearchResponse.Item wcItem = sr.getResponses()[0];
+//                  MultiSearchResponse.Item wfItem = sr.getResponses()[1];
+//                  ObjectMapper mapper = new ObjectMapper();
+//                  // 统计趋势
+//                  SearchResponse wcSR = wcItem.getResponse();
+//                  List<String> period = new ArrayList<String>();
+//                  List<Long> word1Count = new ArrayList<Long>();
+//                  Histogram trend = wcSR.getAggregations().get("trend");
+//                  for (Histogram.Bucket entry : trend.getBuckets()) {
+//                      String keyAsString = entry.getKeyAsString();
+//                      // 按月时间
+//                      String time = keyAsString.substring(0, 10);
+//                      if (Integer.parseInt(time.substring(0, 4)) < 2016)
+//                          continue;
+//                      period.add("\"" + time + "\"");
+//                      Filters fa = entry.getAggregations().get("filter");
+//                      for (Filters.Bucket ent : fa.getBuckets()) {
+//                          // 关键字
+//                          String city = ent.getKeyAsString();
+//                          // 出现次数
+//                          long docCount = ent.getDocCount();
+//                          word1Count.add(docCount);
+//                      }
+//
+//                  }
+//
+//                  // 统计关联词
+//                  SearchResponse wfSR = wfItem.getResponse();
+//                  long all = wfSR.getHits().getTotalHits();
+//                  List<String> nodes = new ArrayList<String>();
+//                  List<String> links = new ArrayList<String>();
+//                  Terms agg = wfSR.getAggregations().get("wf");
+//
+//                  Nodes cnode = new Nodes();
+//                  cnode.setCategory(0);
+//                  cnode.setName("关键字-" + word);
+//                  cnode.setValue(all);
+//                  String center = mapper.writeValueAsString(cnode);
+//                  nodes.add(center);
+//                  for (Terms.Bucket entry : agg.getBuckets()) {
+//                      String key = (String) entry.getKey(); // bucket key
+//                      long docCount = entry.getDocCount();
+//                      if (docCount != all) {
+//                          Nodes node = new Nodes();
+//                          node.setCategory(1);
+//                          node.setName(key);
+//                          node.setValue(docCount);
+//                          String tmp1 = mapper.writeValueAsString(node);
+//                          nodes.add(tmp1);
+//                          Links link = new Links();
+//                          link.setF(1.5);
+//                          link.setSource("关键字-" + word);
+//                          link.setTarget(key);
+//                          link.setWeight(docCount);
+//                          String tmp2 = mapper.writeValueAsString(link);
+//                          links.add(tmp2);
+//                      }
+//                  }
+//                  List<String> legend = new ArrayList<String>();
+//                  Legend wordLeg = new Legend();
+//                  wordLeg.setName(word);
+//
+//                  String wordStr = mapper.writeValueAsString(wordLeg);
+//                  legend.add(wordStr);
+//                  model.addAttribute("title", word + "的关键词热度");
+//                  model.addAttribute("period", period.toString());
+//                  model.addAttribute("word1Count", word1Count.toString());
+//                  model.addAttribute("links", links.toString());
+//                  model.addAttribute("nodes", nodes.toString());
+//                  model.addAttribute("word1", word);
+//                  model.addAttribute("word2Count", "[]");
+//                  model.addAttribute("legend", legend.toString());
+//                  model.addAttribute("keyword", word);
+//                  return view.get(request.getParameter("word"));
+//              }
+//
+//              if (request.getParameter("word") == null
+//                      || request.getParameter("word").equals("")) {
+//                  System.out.println(request.getParameter("word"));
+//                  return "knowledge";
+//              }
+//              request.setCharacterEncoding("UTF-8");
+//              String word = request.getParameter("word");
+//              Client client = TransportClient
+//                      .builder()
+//                      .build()
+//                      .addTransportAddress(
+//                              new InetSocketTransportAddress(InetAddress
+//                                      .getByName("124.127.117.208"), 9735));
+//              if (word.split(",").length > 1) {
+//                  String word1 = word.split(",")[0];
+//                  String word2 = word.split(",")[1];
+//                  // 关联词查询
+//                  QueryBuilder wfQB = queryStringQuery("result.body:" + word1)
+//                          .field("*").analyzeWildcard(true);
+//
+//                  TermsBuilder wfAggs = AggregationBuilders
+//                          .terms("wf")
+//                          .field("result.body")
+//                          .exclude(
+//                                  "者|两个|鲜|当然|7|这里|没|一次|因|如何|内容|日|发生|来源|至|一起|影响|吃|工作|曾|各种|直接|继续|其实|生活|其他|要求|6|目前|因此|选择|金|表示|当时|之一|起|只是|之间|除了|您|打|吗|主要|出了|希望|自|家|得|所有|吧|地方|那么|二|这一|任何|一直|正|对于|它|非常|想|如|知道|不会|称|那|成|由于|发现|甚至|发|一种|第一|10|其中|成了|支持|点|每天|有的|进入|最后|点击|4|一样|虽然|包括|出现|国|更多|面的|过|之后|什么|以及|时候|好|高|看到|而且|5|大家|发展|需要|所以|呢|请|为了|们|可能|重要|很多|出|万|三|认为|看|所|只有|只|最大|前|但是|一些|这种|同时|不能|时间|个|现在|去|的人|到了|2|再|进行|3|作为|通过|做|之|提供|今天|多|详情|问题|美|开始|新|向|原文|其|1|更|成为|可|已设置|如果|都是|下|这是|他们|这些|用|里|还是|不是|小|精选|能|筛选|这个|也是|人|写|会|作者|显示|地|还有|来|需|已经|这样|因为|他|才|这|最|就是|文章|将|你|到|没有|了解|要|大|自己|以上|说|时|一扫|中|介绍|信|信号|公众|关注|功能|加载|号|已|微|我|扫|投诉|提交|留言|该|阅读|和|后|有|为|也|可以|我们|一个|一|都|不|由|上")
+//                          .size(30).order(Order.count(false));
+//                  SearchRequestBuilder wfSB = client
+//                          .prepareSearch("pyspider")
+//                          .addAggregation(wfAggs)
+//                          .addSort(SortParseElement.SCORE_FIELD_NAME,
+//                                  SortOrder.DESC).setScroll(new TimeValue(60000))
+//                          .setQuery(wfQB).setSize(0);
+//                  // 词语出现次数查询
+//
+//                  QueryBuilder wcQB = queryStringQuery(
+//                          "result.body:\"" + word1 + "\" OR result.body:\""
+//                                  + word2 + "\"").analyzeWildcard(true);
+//                  DateHistogramInterval interval = new DateHistogramInterval("7D");
+//                  QueryBuilder wcQB1 = queryStringQuery(word1).analyzeWildcard(
+//                          true).queryName(word1);
+//                  QueryBuilder wcQB2 = queryStringQuery(word2).analyzeWildcard(
+//                          true).queryName(word2);
+//                  FiltersAggregationBuilder wcFilter = AggregationBuilders
+//                          .filters("filter").filter(word2, wcQB2)
+//                          .filter(word1, wcQB1);
+//                  DateHistogramBuilder wcAggs = AggregationBuilders
+//                          .dateHistogram("trend").field("result.issuedate")
+//                          .interval(interval).timeZone("Asia/Shanghai")
+//                          .minDocCount(1).subAggregation(wcFilter)
+//                          .order(Histogram.Order.KEY_ASC);
+//                  SearchRequestBuilder wcSB = client.prepareSearch("pyspider")
+//                          .addAggregation(wcAggs).setScroll(new TimeValue(60000))
+//                          .setQuery(wcQB).setSize(0);
+//                  // 进行多搜索
+//                  MultiSearchResponse sr = client.prepareMultiSearch().add(wcSB)
+//                          .add(wfSB).execute().actionGet();
+//                  MultiSearchResponse.Item wcItem = sr.getResponses()[0];
+//                  MultiSearchResponse.Item wfItem = sr.getResponses()[1];
+//                  ObjectMapper mapper = new ObjectMapper();
+//                  // 统计趋势
+//                  SearchResponse wcSR = wcItem.getResponse();
+//                  List<String> period = new ArrayList<String>();
+//                  List<Long> word1Count = new ArrayList<Long>();
+//                  List<Long> word2Count = new ArrayList<Long>();
+//                  Histogram trend = wcSR.getAggregations().get("trend");
+//                  for (Histogram.Bucket entry : trend.getBuckets()) {
+//                      String keyAsString = entry.getKeyAsString();
+//                      // 按月时间
+//                      String time = keyAsString.substring(0, 10);
+//                      if (Integer.parseInt(time.substring(0, 4)) < 2016)
+//                          continue;
+//                      period.add("\"" + time + "\"");
+//                      Filters fa = entry.getAggregations().get("filter");
+//                      for (Filters.Bucket ent : fa.getBuckets()) {
+//                          // 关键字
+//                          String city = ent.getKeyAsString();
+//                          // 出现次数
+//                          long docCount = ent.getDocCount();
+//                          if (city.equals(word1)) {
+//                              word1Count.add(docCount);
+//                          } else {
+//                              word2Count.add(docCount);
+//                          }
+//
+//                      }
+//                  }
+//                  // 统计关联词
+//                  SearchResponse wfSR = wfItem.getResponse();
+//
+//                  List<String> nodes = new ArrayList<String>();
+//                  List<String> links = new ArrayList<String>();
+//                  long all = wfSR.getHits().getTotalHits();
+//                  Terms agg = wfSR.getAggregations().get("wf");
+//                  Nodes cnode = new Nodes();
+//                  cnode.setCategory(0);
+//                  cnode.setName("关键字-" + word1);
+//                  cnode.setValue(all);
+//                  String center = mapper.writeValueAsString(cnode);
+//                  nodes.add(center);
+//                  for (Terms.Bucket entry : agg.getBuckets()) {
+//                      String key = (String) entry.getKey(); // bucket key
+//                      long docCount = entry.getDocCount();
+//                      if (docCount != all) {
+//                          Nodes node = new Nodes();
+//                          node.setCategory(1);
+//                          node.setName(key);
+//                          node.setValue(docCount);
+//                          String tmp1 = mapper.writeValueAsString(node);
+//                          nodes.add(tmp1);
+//                          Links link = new Links();
+//                          link.setF(1.5);
+//                          link.setSource("关键字-" + word1);
+//                          link.setTarget(key);
+//                          link.setWeight(docCount);
+//                          String tmp2 = mapper.writeValueAsString(link);
+//                          links.add(tmp2);
+//                      }
+//                  }
+//                  List<String> legend = new ArrayList<String>();
+//                  Legend word1Leg = new Legend();
+//                  word1Leg.setName(word1);
+//                  Legend word2Leg = new Legend();
+//                  word2Leg.setName(word2);
+//                  String word1Str = mapper.writeValueAsString(word1Leg);
+//                  legend.add(word1Str);
+//                  String word2Str = mapper.writeValueAsString(word2Leg);
+//                  legend.add(word2Str);
+//                  model.addAttribute("title", word1 + "和" + word2 + "的关键词热度");
+//                  model.addAttribute("period", period.toString());
+//                  model.addAttribute("word1Count", word1Count.toString());
+//                  model.addAttribute("word2Count", word2Count.toString());
+//                  model.addAttribute("links", links.toString());
+//                  model.addAttribute("nodes", nodes.toString());
+//                  model.addAttribute("word1", word1);
+//                  model.addAttribute("word2", word2);
+//                  model.addAttribute("legend", legend.toString());
+//                  model.addAttribute("keyword", word);
+//                  return "knowledge_bak";
+//              } else {
+//                  // 一个关键字
+//                  // 关联词查询
+//                  QueryBuilder wfQB = queryStringQuery("result.body:" + word)
+//                          .field("*").analyzeWildcard(true);
+//
+//                  TermsBuilder wfAggs = AggregationBuilders
+//                          .terms("wf")
+//                          .field("result.body")
+//                          .exclude(
+//                                  "者|两个|鲜|当然|7|这里|没|一次|因|如何|内容|日|发生|来源|至|一起|影响|吃|工作|曾|各种|直接|继续|其实|生活|其他|要求|6|目前|因此|选择|金|表示|当时|之一|起|只是|之间|除了|您|打|吗|主要|出了|希望|自|家|得|所有|吧|地方|那么|二|这一|任何|一直|正|对于|它|非常|想|如|知道|不会|称|那|成|由于|发现|甚至|发|一种|第一|10|其中|成了|支持|点|每天|有的|进入|最后|点击|4|一样|虽然|包括|出现|国|更多|面的|过|之后|什么|以及|时候|好|高|看到|而且|5|大家|发展|需要|所以|呢|请|为了|们|可能|重要|很多|出|万|三|认为|看|所|只有|只|最大|前|但是|一些|这种|同时|不能|时间|个|现在|去|的人|到了|2|再|进行|3|作为|通过|做|之|提供|今天|多|详情|问题|美|开始|新|向|原文|其|1|更|成为|可|已设置|如果|都是|下|这是|他们|这些|用|里|还是|不是|小|精选|能|筛选|这个|也是|人|写|会|作者|显示|地|还有|来|需|已经|这样|因为|他|才|这|最|就是|文章|将|你|到|没有|了解|要|大|自己|以上|说|时|一扫|中|介绍|信|信号|公众|关注|功能|加载|号|已|微|我|扫|投诉|提交|留言|该|阅读|和|后|有|为|也|可以|我们|一个|一|都|不|由|上")
+//                          .size(30).order(Order.count(false));
+//                  SearchRequestBuilder wfSB = client
+//                          .prepareSearch("pyspider")
+//                          .addAggregation(wfAggs)
+//                          .addSort(SortParseElement.SCORE_FIELD_NAME,
+//                                  SortOrder.DESC).setScroll(new TimeValue(60000))
+//                          .setQuery(wfQB).setSize(0);
+//                  // 词语出现次数查询
+//                  QueryBuilder wcQB = queryStringQuery(
+//                          "result.body:\"" + word + "\"").analyzeWildcard(true);
+//                  DateHistogramInterval interval = new DateHistogramInterval("7D");
+//                  QueryBuilder wcQB1 = queryStringQuery(word).analyzeWildcard(
+//                          true).queryName(word);
+//                  FiltersAggregationBuilder wcFilter = AggregationBuilders
+//                          .filters("filter").filter(word, wcQB1);
+//                  DateHistogramBuilder wcAggs = AggregationBuilders
+//                          .dateHistogram("trend").field("result.issuedate")
+//                          .interval(interval).timeZone("Asia/Shanghai")
+//                          .minDocCount(1).subAggregation(wcFilter)
+//                          .order(Histogram.Order.KEY_ASC);
+//                  SearchRequestBuilder wcSB = client.prepareSearch("pyspider")
+//                          .addAggregation(wcAggs).setScroll(new TimeValue(60000))
+//                          .setQuery(wcQB).setSize(0);
+//                  // 进行多搜索
+//                  MultiSearchResponse sr = client.prepareMultiSearch().add(wcSB)
+//                          .add(wfSB).execute().actionGet();
+//                  MultiSearchResponse.Item wcItem = sr.getResponses()[0];
+//                  MultiSearchResponse.Item wfItem = sr.getResponses()[1];
+//                  ObjectMapper mapper = new ObjectMapper();
+//                  // 统计趋势
+//                  SearchResponse wcSR = wcItem.getResponse();
+//                  List<String> period = new ArrayList<String>();
+//                  List<Long> word1Count = new ArrayList<Long>();
+//                  Histogram trend = wcSR.getAggregations().get("trend");
+//                  for (Histogram.Bucket entry : trend.getBuckets()) {
+//                      String keyAsString = entry.getKeyAsString();
+//                      // 按月时间
+//                      String time = keyAsString.substring(0, 10);
+//                      if (Integer.parseInt(time.substring(0, 4)) < 2016)
+//                          continue;
+//                      period.add("\"" + time + "\"");
+//                      Filters fa = entry.getAggregations().get("filter");
+//                      for (Filters.Bucket ent : fa.getBuckets()) {
+//                          // 关键字
+//                          String city = ent.getKeyAsString();
+//                          // 出现次数
+//                          long docCount = ent.getDocCount();
+//                          word1Count.add(docCount);
+//                      }
+//
+//                  }
+//
+//                  // 统计关联词
+//                  SearchResponse wfSR = wfItem.getResponse();
+//                  long all = wfSR.getHits().getTotalHits();
+//                  List<String> nodes = new ArrayList<String>();
+//                  List<String> links = new ArrayList<String>();
+//                  Terms agg = wfSR.getAggregations().get("wf");
+//
+//                  Nodes cnode = new Nodes();
+//                  cnode.setCategory(0);
+//                  cnode.setName("关键字-" + word);
+//                  cnode.setValue(all);
+//                  String center = mapper.writeValueAsString(cnode);
+//                  nodes.add(center);
+//                  for (Terms.Bucket entry : agg.getBuckets()) {
+//                      String key = (String) entry.getKey(); // bucket key
+//                      long docCount = entry.getDocCount();
+//                      if (docCount != all) {
+//                          Nodes node = new Nodes();
+//                          node.setCategory(1);
+//                          node.setName(key);
+//                          node.setValue(docCount);
+//                          String tmp1 = mapper.writeValueAsString(node);
+//                          nodes.add(tmp1);
+//                          Links link = new Links();
+//                          link.setF(1.5);
+//                          link.setSource("关键字-" + word);
+//                          link.setTarget(key);
+//                          link.setWeight(docCount);
+//                          String tmp2 = mapper.writeValueAsString(link);
+//                          links.add(tmp2);
+//                      }
+//                  }
+//                  List<String> legend = new ArrayList<String>();
+//                  Legend wordLeg = new Legend();
+//                  wordLeg.setName(word);
+//
+//                  String wordStr = mapper.writeValueAsString(wordLeg);
+//                  legend.add(wordStr);
+//                  model.addAttribute("title", word + "的关键词热度");
+//                  model.addAttribute("period", period.toString());
+//                  model.addAttribute("word1Count", word1Count.toString());
+//                  model.addAttribute("links", links.toString());
+//                  model.addAttribute("nodes", nodes.toString());
+//                  model.addAttribute("word1", word);
+//                  model.addAttribute("word2Count", "[]");
+//                  model.addAttribute("legend", legend.toString());
+//                  model.addAttribute("keyword", word);
+//                  return "knowledge_bak";
+//              }
+//          } catch (UnsupportedEncodingException e) {
+//
+//              e.printStackTrace();
+//              return "";
+//          } catch (JsonMappingException e) {
+//              // TODO 自动生成的 catch 块
+//              e.printStackTrace();
+//              return "";
+//          } catch (JsonGenerationException e) {
+//              // TODO 自动生成的 catch 块
+//              e.printStackTrace();
+//              return "";
+//          } catch (JsonProcessingException e) {
+//              // TODO 自动生成的 catch 块
+//              e.printStackTrace();
+//              return "";
+//          } catch (UnknownHostException e) {
+//              // TODO 自动生成的 catch 块
+//              e.printStackTrace();
+//              return "";
+//          } catch (IOException e) {
+//              // TODO 自动生成的 catch 块
+//              e.printStackTrace();
+//              return "";
+//          }
+//
+//      }
 
-            if (view.containsKey(request.getParameter("word"))) {
-                request.setCharacterEncoding("UTF-8");
-                String word = request.getParameter("word");
-                Client client = TransportClient
-                        .builder()
-                        .build()
-                        .addTransportAddress(
-                                new InetSocketTransportAddress(InetAddress
-                                        .getByName("124.127.117.208"), 9735));
-                QueryBuilder wfQB = queryStringQuery("result.body:" + word)
-                        .field("*").analyzeWildcard(true);
+//      @RequestMapping(value = "/knowledge", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+//      public String uStatic(HttpServletRequest request, Model model)
+//              throws SQLException {
+//          try {
+//
+//              if (request.getParameter("word") == null
+//                      || request.getParameter("word").equals("")) {
+//                  System.out.println(request.getParameter("word"));
+//                  return "knowledge";
+//              }
+//              request.setCharacterEncoding("UTF-8");
+//              String word = request.getParameter("word");
+//              Settings settings = Settings.settingsBuilder()
+//                      .put("cluster.name", "deepsearch").build();
+//              Client client = TransportClient
+//                      .builder()
+//                      .build()
+//                      .addTransportAddress(
+//                              new InetSocketTransportAddress(InetAddress
+//                                      .getByName("124.127.117.208"), 9735));
+//              if (word.split(",").length > 1) {
+//                  String word1 = word.split(",")[0];
+//                  String word2 = word.split(",")[1];
+//                  // 词语出现次数查询
+//
+//                  QueryBuilder wcQB = queryStringQuery(
+//                          "result.body:\"" + word1 + "\" OR result.body:\""
+//                                  + word2 + "\"").analyzeWildcard(true);
+//                  DateHistogramInterval interval = new DateHistogramInterval("7D");
+//                  QueryBuilder wcQB1 = queryStringQuery(word1).analyzeWildcard(
+//                          true).queryName(word1);
+//                  QueryBuilder wcQB2 = queryStringQuery(word2).analyzeWildcard(
+//                          true).queryName(word2);
+//                  FiltersAggregationBuilder wcFilter = AggregationBuilders
+//                          .filters("filter").filter(word2, wcQB2)
+//                          .filter(word1, wcQB1);
+//                  DateHistogramBuilder wcAggs = AggregationBuilders
+//                          .dateHistogram("trend").field("result.issuedate")
+//                          .interval(interval).timeZone("Asia/Shanghai")
+//                          .minDocCount(1).subAggregation(wcFilter)
+//                          .order(Histogram.Order.KEY_ASC);
+//                  SearchRequestBuilder wcSB = client.prepareSearch("pyspider")
+//                          .addAggregation(wcAggs).setScroll(new TimeValue(60000))
+//                          .setQuery(wcQB).setSize(0);
+//                  // 进行多搜索
+//                  MultiSearchResponse sr = client.prepareMultiSearch().add(wcSB)
+//                          .execute().actionGet();
+//                  MultiSearchResponse.Item wcItem = sr.getResponses()[0];
+//                  ObjectMapper mapper = new ObjectMapper();
+//                  // 统计趋势
+//                  SearchResponse wcSR = wcItem.getResponse();
+//                  List<String> period = new ArrayList<String>();
+//                  List<Long> word1Count = new ArrayList<Long>();
+//                  List<Long> word2Count = new ArrayList<Long>();
+//                  Histogram trend = wcSR.getAggregations().get("trend");
+//                  for (Histogram.Bucket entry : trend.getBuckets()) {
+//                      String keyAsString = entry.getKeyAsString();
+//                      // 按月时间
+//                      String time = keyAsString.substring(0, 10);
+//                      if (Integer.parseInt(time.substring(0, 4)) < 2016)
+//                          continue;
+//                      period.add("\"" + time + "\"");
+//                      Filters fa = entry.getAggregations().get("filter");
+//                      for (Filters.Bucket ent : fa.getBuckets()) {
+//                          // 关键字
+//                          String city = ent.getKeyAsString();
+//                          // 出现次数
+//                          long docCount = ent.getDocCount();
+//                          if (city.equals(word1)) {
+//                              word1Count.add(docCount);
+//                          } else {
+//                              word2Count.add(docCount);
+//                          }
+//
+//                      }
+//                  }
+//                  // 统计关联词
+//                  Connection con = DriverManager.getConnection(
+//                          "jdbc:neo4j://27.148.153.187:7474/", "neo4j", "nlp4");
+//                  String query = "MATCH (n {content:'" + word1.toLowerCase()
+//                          + "'} )-[r]->(f) "
+//                          + "RETURN n as node, r as dis ,f as nextlayer "
+//                          + "ORDER by r.weight DESC limit 20 " + "UNION "
+//                          + "MATCH (n {content:'" + word1.toLowerCase()
+//                          + "'} )-[r]->(f) "
+//                          + "WITH r.weight as weight, f as layer1 "
+//                          + "ORDER by weight DESC limit 20 "
+//                          + "MATCH (layer1)-[r]->(f2) "
+//                          + "return layer1 as node,r as dis , f2 as nextlayer "
+//                          + "ORDER by layer1.content, r.weight DESC limit 200";
+//                  PreparedStatement stmt = null; // 采用预编译，和关系数据库不一样的是,参数需要使用{1},{2},而不是?
+//                  ResultSet rs = null;
+//                  List<String> nodes = new ArrayList<String>();
+//                  List<String> links = new ArrayList<String>();
+//                  Node center = new Node();
+//                  center.setCategory(0);
+//                  center.setLabel(word);
+//                  center.setValue(1);
+//                  center.setName(word);
+//                  String centerStr = mapper.writeValueAsString(center);
+//                  nodes.add(centerStr);
+//                  try {
+//                      stmt = con.prepareStatement(query);
+//                      // stmt.setString(1,"John");
+//                      // stmt.setInt(1, 14);
+//                      rs = stmt.executeQuery();
+//                      while (rs.next()) {
+//                          double value = 0;
+//                          // 加入一条边
+//                          JSONObject linkJson = JSONObject.parseObject(rs
+//                                  .getString(2));
+//                          Link link = new Link();
+//                          link.setName(linkJson.getDouble("weight").toString());
+//                          link.setSource(linkJson.getString("from"));
+//                          value = linkJson.getDouble("weight");
+//                          link.setTarget(linkJson.getString("to"));
+//                          link.setWeight(1);
+//                          String linkStr = mapper.writeValueAsString(link);
+//                          links.add(linkStr);
+//                          // 加入一个点
+//                          JSONObject nodeJson = JSONObject.parseObject(rs
+//                                  .getString(3));
+//                          Node node = new Node();
+//                          node.setCategory(nodeJson.getString("category"));
+//                          node.setValue(1);
+//                          node.setName(nodeJson.getString("content"));
+//                          String nodeStr = mapper.writeValueAsString(node);
+//                          nodes.add(nodeStr);
+//                          // + "  "+ rs.getFloat("r.weight")
+//                          // + "  " +rs.getString("f.content"));
+//                      }
+//                  } catch (Exception e) {
+//                      e.printStackTrace();
+//                  } finally {
+//                      if (null != rs) {
+//                          rs.close();
+//                      }
+//                      if (null != stmt) {
+//                          stmt.close();
+//                      }
+//                  }
+//                  List<String> legend = new ArrayList<String>();
+//                  Legend wordLeg = new Legend();
+//                  wordLeg.setName(word);
+//
+//                  model.addAttribute("title", word1 + "和" + word2 + "的关键词热度");
+//                  model.addAttribute("period", period.toString());
+//                  model.addAttribute("word1Count", word1Count.toString());
+//                  model.addAttribute("word2Count", word2Count.toString());
+//                  model.addAttribute("links", links.toString());
+//                  model.addAttribute("nodes", nodes.toString());
+//                  model.addAttribute("word1", word1);
+//                  model.addAttribute("word2", word2);
+//                  model.addAttribute("legend", legend.toString());
+//                  model.addAttribute("keyword", word);
+//                  return "knowledge";
+//              } else {
+//                  // 一个关键字
+//                  // 关联词查询
+//
+//                  // 词语出现次数查询
+//                  QueryBuilder wcQB = queryStringQuery(
+//                          "result.body:\"" + word + "\"").analyzeWildcard(true);
+//                  DateHistogramInterval interval = new DateHistogramInterval("7D");
+//                  QueryBuilder wcQB1 = queryStringQuery(word).analyzeWildcard(
+//                          true).queryName(word);
+//                  FiltersAggregationBuilder wcFilter = AggregationBuilders
+//                          .filters("filter").filter(word, wcQB1);
+//                  DateHistogramBuilder wcAggs = AggregationBuilders
+//                          .dateHistogram("trend").field("result.issuedate")
+//                          .interval(interval).timeZone("Asia/Shanghai")
+//                          .minDocCount(1).subAggregation(wcFilter)
+//                          .order(Histogram.Order.KEY_ASC);
+//                  SearchRequestBuilder wcSB = client.prepareSearch("pyspider")
+//                          .addAggregation(wcAggs).setScroll(new TimeValue(60000))
+//                          .setQuery(wcQB).setSize(0);
+//                  // 进行多搜索
+//                  MultiSearchResponse sr = client.prepareMultiSearch().add(wcSB)
+//                          .execute().actionGet();
+//                  MultiSearchResponse.Item wcItem = sr.getResponses()[0];
+//                  ObjectMapper mapper = new ObjectMapper();
+//                  // 统计趋势
+//                  SearchResponse wcSR = wcItem.getResponse();
+//                  List<String> period = new ArrayList<String>();
+//                  List<Long> word1Count = new ArrayList<Long>();
+//                  Histogram trend = wcSR.getAggregations().get("trend");
+//                  for (Histogram.Bucket entry : trend.getBuckets()) {
+//                      String keyAsString = entry.getKeyAsString();
+//                      // 按月时间
+//                      String time = keyAsString.substring(0, 10);
+//                      if (Integer.parseInt(time.substring(0, 4)) < 2016)
+//                          continue;
+//                      period.add("\"" + time + "\"");
+//                      Filters fa = entry.getAggregations().get("filter");
+//                      for (Filters.Bucket ent : fa.getBuckets()) {
+//                          // 关键字
+//                          String city = ent.getKeyAsString();
+//                          // 出现次数
+//                          long docCount = ent.getDocCount();
+//                          word1Count.add(docCount);
+//                      }
+//
+//                  }
+//
+//                  // 统计关联词
+//
+//                  Connection con = DriverManager.getConnection(
+//                          "jdbc:neo4j://27.148.153.187:7474/", "neo4j", "nlp4");
+//                  String query = "MATCH (n {content:'" + word.toLowerCase()
+//                          + "'} )-[r]->(f) "
+//                          + "RETURN n as node, r as dis ,f as nextlayer "
+//                          + "ORDER by r.weight DESC limit 20 " + "UNION "
+//                          + "MATCH (n {content:'" + word.toLowerCase()
+//                          + "'} )-[r]->(f) "
+//                          + "WITH r.weight as weight, f as layer1 "
+//                          + "ORDER by weight DESC limit 20 "
+//                          + "MATCH (layer1)-[r]->(f2) "
+//                          + "return layer1 as node,r as dis , f2 as nextlayer "
+//                          + "ORDER by layer1.content, r.weight DESC limit 200";
+//                  PreparedStatement stmt = null; // 采用预编译，和关系数据库不一样的是,参数需要使用{1},{2},而不是?
+//                  ResultSet rs = null;
+//                  List<String> nodes = new ArrayList<String>();
+//                  List<String> links = new ArrayList<String>();
+//                  Node center = new Node();
+//                  center.setCategory(0);
+//                  center.setLabel(word.toLowerCase());
+//                  center.setValue(1);
+//                  center.setName(word.toLowerCase());
+//                  String centerStr = mapper.writeValueAsString(center);
+//                  nodes.add(centerStr);
+//                  try {
+//                      stmt = con.prepareStatement(query);
+//                      // stmt.setString(1,"John");
+//                      // stmt.setInt(1, 14);
+//                      rs = stmt.executeQuery();
+//                      while (rs.next()) {
+//                          double value = 0;
+//                          // 加入一条边
+//                          JSONObject linkJson = JSONObject.parseObject(rs
+//                                  .getString(2));
+//                          Link link = new Link();
+//                          link.setName(linkJson.getDouble("weight").toString());
+//                          link.setSource(linkJson.getString("from"));
+//                          value = linkJson.getDouble("weight");
+//                          link.setTarget(linkJson.getString("to"));
+//                          link.setWeight(1);
+//                          String linkStr = mapper.writeValueAsString(link);
+//                          links.add(linkStr);
+//                          // 加入一个点
+//                          JSONObject nodeJson = JSONObject.parseObject(rs
+//                                  .getString(3));
+//                          Node node = new Node();
+//                          node.setCategory(nodeJson.getString("category"));
+//                          node.setValue(1);
+//                          node.setName(nodeJson.getString("content"));
+//                          String nodeStr = mapper.writeValueAsString(node);
+//                          nodes.add(nodeStr);
+//                          System.out.println(rs.getString(3));
+//                          // + "  "+ rs.getFloat("r.weight")
+//                          // + "  " +rs.getString("f.content"));
+//                      }
+//                  } catch (Exception e) {
+//                      e.printStackTrace();
+//                  } finally {
+//                      if (null != rs) {
+//                          rs.close();
+//                      }
+//                      if (null != stmt) {
+//                          stmt.close();
+//                      }
+//                  }
+//                  List<String> legend = new ArrayList<String>();
+//                  Legend wordLeg = new Legend();
+//                  wordLeg.setName(word);
+//
+//                  model.addAttribute("title", word + "的关键词热度");
+//                  model.addAttribute("period", period.toString());
+//                  model.addAttribute("word1Count", word1Count.toString());
+//                  model.addAttribute("links", links.toString());
+//                  model.addAttribute("nodes", nodes.toString());
+//                  model.addAttribute("word1", word);
+//                  model.addAttribute("word2Count", "[]");
+//                  model.addAttribute("legend", legend.toString());
+//                  model.addAttribute("keyword", word);
+//                  return "knowledge";
+//              }
+//          } catch (UnsupportedEncodingException e) {
+//
+//              e.printStackTrace();
+//              return "";
+//          } catch (JsonMappingException e) {
+//              // TODO 自动生成的 catch 块
+//              e.printStackTrace();
+//              return "";
+//          } catch (JsonProcessingException e) {
+//              // TODO 自动生成的 catch 块
+//              e.printStackTrace();
+//              return "";
+//          } catch (UnknownHostException e) {
+//              // TODO 自动生成的 catch 块
+//              e.printStackTrace();
+//              return "";
+//          } catch (JsonGenerationException e) {
+//              // TODO 自动生成的 catch 块
+//              e.printStackTrace();
+//              return "";
+//          } catch (IOException e) {
+//              // TODO 自动生成的 catch 块
+//              e.printStackTrace();
+//              return "";
+//          }
+//
+//      }
 
-                TermsBuilder wfAggs = AggregationBuilders
-                        .terms("wf")
-                        .field("result.body")
-                        .exclude(
-                                "者|两个|鲜|当然|7|这里|没|一次|因|如何|内容|日|发生|来源|至|一起|影响|吃|工作|曾|各种|直接|继续|其实|生活|其他|要求|6|目前|因此|选择|金|表示|当时|之一|起|只是|之间|除了|您|打|吗|主要|出了|希望|自|家|得|所有|吧|地方|那么|二|这一|任何|一直|正|对于|它|非常|想|如|知道|不会|称|那|成|由于|发现|甚至|发|一种|第一|10|其中|成了|支持|点|每天|有的|进入|最后|点击|4|一样|虽然|包括|出现|国|更多|面的|过|之后|什么|以及|时候|好|高|看到|而且|5|大家|发展|需要|所以|呢|请|为了|们|可能|重要|很多|出|万|三|认为|看|所|只有|只|最大|前|但是|一些|这种|同时|不能|时间|个|现在|去|的人|到了|2|再|进行|3|作为|通过|做|之|提供|今天|多|详情|问题|美|开始|新|向|原文|其|1|更|成为|可|已设置|如果|都是|下|这是|他们|这些|用|里|还是|不是|小|精选|能|筛选|这个|也是|人|写|会|作者|显示|地|还有|来|需|已经|这样|因为|他|才|这|最|就是|文章|将|你|到|没有|了解|要|大|自己|以上|说|时|一扫|中|介绍|信|信号|公众|关注|功能|加载|号|已|微|我|扫|投诉|提交|留言|该|阅读|和|后|有|为|也|可以|我们|一个|一|都|不|由|上")
-                        .size(30).order(Order.count(false));
-                SearchRequestBuilder wfSB = client
-                        .prepareSearch("pyspider")
-                        .addAggregation(wfAggs)
-                        .addSort(SortParseElement.SCORE_FIELD_NAME,
-                                SortOrder.DESC).setScroll(new TimeValue(60000))
-                        .setQuery(wfQB).setSize(0);
-                // 词语出现次数查询
-                QueryBuilder wcQB = queryStringQuery(
-                        "result.body:\"" + word + "\"").analyzeWildcard(true);
-                DateHistogramInterval interval = new DateHistogramInterval("7D");
-                QueryBuilder wcQB1 = queryStringQuery(word).analyzeWildcard(
-                        true).queryName(word);
-                FiltersAggregationBuilder wcFilter = AggregationBuilders
-                        .filters("filter").filter(word, wcQB1);
-                DateHistogramBuilder wcAggs = AggregationBuilders
-                        .dateHistogram("trend").field("result.issuedate")
-                        .interval(interval).timeZone("Asia/Shanghai")
-                        .minDocCount(1).subAggregation(wcFilter)
-                        .order(Histogram.Order.KEY_ASC);
-                SearchRequestBuilder wcSB = client.prepareSearch("pyspider")
-                        .addAggregation(wcAggs).setScroll(new TimeValue(60000))
-                        .setQuery(wcQB).setSize(0);
-                // 进行多搜索
-                MultiSearchResponse sr = client.prepareMultiSearch().add(wcSB)
-                        .add(wfSB).execute().actionGet();
-                MultiSearchResponse.Item wcItem = sr.getResponses()[0];
-                MultiSearchResponse.Item wfItem = sr.getResponses()[1];
-                ObjectMapper mapper = new ObjectMapper();
-                // 统计趋势
-                SearchResponse wcSR = wcItem.getResponse();
-                List<String> period = new ArrayList<String>();
-                List<Long> word1Count = new ArrayList<Long>();
-                Histogram trend = wcSR.getAggregations().get("trend");
-                for (Histogram.Bucket entry : trend.getBuckets()) {
-                    String keyAsString = entry.getKeyAsString();
-                    // 按月时间
-                    String time = keyAsString.substring(0, 10);
-                    if (Integer.parseInt(time.substring(0, 4)) < 2016)
-                        continue;
-                    period.add("\"" + time + "\"");
-                    Filters fa = entry.getAggregations().get("filter");
-                    for (Filters.Bucket ent : fa.getBuckets()) {
-                        // 关键字
-                        String city = ent.getKeyAsString();
-                        // 出现次数
-                        long docCount = ent.getDocCount();
-                        word1Count.add(docCount);
-                    }
+      @RequestMapping(value = "/letter", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+      public
+      @ResponseBody
+      HashMap<String, ArrayList<?>> letter(HttpServletRequest request, Model model)
+              throws SQLException, JsonGenerationException, JsonMappingException,
+              IOException {
+          String word = request.getParameter("id");
 
-                }
+          // 统计关联词
+          Connection con = DriverManager.getConnection(
+                  "jdbc:neo4j://27.148.153.1:7474/", "neo4j", "nlp4");
+          PreparedStatement stmt = null; // 采用预编译，和关系数据库不一样的是,参数需要使用{1},{2},而不是?
+          ResultSet rs = null;
+          ArrayList<Node> nodes = new ArrayList<Node>();
+          ArrayList<Link> links = new ArrayList<Link>();
+          ArrayList<Letter> content = new ArrayList<Letter>();
+          HashSet<String> centers = new HashSet<String>();
+          ObjectMapper mapper = new ObjectMapper();
+          HashMap<String, ArrayList<?>> tmp = new HashMap<String, ArrayList<?>>();
 
-                // 统计关联词
-                SearchResponse wfSR = wfItem.getResponse();
-                long all = wfSR.getHits().getTotalHits();
-                List<String> nodes = new ArrayList<String>();
-                List<String> links = new ArrayList<String>();
-                Terms agg = wfSR.getAggregations().get("wf");
+          try {
 
-                Nodes cnode = new Nodes();
-                cnode.setCategory(0);
-                cnode.setName("关键字-" + word);
-                cnode.setValue(all);
-                String center = mapper.writeValueAsString(cnode);
-                nodes.add(center);
-                for (Terms.Bucket entry : agg.getBuckets()) {
-                    String key = (String) entry.getKey(); // bucket key
-                    long docCount = entry.getDocCount();
-                    if (docCount != all) {
-                        Nodes node = new Nodes();
-                        node.setCategory(1);
-                        node.setName(key);
-                        node.setValue(docCount);
-                        String tmp1 = mapper.writeValueAsString(node);
-                        nodes.add(tmp1);
-                        Links link = new Links();
-                        link.setF(1.5);
-                        link.setSource("关键字-" + word);
-                        link.setTarget(key);
-                        link.setWeight(docCount);
-                        String tmp2 = mapper.writeValueAsString(link);
-                        links.add(tmp2);
-                    }
-                }
-                List<String> legend = new ArrayList<String>();
-                Legend wordLeg = new Legend();
-                wordLeg.setName(word);
+              // String query = "MATCH(n:person) "
+              // + "WHERE n.article =~'.* "
+              // + word
+              // + ".*' OR n.article =~ '\\\\["
+              // + word
+              // + ".*' "
+              // + "WITH n "
+              // + "MATCH p = (n:person)-[r]-(m) "
+              // +
+              // "WHERE r.times > 1 and (m.category = 'crime' or m.category = 'institution' or m.category = 'location' or m.category = 'position') "
+              // + "return p as path, r.times as confidence";
+              //通过id查询文章
+              String query = "MATCH (article:other {content:'["
+                      + word
+                      + "]'})-[]->(n:person) "
+                      + "WITH n "
+                      + "MATCH p = (n:person)-[r]->(m) "
+                      + "WHERE r.times > 1 and (m.category = 'crime' or m.category = 'institution' or m.category = 'location' or m.category = 'position') and ( m.article =~'.* "
+                      + word + ",.*' OR m.article =~ '\\\\[" + word + ",.*') "
+                      + "return p as path, r.times as confidence";
 
-                String wordStr = mapper.writeValueAsString(wordLeg);
-                legend.add(wordStr);
-                model.addAttribute("title", word + "的关键词热度");
-                model.addAttribute("period", period.toString());
-                model.addAttribute("word1Count", word1Count.toString());
-                model.addAttribute("links", links.toString());
-                model.addAttribute("nodes", nodes.toString());
-                model.addAttribute("word1", word);
-                model.addAttribute("word2Count", "[]");
-                model.addAttribute("legend", legend.toString());
-                model.addAttribute("keyword", word);
-                return view.get(request.getParameter("word"));
-            }
+              stmt = con.prepareStatement(query);
+              // stmt.setString(1,"John");
+              // stmt.setInt(1, 14);
+              rs = stmt.executeQuery();
 
-            if (request.getParameter("word") == null
-                    || request.getParameter("word").equals("")) {
-                System.out.println(request.getParameter("word"));
-                return "knowledge";
-            }
-            request.setCharacterEncoding("UTF-8");
-            String word = request.getParameter("word");
-            Client client = TransportClient
-                    .builder()
-                    .build()
-                    .addTransportAddress(
-                            new InetSocketTransportAddress(InetAddress
-                                    .getByName("124.127.117.208"), 9735));
-            if (word.split(",").length > 1) {
-                String word1 = word.split(",")[0];
-                String word2 = word.split(",")[1];
-                // 关联词查询
-                QueryBuilder wfQB = queryStringQuery("result.body:" + word1)
-                        .field("*").analyzeWildcard(true);
+              while (rs.next()) {
+                  JSONArray json = JSONObject.parseArray(rs.getString(1));
+                  // 加入一个中心
+                  JSONObject centerJsos = json.getJSONObject(0);
+                  if (!centers.contains(centerJsos.getString("content"))) {
+                      centers.add(centerJsos.getString("content"));
+                      Node center = new Node();
+                      center.setCategory(centerJsos.getString("category"));
+                      center.setLabel(centerJsos.getString("content"));
+                      center.setValue(5);
+                      center.setName(centerJsos.getString("content"));
+                      // String centerStr = mapper.writeValueAsString(center);
+                      nodes.add(center);
+                  }
+                  // 加入一条边
+                  JSONObject linkJson = json.getJSONObject(1);
+                  if (!centers.contains(linkJson.getString("from") + "_"
+                          + linkJson.getString("to"))
+                          && !centers.contains(linkJson.getString("to") + "_"
+                          + linkJson.getString("from"))) {
+                      centers.add(linkJson.getString("from") + "_"
+                              + linkJson.getString("to"));
+                      Link link = new Link();
+                      link.setName(linkJson.getInteger("times").toString());
+                      link.setSource(linkJson.getString("from"));
+                      link.setTarget(linkJson.getString("to"));
+                      link.setWeight(1);
+                      // String linkStr = mapper.writeValueAsString(link);
+                      links.add(link);
+                  }
+                  // 加入一个点
+                  JSONObject nodeJson = json.getJSONObject(2);
+                  if (!centers.contains(nodeJson.getString("content"))) {
+                      centers.add(nodeJson.getString("content"));
+                      Node node = new Node();
+                      node.setCategory(nodeJson.getString("category"));
+                      node.setValue(1);
+                      node.setName(nodeJson.getString("content"));
+                      // String nodeStr = mapper.writeValueAsString(node);
+                      nodes.add(node);
+                  }
+                  // + "  "+ rs.getFloat("r.weight")
+                  // + "  " +rs.getString("f.content"));
+              }
 
-                TermsBuilder wfAggs = AggregationBuilders
-                        .terms("wf")
-                        .field("result.body")
-                        .exclude(
-                                "者|两个|鲜|当然|7|这里|没|一次|因|如何|内容|日|发生|来源|至|一起|影响|吃|工作|曾|各种|直接|继续|其实|生活|其他|要求|6|目前|因此|选择|金|表示|当时|之一|起|只是|之间|除了|您|打|吗|主要|出了|希望|自|家|得|所有|吧|地方|那么|二|这一|任何|一直|正|对于|它|非常|想|如|知道|不会|称|那|成|由于|发现|甚至|发|一种|第一|10|其中|成了|支持|点|每天|有的|进入|最后|点击|4|一样|虽然|包括|出现|国|更多|面的|过|之后|什么|以及|时候|好|高|看到|而且|5|大家|发展|需要|所以|呢|请|为了|们|可能|重要|很多|出|万|三|认为|看|所|只有|只|最大|前|但是|一些|这种|同时|不能|时间|个|现在|去|的人|到了|2|再|进行|3|作为|通过|做|之|提供|今天|多|详情|问题|美|开始|新|向|原文|其|1|更|成为|可|已设置|如果|都是|下|这是|他们|这些|用|里|还是|不是|小|精选|能|筛选|这个|也是|人|写|会|作者|显示|地|还有|来|需|已经|这样|因为|他|才|这|最|就是|文章|将|你|到|没有|了解|要|大|自己|以上|说|时|一扫|中|介绍|信|信号|公众|关注|功能|加载|号|已|微|我|扫|投诉|提交|留言|该|阅读|和|后|有|为|也|可以|我们|一个|一|都|不|由|上")
-                        .size(30).order(Order.count(false));
-                SearchRequestBuilder wfSB = client
-                        .prepareSearch("pyspider")
-                        .addAggregation(wfAggs)
-                        .addSort(SortParseElement.SCORE_FIELD_NAME,
-                                SortOrder.DESC).setScroll(new TimeValue(60000))
-                        .setQuery(wfQB).setSize(0);
-                // 词语出现次数查询
+              tmp.put("node", nodes);
+              System.out.println(nodes.size());
+              tmp.put("link", links);
+              System.out.println(links.size());
+           //   LetterServiceImpl ls = new LetterServiceImpl();
+             // Letter letter = ls.selectByPrimaryKey(word.trim());
+   //    /*mysql改es*/
+              EsMappper esMappper=new EsMappper();
+              Letter letter = esMappper.selectByPrimaryKey(word.trim());
 
-                QueryBuilder wcQB = queryStringQuery(
-                        "result.body:\"" + word1 + "\" OR result.body:\""
-                                + word2 + "\"").analyzeWildcard(true);
-                DateHistogramInterval interval = new DateHistogramInterval("7D");
-                QueryBuilder wcQB1 = queryStringQuery(word1).analyzeWildcard(
-                        true).queryName(word1);
-                QueryBuilder wcQB2 = queryStringQuery(word2).analyzeWildcard(
-                        true).queryName(word2);
-                FiltersAggregationBuilder wcFilter = AggregationBuilders
-                        .filters("filter").filter(word2, wcQB2)
-                        .filter(word1, wcQB1);
-                DateHistogramBuilder wcAggs = AggregationBuilders
-                        .dateHistogram("trend").field("result.issuedate")
-                        .interval(interval).timeZone("Asia/Shanghai")
-                        .minDocCount(1).subAggregation(wcFilter)
-                        .order(Histogram.Order.KEY_ASC);
-                SearchRequestBuilder wcSB = client.prepareSearch("pyspider")
-                        .addAggregation(wcAggs).setScroll(new TimeValue(60000))
-                        .setQuery(wcQB).setSize(0);
-                // 进行多搜索
-                MultiSearchResponse sr = client.prepareMultiSearch().add(wcSB)
-                        .add(wfSB).execute().actionGet();
-                MultiSearchResponse.Item wcItem = sr.getResponses()[0];
-                MultiSearchResponse.Item wfItem = sr.getResponses()[1];
-                ObjectMapper mapper = new ObjectMapper();
-                // 统计趋势
-                SearchResponse wcSR = wcItem.getResponse();
-                List<String> period = new ArrayList<String>();
-                List<Long> word1Count = new ArrayList<Long>();
-                List<Long> word2Count = new ArrayList<Long>();
-                Histogram trend = wcSR.getAggregations().get("trend");
-                for (Histogram.Bucket entry : trend.getBuckets()) {
-                    String keyAsString = entry.getKeyAsString();
-                    // 按月时间
-                    String time = keyAsString.substring(0, 10);
-                    if (Integer.parseInt(time.substring(0, 4)) < 2016)
-                        continue;
-                    period.add("\"" + time + "\"");
-                    Filters fa = entry.getAggregations().get("filter");
-                    for (Filters.Bucket ent : fa.getBuckets()) {
-                        // 关键字
-                        String city = ent.getKeyAsString();
-                        // 出现次数
-                        long docCount = ent.getDocCount();
-                        if (city.equals(word1)) {
-                            word1Count.add(docCount);
-                        } else {
-                            word2Count.add(docCount);
-                        }
+              SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+              Date date = new Date(Long.parseLong(letter.getSubmitDateTime()
+                      + "000"));
+              String time = sdf.format(date);
+              letter.setSubmitDateTime(time);
+              content.add(letter);
+              tmp.put("letter", content);
 
-                    }
-                }
-                // 统计关联词
-                SearchResponse wfSR = wfItem.getResponse();
+              return tmp;
+          } catch (Exception e) {
+              e.printStackTrace();
+              return null;
+          } finally {
+              if (null != rs) {
+                  rs.close();
+              }
+              if (null != stmt) {
+                  stmt.close();
+              }
 
-                List<String> nodes = new ArrayList<String>();
-                List<String> links = new ArrayList<String>();
-                long all = wfSR.getHits().getTotalHits();
-                Terms agg = wfSR.getAggregations().get("wf");
-                Nodes cnode = new Nodes();
-                cnode.setCategory(0);
-                cnode.setName("关键字-" + word1);
-                cnode.setValue(all);
-                String center = mapper.writeValueAsString(cnode);
-                nodes.add(center);
-                for (Terms.Bucket entry : agg.getBuckets()) {
-                    String key = (String) entry.getKey(); // bucket key
-                    long docCount = entry.getDocCount();
-                    if (docCount != all) {
-                        Nodes node = new Nodes();
-                        node.setCategory(1);
-                        node.setName(key);
-                        node.setValue(docCount);
-                        String tmp1 = mapper.writeValueAsString(node);
-                        nodes.add(tmp1);
-                        Links link = new Links();
-                        link.setF(1.5);
-                        link.setSource("关键字-" + word1);
-                        link.setTarget(key);
-                        link.setWeight(docCount);
-                        String tmp2 = mapper.writeValueAsString(link);
-                        links.add(tmp2);
-                    }
-                }
-                List<String> legend = new ArrayList<String>();
-                Legend word1Leg = new Legend();
-                word1Leg.setName(word1);
-                Legend word2Leg = new Legend();
-                word2Leg.setName(word2);
-                String word1Str = mapper.writeValueAsString(word1Leg);
-                legend.add(word1Str);
-                String word2Str = mapper.writeValueAsString(word2Leg);
-                legend.add(word2Str);
-                model.addAttribute("title", word1 + "和" + word2 + "的关键词热度");
-                model.addAttribute("period", period.toString());
-                model.addAttribute("word1Count", word1Count.toString());
-                model.addAttribute("word2Count", word2Count.toString());
-                model.addAttribute("links", links.toString());
-                model.addAttribute("nodes", nodes.toString());
-                model.addAttribute("word1", word1);
-                model.addAttribute("word2", word2);
-                model.addAttribute("legend", legend.toString());
-                model.addAttribute("keyword", word);
-                return "knowledge_bak";
-            } else {
-                // 一个关键字
-                // 关联词查询
-                QueryBuilder wfQB = queryStringQuery("result.body:" + word)
-                        .field("*").analyzeWildcard(true);
+          }
 
-                TermsBuilder wfAggs = AggregationBuilders
-                        .terms("wf")
-                        .field("result.body")
-                        .exclude(
-                                "者|两个|鲜|当然|7|这里|没|一次|因|如何|内容|日|发生|来源|至|一起|影响|吃|工作|曾|各种|直接|继续|其实|生活|其他|要求|6|目前|因此|选择|金|表示|当时|之一|起|只是|之间|除了|您|打|吗|主要|出了|希望|自|家|得|所有|吧|地方|那么|二|这一|任何|一直|正|对于|它|非常|想|如|知道|不会|称|那|成|由于|发现|甚至|发|一种|第一|10|其中|成了|支持|点|每天|有的|进入|最后|点击|4|一样|虽然|包括|出现|国|更多|面的|过|之后|什么|以及|时候|好|高|看到|而且|5|大家|发展|需要|所以|呢|请|为了|们|可能|重要|很多|出|万|三|认为|看|所|只有|只|最大|前|但是|一些|这种|同时|不能|时间|个|现在|去|的人|到了|2|再|进行|3|作为|通过|做|之|提供|今天|多|详情|问题|美|开始|新|向|原文|其|1|更|成为|可|已设置|如果|都是|下|这是|他们|这些|用|里|还是|不是|小|精选|能|筛选|这个|也是|人|写|会|作者|显示|地|还有|来|需|已经|这样|因为|他|才|这|最|就是|文章|将|你|到|没有|了解|要|大|自己|以上|说|时|一扫|中|介绍|信|信号|公众|关注|功能|加载|号|已|微|我|扫|投诉|提交|留言|该|阅读|和|后|有|为|也|可以|我们|一个|一|都|不|由|上")
-                        .size(30).order(Order.count(false));
-                SearchRequestBuilder wfSB = client
-                        .prepareSearch("pyspider")
-                        .addAggregation(wfAggs)
-                        .addSort(SortParseElement.SCORE_FIELD_NAME,
-                                SortOrder.DESC).setScroll(new TimeValue(60000))
-                        .setQuery(wfQB).setSize(0);
-                // 词语出现次数查询
-                QueryBuilder wcQB = queryStringQuery(
-                        "result.body:\"" + word + "\"").analyzeWildcard(true);
-                DateHistogramInterval interval = new DateHistogramInterval("7D");
-                QueryBuilder wcQB1 = queryStringQuery(word).analyzeWildcard(
-                        true).queryName(word);
-                FiltersAggregationBuilder wcFilter = AggregationBuilders
-                        .filters("filter").filter(word, wcQB1);
-                DateHistogramBuilder wcAggs = AggregationBuilders
-                        .dateHistogram("trend").field("result.issuedate")
-                        .interval(interval).timeZone("Asia/Shanghai")
-                        .minDocCount(1).subAggregation(wcFilter)
-                        .order(Histogram.Order.KEY_ASC);
-                SearchRequestBuilder wcSB = client.prepareSearch("pyspider")
-                        .addAggregation(wcAggs).setScroll(new TimeValue(60000))
-                        .setQuery(wcQB).setSize(0);
-                // 进行多搜索
-                MultiSearchResponse sr = client.prepareMultiSearch().add(wcSB)
-                        .add(wfSB).execute().actionGet();
-                MultiSearchResponse.Item wcItem = sr.getResponses()[0];
-                MultiSearchResponse.Item wfItem = sr.getResponses()[1];
-                ObjectMapper mapper = new ObjectMapper();
-                // 统计趋势
-                SearchResponse wcSR = wcItem.getResponse();
-                List<String> period = new ArrayList<String>();
-                List<Long> word1Count = new ArrayList<Long>();
-                Histogram trend = wcSR.getAggregations().get("trend");
-                for (Histogram.Bucket entry : trend.getBuckets()) {
-                    String keyAsString = entry.getKeyAsString();
-                    // 按月时间
-                    String time = keyAsString.substring(0, 10);
-                    if (Integer.parseInt(time.substring(0, 4)) < 2016)
-                        continue;
-                    period.add("\"" + time + "\"");
-                    Filters fa = entry.getAggregations().get("filter");
-                    for (Filters.Bucket ent : fa.getBuckets()) {
-                        // 关键字
-                        String city = ent.getKeyAsString();
-                        // 出现次数
-                        long docCount = ent.getDocCount();
-                        word1Count.add(docCount);
-                    }
+      }
 
-                }
+//      @RequestMapping(value = "/agg", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+//      public String uAgg(HttpServletRequest request, Model model)
+//              throws UnknownHostException {
+//          try {
+//
+//              if (request.getParameter("word") == null
+//                      || request.getParameter("word").equals("")) {
+//                  System.out.println(request.getParameter("word"));
+//                  return "knowledge";
+//              }
+//              request.setCharacterEncoding("UTF-8");
+//              String word = request.getParameter("word");
+//              Client client = TransportClient
+//                      .builder()
+//                      .build()
+//                      .addTransportAddress(
+//                              new InetSocketTransportAddress(InetAddress
+//                                      .getByName("124.127.117.207"), 9736));
+//              String word1 = "北京";
+//              String word2 = "巴黎";
+//              QueryBuilder qb = queryStringQuery(
+//                      "result.body:\"" + word1 + "\" OR result.body:\"" + word2
+//                              + "\"").analyzeWildcard(true);
+//              DateHistogramInterval interval = new DateHistogramInterval("1M");
+//              QueryBuilder qb1 = queryStringQuery("北京").analyzeWildcard(true)
+//                      .queryName("北京");
+//              QueryBuilder qb2 = queryStringQuery("巴黎").analyzeWildcard(true)
+//                      .queryName("巴黎");
+//              FiltersAggregationBuilder filter = AggregationBuilders.filters("3")
+//                      .filter("巴黎", qb2).filter("北京", qb1);
+//              DateHistogramBuilder aggs = AggregationBuilders.dateHistogram("2")
+//                      .field("result.issuedate").interval(interval)
+//                      .timeZone("Asia/Shanghai").minDocCount(1)
+//                      .subAggregation(filter);
+//              SearchRequestBuilder sbuilder = client.prepareSearch("pyspider")
+//                      .addAggregation(aggs).setScroll(new TimeValue(60000))
+//                      .setQuery(qb).setSize(0);
+//              SearchResponse scrollResp = sbuilder.execute().actionGet();
+//              List<SearchItem> items = new ArrayList<SearchItem>();
+//              Histogram agg = scrollResp.getAggregations().get("2");
+//              for (Histogram.Bucket entry : agg.getBuckets()) {
+//                  String keyAsString = entry.getKeyAsString();
+//                  // 按月时间
+//                  String time = keyAsString.substring(0, 10);
+//                  Filters fa = entry.getAggregations().get("3");
+//                  for (Filters.Bucket ent : fa.getBuckets()) {
+//                      // 关键字
+//                      String city = ent.getKeyAsString();
+//                      // 出现次数
+//                      long docCount = ent.getDocCount();
+//                  }
+//              }
+//              model.addAttribute("keyword", word);
+//              model.addAttribute("items", items);
+//              return "knowledge";
+//          } catch (UnsupportedEncodingException e) {
+//
+//              e.printStackTrace();
+//              return "";
+//          }
+//
+//      }
 
-                // 统计关联词
-                SearchResponse wfSR = wfItem.getResponse();
-                long all = wfSR.getHits().getTotalHits();
-                List<String> nodes = new ArrayList<String>();
-                List<String> links = new ArrayList<String>();
-                Terms agg = wfSR.getAggregations().get("wf");
+      @RequestMapping(value = "/vsearch")
+      public String phone() {
+          return "";
+      }
 
-                Nodes cnode = new Nodes();
-                cnode.setCategory(0);
-                cnode.setName("关键字-" + word);
-                cnode.setValue(all);
-                String center = mapper.writeValueAsString(cnode);
-                nodes.add(center);
-                for (Terms.Bucket entry : agg.getBuckets()) {
-                    String key = (String) entry.getKey(); // bucket key
-                    long docCount = entry.getDocCount();
-                    if (docCount != all) {
-                        Nodes node = new Nodes();
-                        node.setCategory(1);
-                        node.setName(key);
-                        node.setValue(docCount);
-                        String tmp1 = mapper.writeValueAsString(node);
-                        nodes.add(tmp1);
-                        Links link = new Links();
-                        link.setF(1.5);
-                        link.setSource("关键字-" + word);
-                        link.setTarget(key);
-                        link.setWeight(docCount);
-                        String tmp2 = mapper.writeValueAsString(link);
-                        links.add(tmp2);
-                    }
-                }
-                List<String> legend = new ArrayList<String>();
-                Legend wordLeg = new Legend();
-                wordLeg.setName(word);
+      @RequestMapping(value = "/log")
+      public String point(HttpServletRequest request) {
+          String username = request.getParameter("username");
+          request.setAttribute("userName", username);
+          return "business";
+      }
 
-                String wordStr = mapper.writeValueAsString(wordLeg);
-                legend.add(wordStr);
-                model.addAttribute("title", word + "的关键词热度");
-                model.addAttribute("period", period.toString());
-                model.addAttribute("word1Count", word1Count.toString());
-                model.addAttribute("links", links.toString());
-                model.addAttribute("nodes", nodes.toString());
-                model.addAttribute("word1", word);
-                model.addAttribute("word2Count", "[]");
-                model.addAttribute("legend", legend.toString());
-                model.addAttribute("keyword", word);
-                return "knowledge_bak";
-            }
-        } catch (UnsupportedEncodingException e) {
-
-            e.printStackTrace();
-            return "";
-        } catch (JsonProcessingException e) {
-            // TODO 自动生成的 catch 块
-            e.printStackTrace();
-            return "";
-        } catch (UnknownHostException e) {
-            // TODO 自动生成的 catch 块
-            e.printStackTrace();
-            return "";
-        } catch (JsonGenerationException e) {
-            // TODO 自动生成的 catch 块
-            e.printStackTrace();
-            return "";
-        } catch (JsonMappingException e) {
-            // TODO 自动生成的 catch 块
-            e.printStackTrace();
-            return "";
-        } catch (IOException e) {
-            // TODO 自动生成的 catch 块
-            e.printStackTrace();
-            return "";
-        }
-
-    }
-
-    @RequestMapping(value = "/knowledge", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public String uStatic(HttpServletRequest request, Model model)
-            throws SQLException {
-        try {
-
-            if (request.getParameter("word") == null
-                    || request.getParameter("word").equals("")) {
-                System.out.println(request.getParameter("word"));
-                return "knowledge";
-            }
-            request.setCharacterEncoding("UTF-8");
-            String word = request.getParameter("word");
-            Settings settings = Settings.settingsBuilder()
-                    .put("cluster.name", "deepsearch").build();
-            Client client = TransportClient
-                    .builder()
-                    .build()
-                    .addTransportAddress(
-                            new InetSocketTransportAddress(InetAddress
-                                    .getByName("124.127.117.208"), 9735));
-            if (word.split(",").length > 1) {
-                String word1 = word.split(",")[0];
-                String word2 = word.split(",")[1];
-                // 词语出现次数查询
-
-                QueryBuilder wcQB = queryStringQuery(
-                        "result.body:\"" + word1 + "\" OR result.body:\""
-                                + word2 + "\"").analyzeWildcard(true);
-                DateHistogramInterval interval = new DateHistogramInterval("7D");
-                QueryBuilder wcQB1 = queryStringQuery(word1).analyzeWildcard(
-                        true).queryName(word1);
-                QueryBuilder wcQB2 = queryStringQuery(word2).analyzeWildcard(
-                        true).queryName(word2);
-                FiltersAggregationBuilder wcFilter = AggregationBuilders
-                        .filters("filter").filter(word2, wcQB2)
-                        .filter(word1, wcQB1);
-                DateHistogramBuilder wcAggs = AggregationBuilders
-                        .dateHistogram("trend").field("result.issuedate")
-                        .interval(interval).timeZone("Asia/Shanghai")
-                        .minDocCount(1).subAggregation(wcFilter)
-                        .order(Histogram.Order.KEY_ASC);
-                SearchRequestBuilder wcSB = client.prepareSearch("pyspider")
-                        .addAggregation(wcAggs).setScroll(new TimeValue(60000))
-                        .setQuery(wcQB).setSize(0);
-                // 进行多搜索
-                MultiSearchResponse sr = client.prepareMultiSearch().add(wcSB)
-                        .execute().actionGet();
-                MultiSearchResponse.Item wcItem = sr.getResponses()[0];
-                ObjectMapper mapper = new ObjectMapper();
-                // 统计趋势
-                SearchResponse wcSR = wcItem.getResponse();
-                List<String> period = new ArrayList<String>();
-                List<Long> word1Count = new ArrayList<Long>();
-                List<Long> word2Count = new ArrayList<Long>();
-                Histogram trend = wcSR.getAggregations().get("trend");
-                for (Histogram.Bucket entry : trend.getBuckets()) {
-                    String keyAsString = entry.getKeyAsString();
-                    // 按月时间
-                    String time = keyAsString.substring(0, 10);
-                    if (Integer.parseInt(time.substring(0, 4)) < 2016)
-                        continue;
-                    period.add("\"" + time + "\"");
-                    Filters fa = entry.getAggregations().get("filter");
-                    for (Filters.Bucket ent : fa.getBuckets()) {
-                        // 关键字
-                        String city = ent.getKeyAsString();
-                        // 出现次数
-                        long docCount = ent.getDocCount();
-                        if (city.equals(word1)) {
-                            word1Count.add(docCount);
-                        } else {
-                            word2Count.add(docCount);
-                        }
-
-                    }
-                }
-                // 统计关联词
-                Connection con = DriverManager.getConnection(
-                        "jdbc:neo4j://27.148.153.187:7474/", "neo4j", "nlp4");
-                String query = "MATCH (n {content:'" + word1.toLowerCase()
-                        + "'} )-[r]->(f) "
-                        + "RETURN n as node, r as dis ,f as nextlayer "
-                        + "ORDER by r.weight DESC limit 20 " + "UNION "
-                        + "MATCH (n {content:'" + word1.toLowerCase()
-                        + "'} )-[r]->(f) "
-                        + "WITH r.weight as weight, f as layer1 "
-                        + "ORDER by weight DESC limit 20 "
-                        + "MATCH (layer1)-[r]->(f2) "
-                        + "return layer1 as node,r as dis , f2 as nextlayer "
-                        + "ORDER by layer1.content, r.weight DESC limit 200";
-                PreparedStatement stmt = null; // 采用预编译，和关系数据库不一样的是,参数需要使用{1},{2},而不是?
-                ResultSet rs = null;
-                List<String> nodes = new ArrayList<String>();
-                List<String> links = new ArrayList<String>();
-                Node center = new Node();
-                center.setCategory(0);
-                center.setLabel(word);
-                center.setValue(1);
-                center.setName(word);
-                String centerStr = mapper.writeValueAsString(center);
-                nodes.add(centerStr);
-                try {
-                    stmt = con.prepareStatement(query);
-                    // stmt.setString(1,"John");
-                    // stmt.setInt(1, 14);
-                    rs = stmt.executeQuery();
-                    while (rs.next()) {
-                        double value = 0;
-                        // 加入一条边
-                        JSONObject linkJson = JSONObject.parseObject(rs
-                                .getString(2));
-                        Link link = new Link();
-                        link.setName(linkJson.getDouble("weight").toString());
-                        link.setSource(linkJson.getString("from"));
-                        value = linkJson.getDouble("weight");
-                        link.setTarget(linkJson.getString("to"));
-                        link.setWeight(1);
-                        String linkStr = mapper.writeValueAsString(link);
-                        links.add(linkStr);
-                        // 加入一个点
-                        JSONObject nodeJson = JSONObject.parseObject(rs
-                                .getString(3));
-                        Node node = new Node();
-                        node.setCategory(nodeJson.getString("category"));
-                        node.setValue(1);
-                        node.setName(nodeJson.getString("content"));
-                        String nodeStr = mapper.writeValueAsString(node);
-                        nodes.add(nodeStr);
-                        // + "  "+ rs.getFloat("r.weight")
-                        // + "  " +rs.getString("f.content"));
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    if (null != rs) {
-                        rs.close();
-                    }
-                    if (null != stmt) {
-                        stmt.close();
-                    }
-                }
-                List<String> legend = new ArrayList<String>();
-                Legend wordLeg = new Legend();
-                wordLeg.setName(word);
-
-                model.addAttribute("title", word1 + "和" + word2 + "的关键词热度");
-                model.addAttribute("period", period.toString());
-                model.addAttribute("word1Count", word1Count.toString());
-                model.addAttribute("word2Count", word2Count.toString());
-                model.addAttribute("links", links.toString());
-                model.addAttribute("nodes", nodes.toString());
-                model.addAttribute("word1", word1);
-                model.addAttribute("word2", word2);
-                model.addAttribute("legend", legend.toString());
-                model.addAttribute("keyword", word);
-                return "knowledge";
-            } else {
-                // 一个关键字
-                // 关联词查询
-
-                // 词语出现次数查询
-                QueryBuilder wcQB = queryStringQuery(
-                        "result.body:\"" + word + "\"").analyzeWildcard(true);
-                DateHistogramInterval interval = new DateHistogramInterval("7D");
-                QueryBuilder wcQB1 = queryStringQuery(word).analyzeWildcard(
-                        true).queryName(word);
-                FiltersAggregationBuilder wcFilter = AggregationBuilders
-                        .filters("filter").filter(word, wcQB1);
-                DateHistogramBuilder wcAggs = AggregationBuilders
-                        .dateHistogram("trend").field("result.issuedate")
-                        .interval(interval).timeZone("Asia/Shanghai")
-                        .minDocCount(1).subAggregation(wcFilter)
-                        .order(Histogram.Order.KEY_ASC);
-                SearchRequestBuilder wcSB = client.prepareSearch("pyspider")
-                        .addAggregation(wcAggs).setScroll(new TimeValue(60000))
-                        .setQuery(wcQB).setSize(0);
-                // 进行多搜索
-                MultiSearchResponse sr = client.prepareMultiSearch().add(wcSB)
-                        .execute().actionGet();
-                MultiSearchResponse.Item wcItem = sr.getResponses()[0];
-                ObjectMapper mapper = new ObjectMapper();
-                // 统计趋势
-                SearchResponse wcSR = wcItem.getResponse();
-                List<String> period = new ArrayList<String>();
-                List<Long> word1Count = new ArrayList<Long>();
-                Histogram trend = wcSR.getAggregations().get("trend");
-                for (Histogram.Bucket entry : trend.getBuckets()) {
-                    String keyAsString = entry.getKeyAsString();
-                    // 按月时间
-                    String time = keyAsString.substring(0, 10);
-                    if (Integer.parseInt(time.substring(0, 4)) < 2016)
-                        continue;
-                    period.add("\"" + time + "\"");
-                    Filters fa = entry.getAggregations().get("filter");
-                    for (Filters.Bucket ent : fa.getBuckets()) {
-                        // 关键字
-                        String city = ent.getKeyAsString();
-                        // 出现次数
-                        long docCount = ent.getDocCount();
-                        word1Count.add(docCount);
-                    }
-
-                }
-
-                // 统计关联词
-
-                Connection con = DriverManager.getConnection(
-                        "jdbc:neo4j://27.148.153.187:7474/", "neo4j", "nlp4");
-                String query = "MATCH (n {content:'" + word.toLowerCase()
-                        + "'} )-[r]->(f) "
-                        + "RETURN n as node, r as dis ,f as nextlayer "
-                        + "ORDER by r.weight DESC limit 20 " + "UNION "
-                        + "MATCH (n {content:'" + word.toLowerCase()
-                        + "'} )-[r]->(f) "
-                        + "WITH r.weight as weight, f as layer1 "
-                        + "ORDER by weight DESC limit 20 "
-                        + "MATCH (layer1)-[r]->(f2) "
-                        + "return layer1 as node,r as dis , f2 as nextlayer "
-                        + "ORDER by layer1.content, r.weight DESC limit 200";
-                PreparedStatement stmt = null; // 采用预编译，和关系数据库不一样的是,参数需要使用{1},{2},而不是?
-                ResultSet rs = null;
-                List<String> nodes = new ArrayList<String>();
-                List<String> links = new ArrayList<String>();
-                Node center = new Node();
-                center.setCategory(0);
-                center.setLabel(word.toLowerCase());
-                center.setValue(1);
-                center.setName(word.toLowerCase());
-                String centerStr = mapper.writeValueAsString(center);
-                nodes.add(centerStr);
-                try {
-                    stmt = con.prepareStatement(query);
-                    // stmt.setString(1,"John");
-                    // stmt.setInt(1, 14);
-                    rs = stmt.executeQuery();
-                    while (rs.next()) {
-                        double value = 0;
-                        // 加入一条边
-                        JSONObject linkJson = JSONObject.parseObject(rs
-                                .getString(2));
-                        Link link = new Link();
-                        link.setName(linkJson.getDouble("weight").toString());
-                        link.setSource(linkJson.getString("from"));
-                        value = linkJson.getDouble("weight");
-                        link.setTarget(linkJson.getString("to"));
-                        link.setWeight(1);
-                        String linkStr = mapper.writeValueAsString(link);
-                        links.add(linkStr);
-                        // 加入一个点
-                        JSONObject nodeJson = JSONObject.parseObject(rs
-                                .getString(3));
-                        Node node = new Node();
-                        node.setCategory(nodeJson.getString("category"));
-                        node.setValue(1);
-                        node.setName(nodeJson.getString("content"));
-                        String nodeStr = mapper.writeValueAsString(node);
-                        nodes.add(nodeStr);
-                        System.out.println(rs.getString(3));
-                        // + "  "+ rs.getFloat("r.weight")
-                        // + "  " +rs.getString("f.content"));
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    if (null != rs) {
-                        rs.close();
-                    }
-                    if (null != stmt) {
-                        stmt.close();
-                    }
-                }
-                List<String> legend = new ArrayList<String>();
-                Legend wordLeg = new Legend();
-                wordLeg.setName(word);
-
-                model.addAttribute("title", word + "的关键词热度");
-                model.addAttribute("period", period.toString());
-                model.addAttribute("word1Count", word1Count.toString());
-                model.addAttribute("links", links.toString());
-                model.addAttribute("nodes", nodes.toString());
-                model.addAttribute("word1", word);
-                model.addAttribute("word2Count", "[]");
-                model.addAttribute("legend", legend.toString());
-                model.addAttribute("keyword", word);
-                return "knowledge";
-            }
-        } catch (UnsupportedEncodingException e) {
-
-            e.printStackTrace();
-            return "";
-        } catch (JsonProcessingException e) {
-            // TODO 自动生成的 catch 块
-            e.printStackTrace();
-            return "";
-        } catch (UnknownHostException e) {
-            // TODO 自动生成的 catch 块
-            e.printStackTrace();
-            return "";
-        } catch (JsonGenerationException e) {
-            // TODO 自动生成的 catch 块
-            e.printStackTrace();
-            return "";
-        } catch (JsonMappingException e) {
-            // TODO 自动生成的 catch 块
-            e.printStackTrace();
-            return "";
-        } catch (IOException e) {
-            // TODO 自动生成的 catch 块
-            e.printStackTrace();
-            return "";
-        }
-
-    }
-
-    @RequestMapping(value = "/letter", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-    public
-    @ResponseBody
-    HashMap<String, ArrayList<?>> letter(HttpServletRequest request, Model model)
-            throws SQLException, JsonGenerationException, JsonMappingException,
-            IOException {
-        String word = request.getParameter("id");
-
-        // 统计关联词
-        Connection con = DriverManager.getConnection(
-                "jdbc:neo4j://27.148.153.1:7474/", "neo4j", "nlp4");
-        PreparedStatement stmt = null; // 采用预编译，和关系数据库不一样的是,参数需要使用{1},{2},而不是?
-        ResultSet rs = null;
-        ArrayList<Node> nodes = new ArrayList<Node>();
-        ArrayList<Link> links = new ArrayList<Link>();
-        ArrayList<Letter> content = new ArrayList<Letter>();
-        HashSet<String> centers = new HashSet<String>();
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap<String, ArrayList<?>> tmp = new HashMap<String, ArrayList<?>>();
-
-        try {
-
-            // String query = "MATCH(n:person) "
-            // + "WHERE n.article =~'.* "
-            // + word
-            // + ".*' OR n.article =~ '\\\\["
-            // + word
-            // + ".*' "
-            // + "WITH n "
-            // + "MATCH p = (n:person)-[r]-(m) "
-            // +
-            // "WHERE r.times > 1 and (m.category = 'crime' or m.category = 'institution' or m.category = 'location' or m.category = 'position') "
-            // + "return p as path, r.times as confidence";
-            //通过id查询文章
-            String query = "MATCH (article:other {content:'["
-                    + word
-                    + "]'})-[]->(n:person) "
-                    + "WITH n "
-                    + "MATCH p = (n:person)-[r]->(m) "
-                    + "WHERE r.times > 1 and (m.category = 'crime' or m.category = 'institution' or m.category = 'location' or m.category = 'position') and ( m.article =~'.* "
-                    + word + ",.*' OR m.article =~ '\\\\[" + word + ",.*') "
-                    + "return p as path, r.times as confidence";
-
-            stmt = con.prepareStatement(query);
-            // stmt.setString(1,"John");
-            // stmt.setInt(1, 14);
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                JSONArray json = JSONObject.parseArray(rs.getString(1));
-                // 加入一个中心
-                JSONObject centerJsos = json.getJSONObject(0);
-                if (!centers.contains(centerJsos.getString("content"))) {
-                    centers.add(centerJsos.getString("content"));
-                    Node center = new Node();
-                    center.setCategory(centerJsos.getString("category"));
-                    center.setLabel(centerJsos.getString("content"));
-                    center.setValue(5);
-                    center.setName(centerJsos.getString("content"));
-                    // String centerStr = mapper.writeValueAsString(center);
-                    nodes.add(center);
-                }
-                // 加入一条边
-                JSONObject linkJson = json.getJSONObject(1);
-                if (!centers.contains(linkJson.getString("from") + "_"
-                        + linkJson.getString("to"))
-                        && !centers.contains(linkJson.getString("to") + "_"
-                        + linkJson.getString("from"))) {
-                    centers.add(linkJson.getString("from") + "_"
-                            + linkJson.getString("to"));
-                    Link link = new Link();
-                    link.setName(linkJson.getInteger("times").toString());
-                    link.setSource(linkJson.getString("from"));
-                    link.setTarget(linkJson.getString("to"));
-                    link.setWeight(1);
-                    // String linkStr = mapper.writeValueAsString(link);
-                    links.add(link);
-                }
-                // 加入一个点
-                JSONObject nodeJson = json.getJSONObject(2);
-                if (!centers.contains(nodeJson.getString("content"))) {
-                    centers.add(nodeJson.getString("content"));
-                    Node node = new Node();
-                    node.setCategory(nodeJson.getString("category"));
-                    node.setValue(1);
-                    node.setName(nodeJson.getString("content"));
-                    // String nodeStr = mapper.writeValueAsString(node);
-                    nodes.add(node);
-                }
-                // + "  "+ rs.getFloat("r.weight")
-                // + "  " +rs.getString("f.content"));
-            }
-
-            tmp.put("node", nodes);
-            System.out.println(nodes.size());
-            tmp.put("link", links);
-            System.out.println(links.size());
-            LetterServiceImpl ls = new LetterServiceImpl();
-            Letter letter = ls.selectByPrimaryKey(word.trim());
-
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            Date date = new Date(Long.parseLong(letter.getSubmitDateTime()
-                    + "000"));
-            String time = sdf.format(date);
-            letter.setSubmitDateTime(time);
-            content.add(letter);
-            tmp.put("letter", content);
-
-            return tmp;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            if (null != rs) {
-                rs.close();
-            }
-            if (null != stmt) {
-                stmt.close();
-            }
-
-        }
-
-    }
-
-    @RequestMapping(value = "/agg", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public String uAgg(HttpServletRequest request, Model model)
-            throws UnknownHostException {
-        try {
-
-            if (request.getParameter("word") == null
-                    || request.getParameter("word").equals("")) {
-                System.out.println(request.getParameter("word"));
-                return "knowledge";
-            }
-            request.setCharacterEncoding("UTF-8");
-            String word = request.getParameter("word");
-            Client client = TransportClient
-                    .builder()
-                    .build()
-                    .addTransportAddress(
-                            new InetSocketTransportAddress(InetAddress
-                                    .getByName("124.127.117.207"), 9736));
-            String word1 = "北京";
-            String word2 = "巴黎";
-            QueryBuilder qb = queryStringQuery(
-                    "result.body:\"" + word1 + "\" OR result.body:\"" + word2
-                            + "\"").analyzeWildcard(true);
-            DateHistogramInterval interval = new DateHistogramInterval("1M");
-            QueryBuilder qb1 = queryStringQuery("北京").analyzeWildcard(true)
-                    .queryName("北京");
-            QueryBuilder qb2 = queryStringQuery("巴黎").analyzeWildcard(true)
-                    .queryName("巴黎");
-            FiltersAggregationBuilder filter = AggregationBuilders.filters("3")
-                    .filter("巴黎", qb2).filter("北京", qb1);
-            DateHistogramBuilder aggs = AggregationBuilders.dateHistogram("2")
-                    .field("result.issuedate").interval(interval)
-                    .timeZone("Asia/Shanghai").minDocCount(1)
-                    .subAggregation(filter);
-            SearchRequestBuilder sbuilder = client.prepareSearch("pyspider")
-                    .addAggregation(aggs).setScroll(new TimeValue(60000))
-                    .setQuery(qb).setSize(0);
-            SearchResponse scrollResp = sbuilder.execute().actionGet();
-            List<SearchItem> items = new ArrayList<SearchItem>();
-            Histogram agg = scrollResp.getAggregations().get("2");
-            for (Histogram.Bucket entry : agg.getBuckets()) {
-                String keyAsString = entry.getKeyAsString();
-                // 按月时间
-                String time = keyAsString.substring(0, 10);
-                Filters fa = entry.getAggregations().get("3");
-                for (Filters.Bucket ent : fa.getBuckets()) {
-                    // 关键字
-                    String city = ent.getKeyAsString();
-                    // 出现次数
-                    long docCount = ent.getDocCount();
-                }
-            }
-            model.addAttribute("keyword", word);
-            model.addAttribute("items", items);
-            return "knowledge";
-        } catch (UnsupportedEncodingException e) {
-
-            e.printStackTrace();
-            return "";
-        }
-
-    }
-
-    @RequestMapping(value = "/vsearch")
-    public String phone() {
-        return "";
-    }
-
-    @RequestMapping(value = "/log")
-    public String point(HttpServletRequest request) {
-        String username = request.getParameter("username");
-        request.setAttribute("userName", username);
-        return "business";
-    }
-
-    @RequestMapping(value = "/insert")
-    public String insert(HttpServletRequest request, Model model)
-            throws UnknownHostException, ParseException {
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        Settings settings = Settings.settingsBuilder()
-                .put("cluster.name", "elasticsearch").build();
-        Client client = TransportClient
-                .builder()
-                .settings(settings)
-                .build()
-                .addTransportAddress(
-                        new InetSocketTransportAddress(InetAddress
-                                .getByName("124.127.117.207"), 9733));
-        QueryBuilder qb = queryStringQuery("content:*").analyzeWildcard(true)
-                .field("*");
-
-        SearchRequestBuilder sbuilder = client.prepareSearch("zhongjiwei")
-                .addSort(SortParseElement.SCORE_FIELD_NAME, SortOrder.DESC)
-                .setScroll(new TimeValue(60000)).setQuery(qb).setSize(600)
-                .addField("_source");
-
-        // 进行多搜索
-        MultiSearchResponse sr = client.prepareMultiSearch().add(sbuilder)
-                .execute().actionGet();
-        MultiSearchResponse.Item searchItem = sr.getResponses()[0];
-
-        SearchResponse searchResp = searchItem.getResponse();
-        List<SearchItem> items = new ArrayList<SearchItem>();
-        Integer number = 1;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Calendar cl = Calendar.getInstance();
-        Random ran = new Random();
-        int i = 0;
-        for (SearchHit hit : searchResp.getHits().getHits()) {
-            JSONObject obj = JSONObject.parseObject(hit.getSourceAsString());
-            String id = hit.getId();
-            String time = obj.getString("date");
-            Date date = sdf.parse(time);
-            cl.setTime(date);
-            long second = cl.getTimeInMillis();
-            String content = obj.getString("content");
-            String author = obj.getString("publisher");
-            String title = obj.getString("title");
-            int read = ran.nextInt(2);
-            int cate = ran.nextInt(3);
-            LetterServiceImpl ls = new LetterServiceImpl();
-            Letter letter = new Letter();
-            letter.setSubmitDateTime(String.valueOf(second));
-            letter.setAuthor(author);
-            letter.setAttachments(title);
-            letter.setContents(content);
-            ls.insert(letter);
-            StatusServiceImpl ss = new StatusServiceImpl();
-            Status status = new Status();
-            status.setIfRead(read);
-            ss.insert(status);
-            CategoryServiceImpl cs = new CategoryServiceImpl();
-            Category category = new Category();
-            category.setName(cate);
-            cs.insert(category);
-            i++;
-            // String title = hit.getSource().get("title").toString();
-        }
-        System.out.println(i);
-        return "index";
-    }
+//      @RequestMapping(value = "/insert")
+//      public String insert(HttpServletRequest request, Model model)
+//              throws UnknownHostException, ParseException, ParseException {
+//
+//          ObjectMapper mapper = new ObjectMapper();
+//
+//          Settings settings = Settings.settingsBuilder()
+//                  .put("cluster.name", "elasticsearch").build();
+//          Client client = TransportClient
+//                  .builder()
+//                  .settings(settings)
+//                  .build()
+//                  .addTransportAddress(
+//                          new InetSocketTransportAddress(InetAddress
+//                                  .getByName("124.127.117.207"), 9733));
+//          QueryBuilder qb = queryStringQuery("content:*").analyzeWildcard(true)
+//                  .field("*");
+//
+//          SearchRequestBuilder sbuilder = client.prepareSearch("zhongjiwei")
+//                  .addSort(SortParseElement.SCORE_FIELD_NAME, SortOrder.DESC)
+//                  .setScroll(new TimeValue(60000)).setQuery(qb).setSize(600)
+//                  .addField("_source");
+//
+//          // 进行多搜索
+//          MultiSearchResponse sr = client.prepareMultiSearch().add(sbuilder)
+//                  .execute().actionGet();
+//          MultiSearchResponse.Item searchItem = sr.getResponses()[0];
+//
+//          SearchResponse searchResp = searchItem.getResponse();
+//          List<SearchItem> items = new ArrayList<SearchItem>();
+//          Integer number = 1;
+//          SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//          Calendar cl = Calendar.getInstance();
+//          Random ran = new Random();
+//          int i = 0;
+//          for (SearchHit hit : searchResp.getHits().getHits()) {
+//              JSONObject obj = JSONObject.parseObject(hit.getSourceAsString());
+//              String id = hit.getId();
+//              String time = obj.getString("date");
+//              Date date = null;
+//              try {
+//                  date = sdf.parse(time);
+//              } catch (ParseException e) {
+//                  e.printStackTrace();
+//              }
+//              cl.setTime(date);
+//              long second = cl.getTimeInMillis();
+//              String content = obj.getString("content");
+//              String author = obj.getString("publisher");
+//              String title = obj.getString("title");
+//              int read = ran.nextInt(2);
+//              int cate = ran.nextInt(3);
+//              LetterServiceImpl ls = new LetterServiceImpl();
+//              Letter letter = new Letter();
+//              letter.setSubmitDateTime(String.valueOf(second));
+//              letter.setAuthor(author);
+//              letter.setAttachments(title);
+//              letter.setContents(content);
+//              ls.insert(letter);
+//              StatusServiceImpl ss = new StatusServiceImpl();
+//              Status status = new Status();
+//              status.setIfRead(read);
+//              ss.insert(status);
+//              CategoryServiceImpl cs = new CategoryServiceImpl();
+//              Category category = new Category();
+//              category.setName(cate);
+//              cs.insert(category);
+//              i++;
+//              // String title = hit.getSource().get("title").toString();
+//          }
+//          System.out.println(i);
+//          return "index";
+//      }
 
     @RequestMapping(value = "/select", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public
@@ -1231,7 +1252,7 @@ public class BHController {
     HashMap<String, ArrayList<LetterTitle>> select(HttpServletRequest request,
                                                    Model model) throws ParseException, JsonGenerationException,
             JsonMappingException, IOException {
-
+//    /*mysql改es*/
         LetterServiceImpl ls = new LetterServiceImpl();
         ArrayList<LetterTitle> allRes = ls.selectTitles();
         ArrayList<LetterTitle> undo = new ArrayList<LetterTitle>();
@@ -1383,11 +1404,11 @@ public class BHController {
         }*/
         LetterServiceImpl ls = new LetterServiceImpl();
 
-        String word ="";
+        String word = "";
         model.addAttribute("keyword", word);
-        String indexId=request.getParameter("id");
-        if ( indexId== null||indexId.equals("")) {
-       return "index";
+        String indexId = request.getParameter("id");
+        if (indexId == null || indexId.equals("")) {
+            return "index";
         }
 
         Letter letter = ls.selectByPrimaryKey(indexId);

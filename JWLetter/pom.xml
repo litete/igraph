@@ -13,19 +13,31 @@
 		<junitversion>3.8.1</junitversion>
 	</properties>
 
-
+	<repositories>
+		<!-- add the elasticsearch repo -->
+		<repository>
+			<id>elasticsearch-releases</id>
+			<url>https://artifacts.elastic.co/maven</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 	<dependencies>
-		<!--es-->
+	<!--	es-->
 		<dependency>
 			<groupId>org.elasticsearch.client</groupId>
 			<artifactId>transport</artifactId>
 			<version>5.1.1</version>
 		</dependency>
-		<!--<dependency>
+		<dependency>
 			<groupId>org.elasticsearch.plugin</groupId>
 			<artifactId>x-pack-api</artifactId>
 			<version>5.1.1</version>
-		</dependency>-->
+		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
@@ -46,7 +58,8 @@
 			<artifactId>neo4j-java-driver</artifactId>
 			<version>1.1.0</version>
 		</dependency>
-		<!--es-->
+
+		<!--//es-->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -227,11 +240,11 @@
 		</dependency>
 
 
-		<dependency>
+	<!--	<dependency>
 			<groupId>org.elasticsearch</groupId>
 			<artifactId>elasticsearch</artifactId>
 			<version>2.3.5</version>
-		</dependency>
+		</dependency>-->
 
 		<dependency>
 			<groupId>commons-logging</groupId>
