@@ -1295,10 +1295,12 @@ public class BHController {
     ArrayList<LetterResult> tagsArt(HttpServletRequest request, Model model)
             throws ParseException, JsonGenerationException,
             JsonMappingException, IOException {
-        String id = request.getParameter("tag");
-        LetterServiceImpl ls = new LetterServiceImpl();
-        ArrayList<LetterResult> res = ls.selectByTagId(Integer.parseInt(id));
-
+        String name = request.getParameter("tag");
+/*        LetterServiceImpl ls = new LetterServiceImpl();
+        ArrayList<LetterResult> res = ls.selectByTagId(name);*/
+        /*Mysql转ES*/
+      EsMappper es=new EsMappper();
+        ArrayList<LetterResult> res=es.selectByTagId(name);
         return res;
     }
 
@@ -1314,11 +1316,12 @@ public class BHController {
         String word = word1.substring(1, word1.length() - 1);
         System.out.println("word:" + word);
         String[] ids = word.split(",");
-        LetterServiceImpl ls = new LetterServiceImpl();
+        EsMappper esMappper=new EsMappper();
         ArrayList<Letter> article = new ArrayList<Letter>();
         HashMap<String, ArrayList<Letter>> tmp = new HashMap<String, ArrayList<Letter>>();
         for (int i = 0; i < ids.length; i++) {
-            Letter letter = ls.selectByPrimaryKey(ids[i].trim());
+             /*Mysql转ES*/
+            Letter letter = esMappper.selectByPrimaryKey(ids[i].trim());
             article.add(letter);
         }
         tmp.put("article", article);
@@ -1392,7 +1395,7 @@ public class BHController {
                 || request.getParameter("word").equals("")) {
             return "index";
         }*/
-        LetterServiceImpl ls = new LetterServiceImpl();
+       // LetterServiceImpl ls = new LetterServiceImpl();
 
         String word = "";
         model.addAttribute("keyword", word);
@@ -1517,9 +1520,15 @@ public class BHController {
                 lettersList = new ArrayList<LetterTitle>();
                 //for (int i = 0; i <keyWords.size(); i++) {
                 //System.out.print(keyWords.get(i) + "  ");
-                LetterServiceImpl ls = new LetterServiceImpl();
+
+
+               /* LetterServiceImpl ls = new LetterServiceImpl();
                 //ArrayList<LetterTitle> letterTitles = ls.selectTitleByKeyWord((String) keyWords.get(i));
-                ArrayList<LetterTitle> letterTitles = ls.selectTitleByKeyWord(word);
+                ArrayList<LetterTitle> letterTitles = ls.selectTitleByKeyWord(word);*/
+                /*Mysql转ES*/
+                EsMappper esMappper=new EsMappper();
+                ArrayList<LetterTitle> letterTitles =esMappper.selectTitleByKeyWord(word);
+
                 //向lettersList添加元素
                 for (int j = 0; j < letterTitles.size(); j++) {
                     LetterTitle letter = letterTitles.get(j);

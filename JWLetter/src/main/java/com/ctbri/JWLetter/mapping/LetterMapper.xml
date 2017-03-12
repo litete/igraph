@@ -62,7 +62,7 @@ FROM((letters LEFT JOIN categories ON letters.Letter_ID = categories.Letter_ID)
 GROUP BY letters.Letter_ID
     </select>
 
-    <!-- 通过id筛选实体 -->
+    <!-- 通过id筛选实体 --><!--已改为ES-->
     <select id="selectByPrimaryKey" resultMap="LetterMap" parameterType="java.lang.String" flushCache="true">
         select
         <include refid="Base_Column_List"/>
@@ -83,7 +83,7 @@ select
         <include refid="Base_Column_List"/>
         from letters
     </select>
-
+<!--已改为ES-->
     <select id="selectByTagId" resultMap="LetterResultMap" parameterType="java.lang.Integer" flushCache="true">
   	select
   	a.Letter_ID,a.ID,a.SubmitDatetime,a.Author,a.Contents,a.Title,c.ReadOrNot,d.Category_name
@@ -95,7 +95,7 @@ select
   	a.Letter_ID,a.ID,SubmitDatetime,Author,Contents,Title,ReadOrNot,Category_name
   	from letters a,letter_status b,categories c where a.Letter_ID = b.Letter_ID and a.Letter_ID=c.Letter_ID
   </select>
-
+<!--已改为ES-->
     <select id="selectTitles" resultMap="LetterTitleMap" flushCache="true">
   	select
   	a.Letter_ID,a.ID,SubmitDatetime,Author,Title,ReadOrNot,Category_name

@@ -641,7 +641,7 @@ function tagsArt(id, name) {
         cache: true,
         async: true,
         dataType: "json",
-        data: "tag=" + id,
+        data: "tag=" + name,
         url: "http://" + document.location.host + "/JWLetter/tagsArt",
         success: function (res) {
             document.getElementById("message").style.display = "none";
