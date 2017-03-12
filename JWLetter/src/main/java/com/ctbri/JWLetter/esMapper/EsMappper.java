@@ -53,7 +53,8 @@ public class EsMappper {
             System.out.println("contents:"+(String) sh.getSource().get("contents"));
             letter.setAuthor((String) sh.getSource().get("author"));
             letter.setSubmitDateTime((String) sh.getSource().get("submiteDatetime"));
-            letter.setAttachments((String) sh.getSource().get("attachments"));
+            letter.setAttachments((String) sh.getSource().get("title"));
+
             // System.out.println(sh.getSource().get("id"));
         }
         return letter;
