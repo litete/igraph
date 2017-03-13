@@ -13,7 +13,7 @@ public class LetterResult implements Serializable {
 	 */
 	private int id;
 	private int letter_id;
-	private long submitDateTime;
+	private String submitDateTime;
 	private String author;
 	private String contents;
 	private String attachments;
@@ -43,12 +43,15 @@ public class LetterResult implements Serializable {
 	public void setLetter_id(int letter_id) {
 		this.letter_id = letter_id;
 	}
-	public long getSubmitDateTime() {
+
+	public String getSubmitDateTime() {
 		return submitDateTime;
 	}
-	public void setSubmitDateTime(long submitDateTime) {
+
+	public void setSubmitDateTime(String submitDateTime) {
 		this.submitDateTime = submitDateTime;
 	}
+
 	public String getAuthor() {
 		return author;
 	}

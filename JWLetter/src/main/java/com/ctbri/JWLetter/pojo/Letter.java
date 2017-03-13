@@ -51,4 +51,15 @@ public class Letter implements Serializable {
 		this.attachments = attachments;
 	}
 
+	@Override
+	public String toString() {
+		return "Letter{" +
+				"id=" + id +
+				", letter_id=" + letter_id +
+				", submitDateTime='" + submitDateTime + '\'' +
+				", author='" + author + '\'' +
+				", contents='" + contents + '\'' +
+				", attachments='" + attachments + '\'' +
+				'}';
+	}
 }

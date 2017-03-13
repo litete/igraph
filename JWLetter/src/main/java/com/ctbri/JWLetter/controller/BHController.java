@@ -1,4 +1,4 @@
-package com.ctbri.JWLetter.controller;
+ package com.ctbri.JWLetter.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -10,13 +10,11 @@ import com.fasterxml.jackson.core.JsonParseException;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.search.MultiMatchQuery;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.xpack.client.PreBuiltXPackTransportClient;
 import org.springframework.stereotype.Controller;
@@ -34,9 +32,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Date;
 
 @Controller
 public class BHController {
@@ -85,24 +81,21 @@ public class BHController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-      /*  SearchRequestBuilder requestBuilder=client.prepareSearch("articles");
-        requestBuilder.setQuery(QueryBuilders.termsQuery())*/
-
         SearchResponse sr = client.prepareSearch("articles")
                 //allowLeadingWildcard(true)表示加载规定列里的要搜索的字段
-               // .setQuery(QueryBuilders.queryStringQuery("*").field("id").field("title").allowLeadingWildcard(true))
-                .setQuery(QueryBuilders.termsQuery("id","title"))
-                //.setQuery(QueryBuilders.queryStringQuery("孙甲勇").field("contents"))
+                .setQuery(QueryBuilders.queryStringQuery("*").field("id").field("title").allowLeadingWildcard(true))
+                        //.setQuery(QueryBuilders.query)
+                        //.setQuery(QueryBuilders.queryStringQuery("孙甲勇").field("contents"))
                 .get();
         Iterator it = sr.getHits().iterator();
         client.close();
-        SearchHit sh=null;
-        while (it.hasNext()){
-             sh = (SearchHit)it.next();
-           // System.out.println(sh.getSource().get("contents")+"  "+sh.getSource().get("title"));
-            System.out.println("title:"+sh.getSource().get("title"));
-            System.out.println("content"+sh.getSource().get("id"));
-    }
+        SearchHit sh = null;
+        while (it.hasNext()) {
+            sh = (SearchHit) it.next();
+            // System.out.println(sh.getSource().get("contents")+"  "+sh.getSource().get("title"));
+            System.out.println("title:" + sh.getSource().get("title"));
+            System.out.println("content" + sh.getSource().get("id"));
+        }
         // on shutdown
 
 // return sh.getSource().get("contents")+"  "+sh.getSource().get("title");
@@ -188,21 +181,21 @@ public class BHController {
         }
     }
 
-     @RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-      public String ulogin(HttpServletRequest request, Model model)
-              throws JsonParseException, JsonMappingException, IOException,
-              SQLException {
-          try {
+    @RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public String ulogin(HttpServletRequest request, Model model)
+            throws JsonParseException, JsonMappingException, IOException,
+            SQLException {
+        try {
 
-              if (request.getParameter("word") == null
-                      || request.getParameter("word").equals("")) {
-                  System.out.println(request.getParameter("word"));
-                  return "search";
-              }
-              request.setCharacterEncoding("UTF-8");
-              String word = request.getParameter("word");
-              System.out.println(word);
-              ObjectMapper mapper = new ObjectMapper();
+            if (request.getParameter("word") == null
+                    || request.getParameter("word").equals("")) {
+                System.out.println(request.getParameter("word"));
+                return "search";
+            }
+            request.setCharacterEncoding("UTF-8");
+            String word = request.getParameter("word");
+            System.out.println(word);
+            ObjectMapper mapper = new ObjectMapper();
               /*Settings settings = Settings.settingsBuilder()
                       .put("cluster.name", "elasticsearch").build();
               Client client = TransportClient
@@ -242,22 +235,22 @@ public class BHController {
                   items.add(tmp);
                   number++;
               }*/
-              List<GzItem> gzItems = new ArrayList<GzItem>();
-              Integer gzNumber = 1;
+            List<GzItem> gzItems = new ArrayList<GzItem>();
+            Integer gzNumber = 1;
 
-              model.addAttribute("title", word + "关系图谱");
-              model.addAttribute("keyword", word);
+            model.addAttribute("title", word + "关系图谱");
+            model.addAttribute("keyword", word);
               /*model.addAttribute("items", items);*/
-              model.addAttribute("gzitems", gzItems);
-              return "";
+            model.addAttribute("gzitems", gzItems);
+            return "";
 
-          } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
 
-              e.printStackTrace();
-              return "";
-          }
+            e.printStackTrace();
+            return "";
+        }
 
-      }
+    }
 
 //      @RequestMapping(value = "/owledge", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 //      public String uPreStatic(HttpServletRequest request, Model model) {
@@ -974,132 +967,121 @@ public class BHController {
 //
 //      }
 
-      @RequestMapping(value = "/letter", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-      public
-      @ResponseBody
-      HashMap<String, ArrayList<?>> letter(HttpServletRequest request, Model model)
-              throws SQLException, JsonGenerationException, JsonMappingException,
-              IOException {
-          String word = request.getParameter("id");
+    @RequestMapping(value = "/letter", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+    public
+    @ResponseBody
+    HashMap<String, ArrayList<?>> letter(HttpServletRequest request, Model model)
+            throws SQLException, JsonGenerationException, JsonMappingException,
+            IOException {
+        String word = request.getParameter("id");
+        System.out.println("已经到这了");
+        // 统计关联词
+        Connection con = DriverManager.getConnection(
+                "jdbc:neo4j://27.148.153.1:7474/", "neo4j", "nlp4");
+        System.out.println("已经到这了1.1");
+        PreparedStatement stmt = null; // 采用预编译，和关系数据库不一样的是,参数需要使用{1},{2},而不是?
+        ResultSet rs = null;
+        ArrayList<Node> nodes = new ArrayList<Node>();
+        ArrayList<Link> links = new ArrayList<Link>();
+        ArrayList<Letter> content = new ArrayList<Letter>();
+        HashSet<String> centers = new HashSet<String>();
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap<String, ArrayList<?>> tmp = new HashMap<String, ArrayList<?>>();
 
-          // 统计关联词
-          Connection con = DriverManager.getConnection(
-                  "jdbc:neo4j://27.148.153.1:7474/", "neo4j", "nlp4");
-          PreparedStatement stmt = null; // 采用预编译，和关系数据库不一样的是,参数需要使用{1},{2},而不是?
-          ResultSet rs = null;
-          ArrayList<Node> nodes = new ArrayList<Node>();
-          ArrayList<Link> links = new ArrayList<Link>();
-          ArrayList<Letter> content = new ArrayList<Letter>();
-          HashSet<String> centers = new HashSet<String>();
-          ObjectMapper mapper = new ObjectMapper();
-          HashMap<String, ArrayList<?>> tmp = new HashMap<String, ArrayList<?>>();
+        try {
+            //通过id查询文章
+            String query = "MATCH (article:other {content:'["
+                    + word
+                    + "]'})-[]->(n:person) "
+                    + "WITH n "
+                    + "MATCH p = (n:person)-[r]->(m) "
+                    + "WHERE r.times > 1 and (m.category = 'crime' or m.category = 'institution' or m.category = 'location' or m.category = 'position') and ( m.article =~'.* "
+                    + word + ",.*' OR m.article =~ '\\\\[" + word + ",.*') "
+                    + "return p as path, r.times as confidence";
 
-          try {
+            stmt = con.prepareStatement(query);
+            rs = stmt.executeQuery();
 
-              // String query = "MATCH(n:person) "
-              // + "WHERE n.article =~'.* "
-              // + word
-              // + ".*' OR n.article =~ '\\\\["
-              // + word
-              // + ".*' "
-              // + "WITH n "
-              // + "MATCH p = (n:person)-[r]-(m) "
-              // +
-              // "WHERE r.times > 1 and (m.category = 'crime' or m.category = 'institution' or m.category = 'location' or m.category = 'position') "
-              // + "return p as path, r.times as confidence";
-              //通过id查询文章
-              String query = "MATCH (article:other {content:'["
-                      + word
-                      + "]'})-[]->(n:person) "
-                      + "WITH n "
-                      + "MATCH p = (n:person)-[r]->(m) "
-                      + "WHERE r.times > 1 and (m.category = 'crime' or m.category = 'institution' or m.category = 'location' or m.category = 'position') and ( m.article =~'.* "
-                      + word + ",.*' OR m.article =~ '\\\\[" + word + ",.*') "
-                      + "return p as path, r.times as confidence";
+            while (rs.next()) {
+                JSONArray json = JSONObject.parseArray(rs.getString(1));
+                // 加入一个中心
+                JSONObject centerJsos = json.getJSONObject(0);
+                if (!centers.contains(centerJsos.getString("content"))) {
+                    centers.add(centerJsos.getString("content"));
+                    Node center = new Node();
+                    center.setCategory(centerJsos.getString("category"));
+                    center.setLabel(centerJsos.getString("content"));
+                    center.setValue(5);
+                    center.setName(centerJsos.getString("content"));
+                    // String centerStr = mapper.writeValueAsString(center);
+                    nodes.add(center);
+                }
+                // 加入一条边
+                JSONObject linkJson = json.getJSONObject(1);
+                if (!centers.contains(linkJson.getString("from") + "_"
+                        + linkJson.getString("to"))
+                        && !centers.contains(linkJson.getString("to") + "_"
+                        + linkJson.getString("from"))) {
+                    centers.add(linkJson.getString("from") + "_"
+                            + linkJson.getString("to"));
+                    Link link = new Link();
+                    link.setName(linkJson.getInteger("times").toString());
+                    link.setSource(linkJson.getString("from"));
+                    link.setTarget(linkJson.getString("to"));
+                    link.setWeight(1);
+                    // String linkStr = mapper.writeValueAsString(link);
+                    links.add(link);
+                }
+                // 加入一个点
+                JSONObject nodeJson = json.getJSONObject(2);
+                if (!centers.contains(nodeJson.getString("content"))) {
+                    centers.add(nodeJson.getString("content"));
+                    Node node = new Node();
+                    node.setCategory(nodeJson.getString("category"));
+                    node.setValue(1);
+                    node.setName(nodeJson.getString("content"));
+                    // String nodeStr = mapper.writeValueAsString(node);
+                    nodes.add(node);
+                }
+                // + "  "+ rs.getFloat("r.weight")
+                // + "  " +rs.getString("f.content"));
+            }
 
-              stmt = con.prepareStatement(query);
-              // stmt.setString(1,"John");
-              // stmt.setInt(1, 14);
-              rs = stmt.executeQuery();
+            tmp.put("node", nodes);
+            System.out.println(nodes.size());
+            tmp.put("link", links);
+            System.out.println(links.size());
+            //   LetterServiceImpl ls = new LetterServiceImpl();
+            // Letter letter = ls.selectByPrimaryKey(word.trim());
+            //    /*mysql改es*/
+            System.out.println("已经到这了1.5");
+            EsMappper esMappper = new EsMappper();
+            Letter letter = esMappper.selectByPrimaryKey(word);
+            System.out.println("已经到这了2");
+/*            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            Date date = new Date(Long.parseLong(letter.getSubmitDateTime()
+                    + "000"));
+            String time = sdf.format(date);
+            letter.setSubmitDateTime(time);*/
+            System.out.println("letter的全部是:" + letter);
+            content.add(letter);
+            tmp.put("letter", content);
 
-              while (rs.next()) {
-                  JSONArray json = JSONObject.parseArray(rs.getString(1));
-                  // 加入一个中心
-                  JSONObject centerJsos = json.getJSONObject(0);
-                  if (!centers.contains(centerJsos.getString("content"))) {
-                      centers.add(centerJsos.getString("content"));
-                      Node center = new Node();
-                      center.setCategory(centerJsos.getString("category"));
-                      center.setLabel(centerJsos.getString("content"));
-                      center.setValue(5);
-                      center.setName(centerJsos.getString("content"));
-                      // String centerStr = mapper.writeValueAsString(center);
-                      nodes.add(center);
-                  }
-                  // 加入一条边
-                  JSONObject linkJson = json.getJSONObject(1);
-                  if (!centers.contains(linkJson.getString("from") + "_"
-                          + linkJson.getString("to"))
-                          && !centers.contains(linkJson.getString("to") + "_"
-                          + linkJson.getString("from"))) {
-                      centers.add(linkJson.getString("from") + "_"
-                              + linkJson.getString("to"));
-                      Link link = new Link();
-                      link.setName(linkJson.getInteger("times").toString());
-                      link.setSource(linkJson.getString("from"));
-                      link.setTarget(linkJson.getString("to"));
-                      link.setWeight(1);
-                      // String linkStr = mapper.writeValueAsString(link);
-                      links.add(link);
-                  }
-                  // 加入一个点
-                  JSONObject nodeJson = json.getJSONObject(2);
-                  if (!centers.contains(nodeJson.getString("content"))) {
-                      centers.add(nodeJson.getString("content"));
-                      Node node = new Node();
-                      node.setCategory(nodeJson.getString("category"));
-                      node.setValue(1);
-                      node.setName(nodeJson.getString("content"));
-                      // String nodeStr = mapper.writeValueAsString(node);
-                      nodes.add(node);
-                  }
-                  // + "  "+ rs.getFloat("r.weight")
-                  // + "  " +rs.getString("f.content"));
-              }
+            return tmp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (null != rs) {
+                rs.close();
+            }
+            if (null != stmt) {
+                stmt.close();
+            }
 
-              tmp.put("node", nodes);
-              System.out.println(nodes.size());
-              tmp.put("link", links);
-              System.out.println(links.size());
-           //   LetterServiceImpl ls = new LetterServiceImpl();
-             // Letter letter = ls.selectByPrimaryKey(word.trim());
-   //    /*mysql改es*/
-              EsMappper esMappper=new EsMappper();
-              Letter letter = esMappper.selectByPrimaryKey(word.trim());
+        }
 
-              SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-              Date date = new Date(Long.parseLong(letter.getSubmitDateTime()
-                      + "000"));
-              String time = sdf.format(date);
-              letter.setSubmitDateTime(time);
-              content.add(letter);
-              tmp.put("letter", content);
-
-              return tmp;
-          } catch (Exception e) {
-              e.printStackTrace();
-              return null;
-          } finally {
-              if (null != rs) {
-                  rs.close();
-              }
-              if (null != stmt) {
-                  stmt.close();
-              }
-
-          }
-
-      }
+    }
 
 //      @RequestMapping(value = "/agg", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 //      public String uAgg(HttpServletRequest request, Model model)
@@ -1164,17 +1146,17 @@ public class BHController {
 //
 //      }
 
-      @RequestMapping(value = "/vsearch")
-      public String phone() {
-          return "";
-      }
+    @RequestMapping(value = "/vsearch")
+    public String phone() {
+        return "";
+    }
 
-      @RequestMapping(value = "/log")
-      public String point(HttpServletRequest request) {
-          String username = request.getParameter("username");
-          request.setAttribute("userName", username);
-          return "business";
-      }
+    @RequestMapping(value = "/log")
+    public String point(HttpServletRequest request) {
+        String username = request.getParameter("username");
+        request.setAttribute("userName", username);
+        return "business";
+    }
 
 //      @RequestMapping(value = "/insert")
 //      public String insert(HttpServletRequest request, Model model)
@@ -1257,8 +1239,11 @@ public class BHController {
                                                    Model model) throws ParseException, JsonGenerationException,
             JsonMappingException, IOException {
 //    /*mysql改es*/
-        LetterServiceImpl ls = new LetterServiceImpl();
-        ArrayList<LetterTitle> allRes = ls.selectTitles();
+        /*LetterServiceImpl ls = new LetterServiceImpl();
+        ArrayList<LetterTitle> allRes = ls.selectTitles();*/
+        System.out.println("进入了/select");
+        EsMappper em=new EsMappper();
+        ArrayList<LetterTitle> allRes = em.selectTitles();
         ArrayList<LetterTitle> undo = new ArrayList<LetterTitle>();
         ArrayList<LetterTitle> levelOne = new ArrayList<LetterTitle>();
         ArrayList<LetterTitle> levelTwo = new ArrayList<LetterTitle>();
@@ -1266,6 +1251,7 @@ public class BHController {
         HashMap<String, ArrayList<LetterTitle>> tmp = new HashMap<String, ArrayList<LetterTitle>>();
         for (int i = 0; i < allRes.size(); i++) {
             LetterTitle letter = allRes.get(i);
+            System.out.println("letter的title是"+letter.getAttachments());
             if (letter.getIfRead() == 0) {
                 undo.add(letter);
             }
@@ -1277,7 +1263,7 @@ public class BHController {
                 levelThree.add(letter);
             }
         }
-        tmp.put("all", allRes);
+        tmp.put("all",  allRes);
         tmp.put("undo", undo);
         tmp.put("levelOne", levelOne);
         tmp.put("levelTwo", levelTwo);
@@ -1309,10 +1295,12 @@ public class BHController {
     ArrayList<LetterResult> tagsArt(HttpServletRequest request, Model model)
             throws ParseException, JsonGenerationException,
             JsonMappingException, IOException {
-        String id = request.getParameter("tag");
-        LetterServiceImpl ls = new LetterServiceImpl();
-        ArrayList<LetterResult> res = ls.selectByTagId(Integer.parseInt(id));
-
+        String name = request.getParameter("tag");
+/*        LetterServiceImpl ls = new LetterServiceImpl();
+        ArrayList<LetterResult> res = ls.selectByTagId(name);*/
+        /*Mysql转ES*/
+      EsMappper es=new EsMappper();
+        ArrayList<LetterResult> res=es.selectByTagId(name);
         return res;
     }
 
@@ -1328,11 +1316,12 @@ public class BHController {
         String word = word1.substring(1, word1.length() - 1);
         System.out.println("word:" + word);
         String[] ids = word.split(",");
-        LetterServiceImpl ls = new LetterServiceImpl();
+        EsMappper esMappper=new EsMappper();
         ArrayList<Letter> article = new ArrayList<Letter>();
         HashMap<String, ArrayList<Letter>> tmp = new HashMap<String, ArrayList<Letter>>();
         for (int i = 0; i < ids.length; i++) {
-            Letter letter = ls.selectByPrimaryKey(ids[i].trim());
+             /*Mysql转ES*/
+            Letter letter = esMappper.selectByPrimaryKey(ids[i].trim());
             article.add(letter);
         }
         tmp.put("article", article);
@@ -1402,22 +1391,27 @@ public class BHController {
 
     @RequestMapping(value = "/index", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public String index(HttpServletRequest request, Model model) {
-     /*   if (request.getParameter("word") == null
+/*       if (request.getParameter("word") == null
                 || request.getParameter("word").equals("")) {
             return "index";
         }*/
-        LetterServiceImpl ls = new LetterServiceImpl();
+       // LetterServiceImpl ls = new LetterServiceImpl();
 
         String word = "";
         model.addAttribute("keyword", word);
         String indexId = request.getParameter("id");
+        System.out.println("indexId:"+indexId);
         if (indexId == null || indexId.equals("")) {
             return "index";
         }
 
-        Letter letter = ls.selectByPrimaryKey(indexId);
+        // Letter letter = ls.selectByPrimaryKey(indexId);
+        //    /*mysql改es*/
+        EsMappper esMappper = new EsMappper();
+        Letter letter = esMappper.selectByPrimaryKey(indexId);
         //System.out.println(letter.getId());
         model.addAttribute("letter", letter);
+        System.out.println("letter:" + letter);
         System.out.println("index:" + letter.getAttachments());
         return "index";
     }
@@ -1526,9 +1520,15 @@ public class BHController {
                 lettersList = new ArrayList<LetterTitle>();
                 //for (int i = 0; i <keyWords.size(); i++) {
                 //System.out.print(keyWords.get(i) + "  ");
-                LetterServiceImpl ls = new LetterServiceImpl();
+
+
+               /* LetterServiceImpl ls = new LetterServiceImpl();
                 //ArrayList<LetterTitle> letterTitles = ls.selectTitleByKeyWord((String) keyWords.get(i));
-                ArrayList<LetterTitle> letterTitles = ls.selectTitleByKeyWord(word);
+                ArrayList<LetterTitle> letterTitles = ls.selectTitleByKeyWord(word);*/
+                /*Mysql转ES*/
+                EsMappper esMappper=new EsMappper();
+                ArrayList<LetterTitle> letterTitles =esMappper.selectTitleByKeyWord(word);
+
                 //向lettersList添加元素
                 for (int j = 0; j < letterTitles.size(); j++) {
                     LetterTitle letter = letterTitles.get(j);
