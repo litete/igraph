@@ -6,12 +6,12 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="37b5a9a6-c782-4338-9714-7a4bbfafb1de" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/BHController.java" afterPath="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/BHController.java" />
+    <list default="true" id="37b5a9a6-c782-4338-9714-7a4bbfafb1de" name="Default" comment="es做了举报箱2">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/commons-logging-1.1.3.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/myvsearch/WEB-INF/lib/jackson-core-2.8.1.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/esDAO/EsMappper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/esMapper/EsMappper.java" afterPath="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/esMapper/EsMappper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/mapping/LetterMapper.xml" afterPath="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/mapping/LetterMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/pojo/LetterResult.java" afterPath="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/pojo/LetterResult.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/index.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/index.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/index.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -48,8 +48,8 @@
       <file leaf-file-name="BHController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/BHController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.1" vertical-offset="19998" max-vertical-offset="24138">
-              <caret line="1711" column="28" selection-start-line="1711" selection-start-column="28" selection-end-line="1711" selection-end-column="28" />
+            <state vertical-scroll-proportion="-5.25" vertical-offset="12882" max-vertical-offset="26820">
+              <caret line="1391" column="28" selection-start-line="1391" selection-start-column="28" selection-end-line="1391" selection-end-column="28" />
               <folding>
                 <element signature="method#selectes#0;class#BHController#0" expanded="false" />
                 <element signature="e#10246#10363#0" expanded="false" />
@@ -61,33 +61,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LetterMapper.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/mapping/LetterMapper.xml">
+      <file leaf-file-name="graph.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/graph.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.3" vertical-offset="3069" max-vertical-offset="3780">
-              <caret line="124" column="50" selection-start-line="124" selection-start-column="50" selection-end-line="124" selection-end-column="50" />
-              <folding>
-                <marker date="1489303209665" expanded="true" signature="2249:2331" placeholder="SELECT Lette..tag_letter..." />
-                <marker date="1489303209665" expanded="true" signature="2411:2998" placeholder="SELECT lette..." />
-                <marker date="1489303209665" expanded="true" signature="3166:3288" placeholder="select from ..letters..." />
-                <marker date="1489303209665" expanded="true" signature="3443:3613" placeholder="select a.Let..letters..." />
-                <marker date="1489303209665" expanded="true" signature="3703:3774" placeholder="select from ..letters..." />
-                <marker date="1489303209665" expanded="true" signature="3917:4218" placeholder="select a.Let..letters..." />
-                <marker date="1489303209665" expanded="true" signature="4309:4503" placeholder="select a.Let..letters..." />
-                <marker date="1489303209665" expanded="true" signature="4608:4793" placeholder="select a.Let..letters..." />
-                <marker date="1489303209665" expanded="true" signature="4901:5204" placeholder="insert into ..." />
-                <marker date="1489303209665" expanded="true" signature="5333:5698" placeholder="update lette..." />
-                <marker date="1489303209665" expanded="true" signature="5811:5871" placeholder="delete from ..." />
-              </folding>
+            <state vertical-scroll-proportion="-4.6153846" vertical-offset="450" max-vertical-offset="15660">
+              <caret line="21" column="25" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EsMappper.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="navigation.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/navigation.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-4.1538463" vertical-offset="618" max-vertical-offset="1590">
+              <caret line="26" column="36" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LetterMapper.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/mapping/LetterMapper.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="3720" max-vertical-offset="4200">
+              <caret line="124" column="50" selection-start-line="124" selection-start-column="50" selection-end-line="124" selection-end-column="50" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EsMappper.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/esMapper/EsMappper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.55330884" vertical-offset="3101" max-vertical-offset="3645">
-              <caret line="139" column="0" selection-start-line="139" selection-start-column="0" selection-end-line="139" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2883" max-vertical-offset="4050">
+              <caret line="110" column="58" selection-start-line="110" selection-start-column="58" selection-end-line="110" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -96,7 +104,7 @@
       <file leaf-file-name="LetterResult.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/pojo/LetterResult.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="594" max-vertical-offset="1404">
+            <state vertical-scroll-proportion="0.0" vertical-offset="900" max-vertical-offset="1560">
               <caret line="46" column="39" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="39" />
               <folding>
                 <element signature="e#894#895#0" expanded="true" />
@@ -110,7 +118,7 @@
       <file leaf-file-name="LetterTitle.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/pojo/LetterTitle.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="766" max-vertical-offset="1323">
+            <state vertical-scroll-proportion="0.0" vertical-offset="900" max-vertical-offset="1470">
               <caret line="46" column="39" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="39" />
               <folding>
                 <element signature="e#868#869#0" expanded="true" />
@@ -119,11 +127,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.jsp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.jsp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/index.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="448" max-vertical-offset="27216">
-              <caret line="23" column="71" selection-start-line="23" selection-start-column="71" selection-end-line="23" selection-end-column="71" />
+            <state vertical-scroll-proportion="0.36144578" vertical-offset="1140" max-vertical-offset="30240">
+              <caret line="44" column="40" selection-start-line="44" selection-start-column="40" selection-end-line="44" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -132,7 +140,7 @@
       <file leaf-file-name="Letter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/pojo/Letter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="243" max-vertical-offset="1269">
+            <state vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="1410">
               <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
               <folding />
             </state>
@@ -142,13 +150,9 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.3" vertical-offset="17082" max-vertical-offset="32616">
+            <state vertical-scroll-proportion="0.0" vertical-offset="19290" max-vertical-offset="36240">
               <caret line="643" column="27" selection-start-line="643" selection-start-column="27" selection-end-line="643" selection-end-column="27" />
-              <folding>
-                <marker date="1489303571513" expanded="true" signature="8863:8882" placeholder="..." />
-                <marker date="1489303571513" expanded="true" signature="8915:8946" placeholder="..." />
-                <marker date="1489303571513" expanded="true" signature="8983:9148" placeholder="..." />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -198,7 +202,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/Aa.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/Aa.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/map.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/index.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/DAO/LetterMapper.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/impl/LetterServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/pojo/Es.java" />
@@ -216,6 +219,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/pojo/LetterResult.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/BHController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/esMapper/EsMappper.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/index.jsp" />
       </list>
     </option>
   </component>
@@ -293,7 +297,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -441,28 +444,6 @@
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vSearch" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JWLetter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="JWLetter" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
@@ -574,6 +555,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
@@ -595,13 +577,13 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="FullScreen" value="false" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="99" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="94" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="129" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="122" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="129" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="122" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="922" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="937" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="117" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
@@ -609,7 +591,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="123" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="916" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="912" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="dynamic.classpath" value="false" />
     <property name="LayoutCode.rearrangeEntriesJava" value="false" />
@@ -1198,6 +1180,7 @@
       <workItem from="1489222916437" duration="10438000" />
       <workItem from="1489252385039" duration="1112000" />
       <workItem from="1489285726278" duration="10842000" />
+      <workItem from="1489366950478" duration="2104000" />
     </task>
     <task id="LOCAL-00001" summary="11">
       <created>1486915077429</created>
@@ -1301,7 +1284,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="258158000" />
+    <option name="totallyTimeSpent" value="260262000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1324,7 +1307,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1344,11 +1327,11 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3668942" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874355" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41467577" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874355" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4130809" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874355" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874355" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27231467" sideWeight="0.48772505" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27162367" sideWeight="0.48772505" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27382752" sideWeight="0.512275" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25113463" sideWeight="0.5104167" order="7" side_tool="true" content_ui="tabs" />
@@ -1476,6 +1459,14 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="19290" max-vertical-offset="36240">
+          <caret line="643" column="27" selection-start-line="643" selection-start-column="27" selection-end-line="643" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2106" max-vertical-offset="27216">
@@ -1488,11 +1479,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="7695" max-vertical-offset="32616">
           <caret line="285" column="39" selection-start-line="285" selection-start-column="39" selection-end-line="285" selection-end-column="39" />
-          <folding>
-            <marker date="1489303571513" expanded="true" signature="8863:8882" placeholder="..." />
-            <marker date="1489303571513" expanded="true" signature="8915:8946" placeholder="..." />
-            <marker date="1489303571513" expanded="true" signature="8983:9148" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1700,19 +1687,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/graph.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33261803" vertical-offset="265" max-vertical-offset="15660">
-          <caret line="14" column="62" selection-start-line="14" selection-start-column="60" selection-end-line="14" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/index_back.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.76609445" vertical-offset="483" max-vertical-offset="25470">
           <caret line="28" column="16" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1746,14 +1724,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/navigation.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.7042253" vertical-offset="618" max-vertical-offset="1590">
-          <caret line="27" column="72" selection-start-line="27" selection-start-column="72" selection-end-line="27" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/opinions.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.5555556" vertical-offset="0" max-vertical-offset="16590">
@@ -1775,21 +1745,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/resources/log4j2.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="314">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/index.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="448" max-vertical-offset="27216">
-          <caret line="23" column="71" selection-start-line="23" selection-start-column="71" selection-end-line="23" selection-end-column="71" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/pojo/Letter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="243" max-vertical-offset="1269">
@@ -1800,13 +1755,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.3" vertical-offset="17082" max-vertical-offset="32616">
+        <state vertical-scroll-proportion="0.0" vertical-offset="19290" max-vertical-offset="36240">
           <caret line="643" column="27" selection-start-line="643" selection-start-column="27" selection-end-line="643" selection-end-column="27" />
-          <folding>
-            <marker date="1489303571513" expanded="true" signature="8863:8882" placeholder="..." />
-            <marker date="1489303571513" expanded="true" signature="8915:8946" placeholder="..." />
-            <marker date="1489303571513" expanded="true" signature="8983:9148" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1834,21 +1785,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/mapping/LetterMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.3" vertical-offset="3069" max-vertical-offset="3780">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3720" max-vertical-offset="4200">
           <caret line="124" column="50" selection-start-line="124" selection-start-column="50" selection-end-line="124" selection-end-column="50" />
-          <folding>
-            <marker date="1489303209665" expanded="true" signature="2249:2331" placeholder="SELECT Lette..tag_letter..." />
-            <marker date="1489303209665" expanded="true" signature="2411:2998" placeholder="SELECT lette..." />
-            <marker date="1489303209665" expanded="true" signature="3166:3288" placeholder="select from ..letters..." />
-            <marker date="1489303209665" expanded="true" signature="3443:3613" placeholder="select a.Let..letters..." />
-            <marker date="1489303209665" expanded="true" signature="3703:3774" placeholder="select from ..letters..." />
-            <marker date="1489303209665" expanded="true" signature="3917:4218" placeholder="select a.Let..letters..." />
-            <marker date="1489303209665" expanded="true" signature="4309:4503" placeholder="select a.Let..letters..." />
-            <marker date="1489303209665" expanded="true" signature="4608:4793" placeholder="select a.Let..letters..." />
-            <marker date="1489303209665" expanded="true" signature="4901:5204" placeholder="insert into ..." />
-            <marker date="1489303209665" expanded="true" signature="5333:5698" placeholder="update lette..." />
-            <marker date="1489303209665" expanded="true" signature="5811:5871" placeholder="delete from ..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1860,10 +1799,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/esMapper/EsMappper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2883" max-vertical-offset="4050">
+          <caret line="110" column="58" selection-start-line="110" selection-start-column="58" selection-end-line="110" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/graph.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.6153846" vertical-offset="450" max-vertical-offset="15660">
+          <caret line="21" column="25" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/navigation.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.1538463" vertical-offset="618" max-vertical-offset="1590">
+          <caret line="26" column="36" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/controller/BHController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.1" vertical-offset="19998" max-vertical-offset="24138">
-          <caret line="1711" column="28" selection-start-line="1711" selection-start-column="28" selection-end-line="1711" selection-end-column="28" />
+        <state vertical-scroll-proportion="-5.25" vertical-offset="12882" max-vertical-offset="26820">
+          <caret line="1391" column="28" selection-start-line="1391" selection-start-column="28" selection-end-line="1391" selection-end-column="28" />
           <folding>
             <element signature="method#selectes#0;class#BHController#0" expanded="false" />
             <element signature="e#10246#10363#0" expanded="false" />
@@ -1874,10 +1837,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/ctbri/JWLetter/esMapper/EsMappper.java">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.55330884" vertical-offset="3101" max-vertical-offset="3645">
-          <caret line="139" column="0" selection-start-line="139" selection-start-column="0" selection-end-line="139" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.36144578" vertical-offset="1140" max-vertical-offset="30240">
+          <caret line="44" column="40" selection-start-line="44" selection-start-column="40" selection-end-line="44" selection-end-column="40" />
           <folding />
         </state>
       </provider>

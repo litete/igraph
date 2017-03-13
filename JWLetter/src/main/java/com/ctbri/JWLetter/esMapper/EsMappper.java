@@ -109,7 +109,7 @@ public class EsMappper {
         Conn conn=new Conn();
         TransportClient client = conn.getConn();
         SearchResponse sr=client.prepareSearch("articles")
-                .setQuery(QueryBuilders.queryStringQuery(word).field("contents")).setSize(20).get();
+                .setQuery(QueryBuilders.queryStringQuery(word).field("contents").field("title")).setSize(20).get();
         Iterator it=sr.getHits().iterator();
         SearchHit sh=null;
         ArrayList<LetterTitle> letterTitles=new ArrayList<>();
@@ -126,17 +126,17 @@ public class EsMappper {
         }
         return letterTitles;
     }
-    public void updateByPrimaryKey(int id){
-        String _id="";
-        Conn conn=new Conn();
-        TransportClient client = conn.getConn();
-        SearchResponse sr=client.prepareSearch("articles")
-                .setQuery(QueryBuilders.queryStringQuery(String.valueOf(id)).field("id")).setSize(1).get();
-        Iterator it=sr.getHits().iterator();
-        SearchHit sh=null;
-        while (it.hasNext()){
-            _id=sh.getId();
-        }
-
-    }
+//    public void updateByPrimaryKey(int id){
+//        String _id="";
+//        Conn conn=new Conn();
+//        TransportClient client = conn.getConn();
+//        SearchResponse sr=client.prepareSearch("articles")
+//                .setQuery(QueryBuilders.queryStringQuery(String.valueOf(id)).field("id")).setSize(1).get();
+//        Iterator it=sr.getHits().iterator();
+//        SearchHit sh=null;
+//        while (it.hasNext()){
+//            _id=sh.getId();
+//        }
+//
+//    }
 }

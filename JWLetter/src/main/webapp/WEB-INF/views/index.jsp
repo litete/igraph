@@ -42,7 +42,7 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<%--<li><a href="index">举报箱</a></li>--%>
-					<li><a href="#" onclick="indexOnclick">举报箱</a></li>
+					<li><a href="index" >举报箱</a></li>
 					<li><a <%--id="toGraph"--%> href="#" onclick="graphOnclick()">关联图谱</a></li>
 					<li><a href="#" onclick="mapOnclick()">地图</a></li>
 					<li><a href="#" onclick="opinionsOnclick()">舆情</a></li>
